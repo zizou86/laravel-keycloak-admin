@@ -1,4 +1,4 @@
-image: registry.gitlab.com/scito/keycloak-admin/app:latest
+image: php:7.3-cli
 
 services:
   - name: jboss/keycloak:latest

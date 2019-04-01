@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker build -f app/Dockerfile -t keycloak-admin/app:latest ./app

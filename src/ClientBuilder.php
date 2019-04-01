@@ -36,49 +36,81 @@ class ClientBuilder
     {
     }
 
-    public function withGuzzle(ClientInterface $guzzle)
+    /**
+     * @param ClientInterface $guzzle
+     * @return ClientBuilder
+     */
+    public function withGuzzle(ClientInterface $guzzle): self
     {
         $this->guzzle = $guzzle;
         return $this;
     }
 
-    public function withRealm($realm)
+    /**
+     * @param null|string $realm
+     * @return ClientBuilder
+     */
+    public function withRealm(?string $realm): self
     {
         $this->realm = $realm;
         return $this;
     }
 
-    public function withServerUrl(string $url)
+    /**
+     * @param null|string $url
+     * @return ClientBuilder
+     */
+    public function withServerUrl(?string $url): self
     {
         $this->serverUrl = $url;
         return $this;
     }
 
-    public function withClientId(string $clientId)
+    /**
+     * @param null|string $clientId
+     * @return ClientBuilder
+     */
+    public function withClientId(?string $clientId): self
     {
         $this->clientId = $clientId;
         return $this;
     }
 
-    public function withClientSecret(string $secret)
+    /**
+     * @param null|string $secret
+     * @return ClientBuilder
+     */
+    public function withClientSecret(?string $secret): self
     {
         $this->clientSecret = $secret;
         return $this;
     }
 
-    public function withUsername(string $username)
+    /**
+     * @param null|string $username
+     * @return ClientBuilder
+     */
+    public function withUsername(?string $username): self
     {
         $this->username = $username;
         return $this;
     }
 
-    public function withPassword(string $password)
+    /**
+     * @param null|string $password
+     * @return ClientBuilder
+     */
+    public function withPassword(?string $password): self
     {
         $this->password = $password;
         return $this;
     }
 
-    public function withAuthToken($token)
+    /**
+     * @param null|string $token
+     * @return ClientBuilder
+     */
+    public function withAuthToken(?string $token): self
     {
         $this->token = $token;
         return $this;

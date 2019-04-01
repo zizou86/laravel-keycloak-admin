@@ -35,5 +35,12 @@ class RealmResourceTest extends TestCase
             ->create()
             ->name($name)
             ->save();
+
+        $realm = $this
+            ->client
+            ->realm($name)
+            ->toRepresentation();
+
+        $this->assertInstanceOf(RealmRepresentationInterface::class, $realm);
     }
 }

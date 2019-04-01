@@ -54,7 +54,7 @@ class RealmResource implements RealmResourceInterface
         return $this->hydrator->hydrate($data, RealmRepresentation::class);
     }
 
-    public function update(?array $options = null): void
+    public function update(?array $options = null): RealmUpdateResourceInterface
     {
         // TODO: Implement update() method.
     }

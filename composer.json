@@ -1,0 +1,29 @@
+{
+    "name": "scito/keycloak-admin",
+    "description": "PHP client for the Keyadmin Admin API",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Maikel van Maurik",
+            "email": "maikel@ttc.media"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Keycloak\\Admin\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Keycloak\\Admin\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "php-di/phpdoc-reader": "^2.1"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.8",
+        "phpunit/phpunit": "^8.0"
+    }
+}

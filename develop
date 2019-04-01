@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")"
+
+COMPOSE="docker-compose"
+
+# Is the environment running
+PSRESULT="$(docker ps -q)"
+if [ ! -z "$PSRESULT" ]; then
+    EXEC="yes"
+else
+    EXEC="no"
+fi
+# If we pass any arguments...
+if [ $# -gt 0 ];then
+
+    # if env file is found, source it.
+    if [ -f .env ]; then
+        source .env
+    fi
+
+    # inside a new container
+    if [ "$1" == "start" ]; then
+        $COMPOSE up -d
+
+    # If "test" is used, run unit tests,
+    # pass-thru any extra arguments to php-unit
+    elif [ "$1" == "test" ]; then
+        shift 1
+        $COMPOSE run --rm \
+            -w /var/www/html \
+            php \
+            ./vendor/bin/phpunit "$@"
+
+    # Else, pass-thru args to docker-compose
+    else
+        $COMPOSE "$@"
+    fi
+
+else
+    $COMPOSE ps
+fi

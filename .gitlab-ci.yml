@@ -3,7 +3,7 @@ image: registry.gitlab.com/scito/keycloak-admin:latest
 services:
   - name: selenium/standalone-chrome-debug
     alias: selenium
-  - name: jboss/keycloak:latest
+  - name: jboss/keycloak
     alias: keycloak
 
 variables:
@@ -52,24 +52,3 @@ codestyle:
   allow_failure: true
   script:
     - vendor/squizlabs/php_codesniffer/bin/phpcs --standard=PSR2 --extensions=php src
-
-# staging:
-#   stage: deploy
-#   script:
-#     - php artisan --version
-#   environment:
-#     name: staging
-#     url: http://slits.io
-#   except:
-#     - master
-
-# production:
-#   stage: deploy
-#   script:
-#     - php artisan --version
-#   environment:
-#     name: production
-#     url: http://slits.io
-#   when: manual
-#   only:
-#     - master

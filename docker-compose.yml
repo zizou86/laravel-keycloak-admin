@@ -8,13 +8,13 @@ services:
     volumes:
        - .:/var/www/html
     networks:
-     - network
+     - keycloak_admin_network
   selenium:
     image: selenium/standalone-chrome-debug
     ports:
       - "4444:4444"
     networks:
-      - network
+      - keycloak_admin_network
   keycloak:
     image: jboss/keycloak
     environment:
@@ -24,14 +24,7 @@ services:
     ports:
       - 8080:8080
     networks:
-      - network
+      - keycloak_admin_network
 networks:
-  network:
+  keycloak_admin_network:
     driver: "bridge"
-volumes:
-  mysqldata:
-    driver: "local"
-  mysqldatakeycloak:
-    driver: "local"
-  redisdata:
-    driver: "local"

@@ -21,7 +21,7 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y wget beanstalkd 7.3-fpm 7.3-cli 7.3-gd 7.3-mysql php7.3-bcmath \
        7.3-imap php-memcached 7.3-zip 7.3-mbstring 7.3-xml 7.3-curl 7.3-soap \
-       7.3-sqlite3 \
+       7.3-sqlite3 7.3-xdebug \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && mkdir /run/php \
     && apt-get remove -y --purge software-properties-common \

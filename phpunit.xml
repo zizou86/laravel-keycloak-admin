@@ -26,6 +26,6 @@
         <env name="PASSWORD" value="secret" />
         <env name="GRANT_TYPE" value="password" />
         <env name="DUSK_SCREENSHOT_DIR" value="tests/Browser/screenshots" />
-        <env name="DUSK_BASE_URL" value="http://127.0.0.1:8000" />
+        <env name="DUSK_BASE_URL" value="http://keycloak:8080" />
     </php>
 </phpunit>

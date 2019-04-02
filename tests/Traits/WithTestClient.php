@@ -30,7 +30,7 @@ trait WithTestClient
     protected function makeClient()
     {
         return (new ClientBuilder())
-            ->withRealm($_SERVER['REALM'])
+            ->withRealm($_SERVER['REALM'] ?? null)
             ->withServerUrl($_SERVER['SERVER_URL'])
             ->withClientId($_SERVER['CLIENT_ID'])
             ->withUsername($_SERVER['USERNAME'])

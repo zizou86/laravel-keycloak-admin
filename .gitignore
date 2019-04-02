@@ -3,4 +3,4 @@ vendor
 .php_cs.cache
 .phpunit.result.cache
 etc/screenshots/*
-!etc/screenshots
+!etc/screenshots/.gitkeep

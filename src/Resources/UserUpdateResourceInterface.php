@@ -3,11 +3,13 @@ namespace Keycloak\Admin\Resources;
 
 interface UserUpdateResourceInterface
 {
-    public function username(?string $username): UserUpdateResourceInterface;
+    public function username(?string $username): self;
 
-    public function password(?string $password): UserUpdateResourceInterface;
+    public function password(?string $password): self;
 
-    public function enabled(?bool $enabled): UserUpdateResourceInterface;
+    public function enabled(?bool $enabled): self;
+
+    public function email(?string $email): self;
 
     public function save(): void;
 }

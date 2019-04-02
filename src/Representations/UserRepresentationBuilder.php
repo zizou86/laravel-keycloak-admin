@@ -1,9 +1,10 @@
 <?php
 namespace Keycloak\Admin\Representations;
 
+use function array_key_exists;
+use function in_array;
 use function is_array;
 use Keycloak\Admin\Hydrator\Hydrator;
-use Keycloak\Admin\Hydrator\HydratorInterface;
 
 class UserRepresentationBuilder extends AbstractRepresentationBuilder implements UserRepresentationBuilderInterface
 {
@@ -19,7 +20,29 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
 
     public function withPassword(string $password): UserRepresentationBuilderInterface
     {
+        $this->withPasswordIsTemporary(false);
         return $this->setAttribute('password', $password);
+    }
+
+    public function withTemporaryPassword(string $password): UserRepresentationBuilderInterface
+    {
+        $this->withPasswordIsTemporary(true);
+        $actions = $this->getAttribute('requiredActions', []);
+        if (!in_array('UPDATE_PASSWORD', $actions)) {
+            $actions[] = 'UPDATE_PASSWORD';
+            $this->withRequiredActions($actions);
+        }
+        return $this->setAttribute('password', $password);
+    }
+
+    public function withPasswordIsTemporary(bool $temporary): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('passwordIsTemporary', $temporary);
+    }
+
+    public function withRequiredActions(?array $actions): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('requiredActions', $actions);
     }
 
     public function withEnabled(bool $enabled): UserRepresentationBuilderInterface
@@ -32,9 +55,8 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
         return $this->setAttribute('email', $email);
     }
 
-    public function build(): UserRepresentationInterface
+    private function buildCredentials(&$data)
     {
-        $data = $this->getAttributes();
         if (isset($data['password'])) {
             $password = $data['password'];
             unset($data['password']);
@@ -42,11 +64,24 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
             if (!is_array($data['credentials'])) {
                 $data['credentials'] = [];
             }
-            $data['credentials'][] = [
+
+            $passwordCredential = [
                 'type' => 'password',
                 'value' => $password
             ];
+
+            if (array_key_exists('passwordIsTemporary', $data)) {
+                $passwordCredential['temporary'] = $data['passwordIsTemporary'];
+            }
+
+            $data['credentials'][] = $passwordCredential;
         }
+    }
+
+    public function build(): UserRepresentationInterface
+    {
+        $data = $this->getAttributes();
+        $this->buildCredentials($data);
         $hydrator = new Hydrator();
         return $hydrator->hydrate($data, UserRepresentation::class);
     }

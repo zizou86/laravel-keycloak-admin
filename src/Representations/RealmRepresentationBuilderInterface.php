@@ -3,41 +3,41 @@ namespace Keycloak\Admin\Representations;
 
 interface RealmRepresentationBuilderInterface
 {
-    public function withName(string $name): RealmRepresentationBuilderInterface;
+    public function withName(string $name): self;
 
-    public function withEnabled(bool $enabled): RealmRepresentationBuilderInterface;
+    public function withEnabled(bool $enabled): self;
 
-    public function withDisplayName(string $displayName): RealmRepresentationBuilderInterface;
+    public function withDisplayName(string $displayName): self;
 
-    public function withAccessCodeLifespan(int $accessCodeLifespan): RealmRepresentationBuilderInterface;
+    public function withAccessCodeLifespan(int $accessCodeLifespan): self;
 
-    public function withAccessCodeLifespanLogin(int $accessCodeLifespanLogin): RealmRepresentationBuilderInterface;
+    public function withAccessCodeLifespanLogin(int $accessCodeLifespanLogin): self;
 
-    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction): RealmRepresentationBuilderInterface;
+    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction): self;
 
-    public function withAccessTokenLifespan(int $accessTokenLifespan): RealmRepresentationBuilderInterface;
+    public function withAccessTokenLifespan(int $accessTokenLifespan): self;
 
-    public function withAccessTokenLifespanForImplicitFlow(int $accessTokenLifespanForImplicitFlow): RealmRepresentationBuilderInterface;
+    public function withAccessTokenLifespanForImplicitFlow(int $accessTokenLifespanForImplicitFlow): self;
 
-    public function withAccountTheme(string $accountTheme): RealmRepresentationBuilderInterface;
+    public function withAccountTheme(string $accountTheme): self;
 
-    public function withActionTokenGeneratedByAdminLifespan(int $actionTokenGeneratedByAdminLifespan): RealmRepresentationBuilderInterface;
+    public function withActionTokenGeneratedByAdminLifespan(int $actionTokenGeneratedByAdminLifespan): self;
 
-    public function withActionTokenGeneratedByUserLifespan(int $actionTokenGeneratedByUserLifespan): RealmRepresentationBuilderInterface;
+    public function withActionTokenGeneratedByUserLifespan(int $actionTokenGeneratedByUserLifespan): self;
 
-    public function withAdminEventsDetailsEnabled(bool $adminEventsDetailsEnabled): RealmRepresentationBuilderInterface;
+    public function withAdminEventsDetailsEnabled(bool $adminEventsDetailsEnabled): self;
 
-    public function withAdminEventsEnabled(bool $adminEventsEnabled): RealmRepresentationBuilderInterface;
+    public function withAdminEventsEnabled(bool $adminEventsEnabled): self;
 
-    public function withAdminTheme(string $adminTheme): RealmRepresentationBuilderInterface;
+    public function withAdminTheme(string $adminTheme): self;
 
-    public function withAttributes(?array $attributes): RealmRepresentationBuilderInterface;
+    public function withAttributes(?array $attributes): self;
 
-    public function withBruteForceProtected(bool $bruteForceProtected): RealmRepresentationBuilderInterface;
+    public function withBruteForceProtected(bool $bruteForceProtected): self;
 
-    public function withRememberMe(bool $rememberMe): RealmRepresentationBuilderInterface;
+    public function withRememberMe(bool $rememberMe): self;
 
-    public function withRoles($roles): RealmRepresentationBuilderInterface;
+    public function withRoles($roles): self;
 
     public function build(): RealmRepresentationInterface;
 }

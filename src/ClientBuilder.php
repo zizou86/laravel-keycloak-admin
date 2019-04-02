@@ -7,10 +7,8 @@ use Keycloak\Admin\Guzzle\DefaultHeadersMiddleware;
 use Keycloak\Admin\Guzzle\TokenMiddleware;
 use Keycloak\Admin\Hydrator\Hydrator;
 use Keycloak\Admin\Resources\ResourceFactory;
-use Keycloak\Admin\Resources\ResourceFactoryBuilder;
 use Keycloak\Admin\Token\TokenManager;
 use GuzzleHttp\Client as GuzzleClient;
-use PhpDocReader\PhpDocReader;
 
 class ClientBuilder
 {

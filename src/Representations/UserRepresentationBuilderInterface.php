@@ -3,13 +3,21 @@ namespace Keycloak\Admin\Representations;
 
 interface UserRepresentationBuilderInterface
 {
-    public function withUsername(string $username): UserRepresentationBuilderInterface;
+    public function withId(string $id): self;
 
-    public function withEmail(string $email): UserRepresentationBuilderInterface;
+    public function withUsername(string $username): self;
 
-    public function withPassword(string $password): UserRepresentationBuilderInterface;
+    public function withEmail(string $email): self;
 
-    public function withEnabled(bool $enabled): UserRepresentationBuilderInterface;
+    public function withPassword(string $password): self;
+
+    public function withTemporaryPassword(string $password): self;
+
+    public function withPasswordIsTemporary(bool $temporary): self;
+
+    public function withRequiredActions(?array $actions): self;
+
+    public function withEnabled(bool $enabled): self;
 
     public function build(): UserRepresentationInterface;
 }

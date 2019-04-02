@@ -24,6 +24,9 @@
     },
     "require-dev": {
         "fzaninotto/faker": "^1.8",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^8.0",
+        "laravel/dusk": "^6.0@dev",
+        "symfony/filesystem": "^4.3@dev",
+        "symfony/finder": "^4.3@dev"
     }
 }

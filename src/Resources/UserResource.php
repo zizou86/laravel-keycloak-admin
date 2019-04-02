@@ -3,7 +3,6 @@ namespace Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use Keycloak\Admin\Exceptions\CannotRetrieveUserException;
-use Keycloak\Admin\Exceptions\CannotRetrieveUsersException;
 use Keycloak\Admin\Hydrator\HydratorInterface;
 use Keycloak\Admin\Representations\UserRepresentationInterface;
 use Keycloak\Admin\Representations\UserRepresentation;
@@ -26,13 +25,23 @@ class UserResource implements UserResourceInterface
      * @var HydratorInterface
      */
     private $hydrator;
+    /**
+     * @var ResourceFactoryInterface
+     */
+    private $resourceFactory;
 
-    public function __construct(ClientInterface $client, HydratorInterface $hydrator, string $realm, string $id)
-    {
+    public function __construct(
+        ClientInterface $client,
+        ResourceFactoryInterface $resourceFactory,
+        HydratorInterface $hydrator,
+        string $realm,
+        string $id
+    ) {
         $this->client = $client;
         $this->realm = $realm;
         $this->id = $id;
         $this->hydrator = $hydrator;
+        $this->resourceFactory = $resourceFactory;
     }
 
     public function toRepresentation(): UserRepresentationInterface
@@ -53,8 +62,9 @@ class UserResource implements UserResourceInterface
         // TODO: Implement roles() method.
     }
 
-    public function update(?array $options): UserUpdateResourceInterface
+    public function update(?array $options = null): UserUpdateResourceInterface
     {
-        // TODO: Implement update() method.
+        return $this->resourceFactory
+            ->createUserUpdateResource($this->realm, $this->id);
     }
 }

@@ -2,8 +2,6 @@
 namespace Keycloak\Admin\Representations;
 
 use function array_key_exists;
-use function is_array;
-use function json_encode;
 
 abstract class AbstractRepresentationBuilder
 {

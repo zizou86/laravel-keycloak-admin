@@ -6,12 +6,11 @@ use Keycloak\Admin\Representations\RoleRepresentationBuilder;
 use Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
 use Keycloak\Admin\Representations\RoleRepresentationInterface;
 use Keycloak\Admin\Resources\RolesResourceInterface;
-use Keycloak\Admin\Tests\Traits\WithFaker;
-use Keycloak\Admin\Tests\Traits\WithTestClient;
+use Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
 
 class RolesResourceTest extends TestCase
 {
-    use WithFaker, WithTestClient;
+    use WithTemporaryRealm;
 
     /**
      * @var RolesResourceInterface
@@ -26,7 +25,7 @@ class RolesResourceTest extends TestCase
     {
         parent::setUp();
         $this->builder = new RoleRepresentationBuilder();
-        $this->resource = $this->client->realm('master')->roles();
+        $this->resource = $this->client->realm($this->temporaryRealm)->roles();
     }
 
     /**
@@ -36,7 +35,7 @@ class RolesResourceTest extends TestCase
     {
         $role = $this
             ->resource
-            ->get('admin')
+            ->get('offline_access')
             ->toRepresentation();
 
         $this->assertInstanceOf(RoleRepresentationInterface::class, $role);
@@ -54,11 +53,10 @@ class RolesResourceTest extends TestCase
 
         /* @var RoleRepresentationInterface $adminRole */
         $adminRole = $roles->first(function(RoleRepresentationInterface $role) {
-            return 'admin' == $role->getName();
+            return 'offline_access' == $role->getName();
         }, false);
 
         $this->assertInstanceOf(RoleRepresentationInterface::class, $adminRole);
-        $this->assertEquals('${role_admin}', $adminRole->getDescription());
         $matches = filter_var(preg_match('/^([a-z0-9\-]){36}$/', $adminRole->getId()), FILTER_VALIDATE_BOOLEAN);
         $this->assertTrue($matches);
     }
@@ -75,7 +73,6 @@ class RolesResourceTest extends TestCase
     }
 
     /**
-     * @depends roles_can_be_retrieved
      * @test
      */
     public function roles_can_be_created() {

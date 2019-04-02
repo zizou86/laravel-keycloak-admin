@@ -16,8 +16,8 @@ class RealmCreateResource implements RealmCreateResourceInterface
 
     public function __construct(
         RealmsResourceInterface $realmsResource,
-        RealmRepresentationBuilder $builder)
-    {
+        RealmRepresentationBuilder $builder
+    ) {
         $this->realmsResource = $realmsResource;
         $this->builder = $builder;
     }

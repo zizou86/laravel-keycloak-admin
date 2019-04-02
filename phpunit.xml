@@ -25,7 +25,7 @@
         <env name="USERNAME" value="admin" />
         <env name="PASSWORD" value="secret" />
         <env name="GRANT_TYPE" value="password" />
-        <env name="DUSK_SCREENSHOT_DIR" value="var/screenshots" />
+        <env name="DUSK_SCREENSHOT_DIR" value="etc/screenshots" />
         <env name="DUSK_BASE_URL" value="http://127.0.0.1:8000" />
     </php>
 </phpunit>

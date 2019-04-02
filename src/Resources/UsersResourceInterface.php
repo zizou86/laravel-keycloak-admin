@@ -1,7 +1,6 @@
 <?php
 namespace Keycloak\Admin\Resources;
 
-use Keycloak\Admin\Representations\UserRepresentation;
 use Keycloak\Admin\Representations\UserRepresentationInterface;
 
 interface UsersResourceInterface
@@ -21,9 +20,9 @@ interface UsersResourceInterface
     public function update(UserRepresentationInterface $user): void;
 
     /**
-     * @return UsersSearchResourceInterface
+     * @return UserSearchResourceInterface
      */
-    public function search(): UsersSearchResourceInterface;
+    public function search(): UserSearchResourceInterface;
 
     public function create(?array $options = null): UserCreateResourceInterface;
 }

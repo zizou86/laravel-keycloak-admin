@@ -41,7 +41,7 @@ class ResourceFactory implements ResourceFactoryInterface
 
     public function createUserResource(string $realm, string $id): UserResourceInterface
     {
-        return new UserResource($this->client, $this->hydrator, $realm, $id);
+        return new UserResource($this->client, $this, $this->hydrator, $realm, $id);
     }
 
     public function createRolesResource(string $realm): RolesResourceInterface
@@ -59,16 +59,23 @@ class ResourceFactory implements ResourceFactoryInterface
         return new ClientsResource();
     }
 
-    public function createUsersSearchResource(string $realm): UsersSearchResourceInterface
+    public function createUserSearchResource(string $realm): UserSearchResourceInterface
     {
-        return new UsersSearchResource($this->client, $this, $this->hydrator, $realm);
+        return new UserSearchResource($this->client, $this, $this->hydrator, $realm);
     }
 
-    public function createUsersCreateResource(string $realm): UserCreateResourceInterface
+    public function createUserCreateResource(string $realm): UserCreateResourceInterface
     {
         $usersResource = $this->createUsersResource($realm);
         return new UserCreateResource($usersResource, new UserRepresentationBuilder());
     }
+
+    public function createUserUpdateResource(string $realm, string $id): UserUpdateResourceInterface
+    {
+        $usersResource = $this->createUsersResource($realm);
+        return new UserUpdateResource($usersResource, new UserRepresentationBuilder(), $realm, $id);
+    }
+
 
     public function createRoleResource(string $realm, string $role)
     {

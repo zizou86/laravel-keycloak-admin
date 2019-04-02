@@ -3,11 +3,12 @@ namespace Keycloak\Admin\Tests;
 
 use Keycloak\Admin\Representations\RealmRepresentationInterface;
 use Keycloak\Admin\Tests\Traits\WithFaker;
+use Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
 use Keycloak\Admin\Tests\Traits\WithTestClient;
 
 class RealmResourceTest extends TestCase
 {
-    use WithFaker, WithTestClient;
+    use WithTemporaryRealm;
 
     protected function setUp(): void
     {
@@ -19,7 +20,7 @@ class RealmResourceTest extends TestCase
      */
     public function realm_details_can_be_retrieved()
     {
-        $realm = $this->client->realm('master')->toRepresentation();
+        $realm = $this->client->realm($this->temporaryRealm)->toRepresentation();
 
         $this->assertInstanceOf(RealmRepresentationInterface::class, $realm);
     }

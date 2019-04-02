@@ -3,15 +3,15 @@ namespace Keycloak\Admin\Representations;
 
 interface RoleRepresentationBuilderInterface
 {
-    public function withName(string $name): RoleRepresentationBuilderInterface;
+    public function withName(string $name): self;
 
-    public function withDescription(string $description): RoleRepresentationBuilderInterface;
+    public function withDescription(string $description): self;
 
-    public function withClientRole(bool $isClientRole): RoleRepresentationBuilderInterface;
+    public function withClientRole(bool $isClientRole): self;
 
-    public function withComposite(bool $composite): RoleRepresentationBuilderInterface;
+    public function withComposite(bool $composite): self;
 
-    public function withContainerId(string $containerId): RoleRepresentationBuilderInterface;
+    public function withContainerId(string $containerId): self;
 
     public function build(): RoleRepresentationInterface;
 }

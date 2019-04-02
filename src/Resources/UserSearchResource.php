@@ -1,10 +1,8 @@
 <?php
 namespace Keycloak\Admin\Resources;
 
-use ArrayObject;
 use GuzzleHttp\ClientInterface;
 use function http_build_query;
-use function is_array;
 use function json_decode;
 use Keycloak\Admin\Exceptions\CannotRetrieveUsersException;
 use Keycloak\Admin\Hydrator\HydratorInterface;
@@ -12,7 +10,7 @@ use Keycloak\Admin\Representations\RepresentationCollection;
 use Keycloak\Admin\Representations\UserRepresentation;
 use RuntimeException;
 
-class UsersSearchResource implements UsersSearchResourceInterface
+class UserSearchResource implements UserSearchResourceInterface
 {
     use SearchableResource;
 
@@ -28,74 +26,70 @@ class UsersSearchResource implements UsersSearchResourceInterface
      * @var string
      */
     private $realm;
-
-    private $offset;
-
-    private $limit;
-
-    private $username;
-
-    private $email;
-
-    private $lastName;
-
-    private $firstName;
-
-    private $briefRepresentation;
-
-    private $query;
     /**
      * @var HydratorInterface
      */
     private $hydrator;
 
 
-    public function __construct(ClientInterface $client, ResourceFactoryInterface $resourceFactory, HydratorInterface $hydrator, string $realm)
-    {
+    public function __construct(
+        ClientInterface $client,
+        ResourceFactoryInterface $resourceFactory,
+        HydratorInterface $hydrator,
+        string $realm
+    ) {
         $this->client = $client;
         $this->resourceFactory = $resourceFactory;
         $this->realm = $realm;
         $this->hydrator = $hydrator;
     }
 
-    public function offset(int $offset = null): UsersSearchResourceInterface
+    public function offset(int $offset = null): UserSearchResourceInterface
     {
-        return $this->withSearchOption('first', $offset);
+        $this->withSearchOption('first', $offset);
+        return $this;
     }
 
-    public function limit(int $limit = null): UsersSearchResourceInterface
+    public function limit(int $limit = null): UserSearchResourceInterface
     {
-        return $this->withSearchOption('max', $limit);
+        $this->withSearchOption('max', $limit);
+        return $this;
     }
 
-    public function lastName(string $lastName): UsersSearchResourceInterface
+    public function lastName(string $lastName): UserSearchResourceInterface
     {
-        return $this->withSearchOption('lastName', $lastName);
+        $this->withSearchOption('lastName', $lastName);
+        return $this;
     }
 
-    public function firstName(string $firstName): UsersSearchResourceInterface
+    public function firstName(string $firstName): UserSearchResourceInterface
     {
-        return $this->withSearchOption('firstName', $firstName);
+        $this->withSearchOption('firstName', $firstName);
+        return $this;
     }
 
-    public function email(string $email): UsersSearchResourceInterface
+    public function email(string $email): UserSearchResourceInterface
     {
-        return $this->withSearchOption('email', $email);
+        $this->withSearchOption('email', $email);
+        return $this;
     }
 
-    public function username(string $username): UsersSearchResourceInterface
+    public function username(string $username): UserSearchResourceInterface
     {
-        return $this->withSearchOption('username', $username);
+        $this->withSearchOption('username', $username);
+        return $this;
     }
 
-    public function briefRepresentation(bool $briefRepresentation): UsersSearchResourceInterface
+    public function briefRepresentation(bool $briefRepresentation): UserSearchResourceInterface
     {
-        return $this->withSearchOption('briefRepresentation', $briefRepresentation);
+        $this->withSearchOption('briefRepresentation', $briefRepresentation);
+        return $this;
     }
 
-    public function query(string $query): UsersSearchResourceInterface
+    public function query(string $query): UserSearchResourceInterface
     {
-        return $this->withSearchOption('search', $query);
+        $this->withSearchOption('search', $query);
+        return $this;
     }
 
     public function __call($name, $arguments)

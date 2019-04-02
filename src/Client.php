@@ -23,7 +23,7 @@ class Client
 
     private function checkDefaultRealm()
     {
-        if(null === $this->defaultRealm) {
+        if (null === $this->defaultRealm) {
             throw new DefaultRealmMissingException("The default realm is not set");
         }
         return $this->defaultRealm;

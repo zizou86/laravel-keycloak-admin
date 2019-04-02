@@ -7,10 +7,9 @@ trait SearchableResource
 {
     protected $searchOptions = [];
 
-    protected function withSearchOption($key, $value): self
+    protected function withSearchOption($key, $value): void
     {
         $this->searchOptions[$key] = $value;
-        return $this;
     }
 
     protected function getSearchOption($key, $default = null)

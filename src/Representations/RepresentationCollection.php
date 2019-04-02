@@ -7,7 +7,6 @@ use ArrayObject;
 use function call_user_func;
 use function is_callable;
 use function iterator_to_array;
-use Traversable;
 
 class RepresentationCollection implements RepresentationCollectionInterface
 {
@@ -66,7 +65,7 @@ class RepresentationCollection implements RepresentationCollectionInterface
     public function first(?callable $callback = null, $default = false)
     {
         if (!is_callable($callback)) {
-            return reset($this->items);
+            return count($this->items) > 0 ? reset($this->items) : $default;
         }
         foreach ($this->getIterator() as $item) {
             if (call_user_func($callback, $item)) {

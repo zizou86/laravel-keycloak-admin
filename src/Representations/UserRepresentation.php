@@ -18,6 +18,7 @@ class UserRepresentation extends AbstractRepresentation implements UserRepresent
      * @param bool $enabled
      * @param bool $emailVerified
      * @param Attribute[] $attributes
+     * @param string[] $requiredActions
      * @param DateTime $created
      */
     public function __construct(
@@ -30,6 +31,7 @@ class UserRepresentation extends AbstractRepresentation implements UserRepresent
         bool $enabled = false,
         bool $emailVerified = false,
         array $attributes = [],
+        array $requiredActions = [],
         DateTime $created = null
     ) {
         $this->setAttributes(get_defined_vars());
@@ -73,5 +75,10 @@ class UserRepresentation extends AbstractRepresentation implements UserRepresent
     public function getCredentials(): array
     {
         return $this->getAttribute('credentials', []);
+    }
+
+    public function getRequiredActions()
+    {
+        return $this->getAttribute('requiredActions', []);
     }
 }

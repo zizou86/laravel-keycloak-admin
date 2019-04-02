@@ -1,10 +1,12 @@
 <?php
 namespace Keycloak\Admin\Resources;
 
-use Keycloak\Admin\Representations\UserRepresentation;
 use Keycloak\Admin\Representations\UserRepresentationBuilderInterface;
-use function var_dump;
 
+/**
+ * Class UserCreateResource
+ * @package Keycloak\Admin\Resources
+ */
 class UserCreateResource extends AbstractCreateResource implements UserCreateResourceInterface
 {
     /**
@@ -44,6 +46,24 @@ class UserCreateResource extends AbstractCreateResource implements UserCreateRes
     public function password(string $password): UserCreateResourceInterface
     {
         $this->builder->withPassword($password);
+        return $this;
+    }
+
+    public function temporaryPassword(string $password): UserCreateResourceInterface
+    {
+        $this->builder->withTemporaryPassword($password);
+        return $this;
+    }
+
+    public function passwordIsTemporary(bool $temporary): UserCreateResourceInterface
+    {
+        $this->builder->withPasswordIsTemporary($temporary);
+        return $this;
+    }
+
+    public function requiredActions(?array $actions): UserCreateResourceInterface
+    {
+        $this->builder->withRequiredActions($actions);
         return $this;
     }
 

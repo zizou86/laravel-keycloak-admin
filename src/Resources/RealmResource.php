@@ -3,11 +3,11 @@ namespace Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use function json_decode;
+use Keycloak\Admin\Exceptions\CannotDeleteRealmException;
 use Keycloak\Admin\Exceptions\CannotRetrieveRealmRepresentationException;
 use Keycloak\Admin\Hydrator\HydratorInterface;
 use Keycloak\Admin\Representations\RealmRepresentation;
 use Keycloak\Admin\Representations\RealmRepresentationInterface;
-use function var_dump;
 
 class RealmResource implements RealmResourceInterface
 {
@@ -25,8 +25,12 @@ class RealmResource implements RealmResourceInterface
      */
     private $hydrator;
 
-    public function __construct(ClientInterface $client, ResourceFactoryInterface $resourceFactory, HydratorInterface $hydrator, string $realm)
-    {
+    public function __construct(
+        ClientInterface $client,
+        ResourceFactoryInterface $resourceFactory,
+        HydratorInterface $hydrator,
+        string $realm
+    ) {
         $this->resourceFactory = $resourceFactory;
         $this->client = $client;
         $this->realm = $realm;
@@ -43,7 +47,7 @@ class RealmResource implements RealmResourceInterface
     {
         $response = $this->client->get("/auth/admin/realms/{$this->realm}");
 
-        if(200 !== $response->getStatusCode()) {
+        if (200 !== $response->getStatusCode()) {
             throw new CannotRetrieveRealmRepresentationException("Cannot retrieve details of realm $this->realm");
         }
 
@@ -78,6 +82,10 @@ class RealmResource implements RealmResourceInterface
 
     public function delete(): void
     {
-        // TODO: Implement delete() method.
+        $response = $this->client->delete("/auth/admin/realms/{$this->realm}");
+
+        if (204 !== $response->getStatusCode()) {
+            throw new CannotDeleteRealmException("The realm [$this->realm] cannot be deleted");
+        }
     }
 }

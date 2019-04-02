@@ -1,18 +1,14 @@
 <?php
 namespace Keycloak\Admin\Resources;
 
-use GuzzleHttp\ClientInterface;
+use Keycloak\Admin\Representations\UserRepresentationBuilderInterface;
 
 class UserUpdateResource implements UserUpdateResourceInterface
 {
     /**
-     * @var ClientInterface
+     * @var UsersResourceInterface
      */
-    private $client;
-    /**
-     * @var UserResourceInterface
-     */
-    private $userResource;
+    private $usersResource;
     /**
      * @var string
      */
@@ -21,32 +17,51 @@ class UserUpdateResource implements UserUpdateResourceInterface
      * @var string
      */
     private $id;
+    /**
+     * @var UserRepresentationBuilderInterface
+     */
+    private $builder;
 
-    public function __construct(ClientInterface $client, UserResourceInterface $userResource, string $realm, string $id)
-    {
-        $this->client = $client;
-        $this->userResource = $userResource;
+    public function __construct(
+        UsersResourceInterface $usersResource,
+        UserRepresentationBuilderInterface $builder,
+        string $realm,
+        string $id
+    ) {
+        $this->usersResource = $usersResource;
         $this->realm = $realm;
         $this->id = $id;
+        $this->builder = $builder;
     }
 
     public function username(?string $username): UserUpdateResourceInterface
     {
-        // TODO: Implement username() method.
+        $this->builder->withUsername($username);
+        return $this;
     }
 
     public function password(?string $password): UserUpdateResourceInterface
     {
-        // TODO: Implement password() method.
+        $this->builder->withPassword($password);
+        return $this;
     }
 
     public function enabled(?bool $enabled): UserUpdateResourceInterface
     {
-        // TODO: Implement enabled() method.
+        $this->builder->withEnabled($enabled);
+        return $this;
+    }
+
+    public function email(?string $email): UserUpdateResourceInterface
+    {
+        $this->builder->withEmail($email);
+        return $this;
     }
 
     public function save(): void
     {
-        // TODO: Implement save() method.
+        $this->builder->withId($this->id);
+        $user = $this->builder->build();
+        $this->usersResource->update($user);
     }
 }

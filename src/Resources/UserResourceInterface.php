@@ -11,5 +11,5 @@ interface UserResourceInterface
      */
     public function roles();
 
-    public function update(?array $options): UserUpdateResourceInterface;
+    public function update(?array $options = null): UserUpdateResourceInterface;
 }

@@ -2,21 +2,14 @@
 
 namespace Keycloak\Admin\Resources;
 
-use function array_filter;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use function http_build_query;
-use function iterator_to_array;
-use function json_decode;
 use Keycloak\Admin\Exceptions\CannotCreateUserException;
 use Keycloak\Admin\Exceptions\CannotDeleteUserException;
 use Keycloak\Admin\Exceptions\CannotUpdateUserException;
 use Keycloak\Admin\Exceptions\UnknownUserException;
-use Keycloak\Admin\Exceptions\CannotRetrieveUsersException;
 use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\UserRepresentation;
 use Keycloak\Admin\Representations\UserRepresentationInterface;
-use function var_dump;
 
 class UsersResource implements UsersResourceInterface
 {
@@ -33,8 +26,12 @@ class UsersResource implements UsersResourceInterface
 
     private $hydrator;
 
-    public function __construct(ClientInterface $client, ResourceFactoryInterface $resourceFactory, HydratorInterface $hydrator, string $realm)
-    {
+    public function __construct(
+        ClientInterface $client,
+        ResourceFactoryInterface $resourceFactory,
+        HydratorInterface $hydrator,
+        string $realm
+    ) {
         $this->client = $client;
         $this->realm = $realm;
         $this->hydrator = $hydrator;
@@ -91,6 +88,7 @@ class UsersResource implements UsersResourceInterface
     {
         $data = $this->hydrator->extract($user);
         unset($data['id'], $data['created']);
+
         $response = $this->client->post("/auth/admin/realms/{$this->realm}/users", [
             'body' => json_encode($data)
         ]);
@@ -106,7 +104,7 @@ class UsersResource implements UsersResourceInterface
      */
     public function create(?array $options = null): UserCreateResourceInterface
     {
-        $builderResource = $this->resourceFactory->createUsersCreateResource($this->realm);
+        $builderResource = $this->resourceFactory->createUserCreateResource($this->realm);
         if (null !== $options) {
             foreach ($options as $key => $value) {
                 $builderResource->$key($value);
@@ -146,11 +144,11 @@ class UsersResource implements UsersResourceInterface
             ->createUserResource($this->realm, $id);
     }
 
-    public function search(array $options = []): UsersSearchResourceInterface
+    public function search(array $options = []): UserSearchResourceInterface
     {
         $searchResource = $this
             ->resourceFactory
-            ->createUsersSearchResource($this->realm);
+            ->createUserSearchResource($this->realm);
 
         foreach ($options as $k => $v) {
             $searchResource->$k($v);

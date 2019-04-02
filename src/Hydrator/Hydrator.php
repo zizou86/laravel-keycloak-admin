@@ -1,7 +1,6 @@
 <?php
 namespace Keycloak\Admin\Hydrator;
 
-use function func_get_args;
 use function is_array;
 use function is_object;
 use Keycloak\Admin\Exceptions\AnnotationException;
@@ -101,7 +100,11 @@ class Hydrator implements HydratorInterface
         }
 
         $namespace = preg_quote($class->getNamespaceName());
-        $content = preg_replace('/^.*?(\bnamespace\s+' . $namespace . '\s*[;{].*)$/s', '\\1', $content);
+        $content = preg_replace(
+            '/^.*?(\bnamespace\s+' . $namespace . '\s*[;{].*)$/s',
+            '\\1',
+            $content
+        );
         $tokenizer = new \PhpDocReader\PhpParser\TokenParser('<?php ' . $content);
 
         $statements = $tokenizer->parseUseStatements($class->getNamespaceName());
@@ -110,8 +113,8 @@ class Hydrator implements HydratorInterface
     }
 
     /**
-     * Attempts to resolve the FQN of the provided $type based on the $class and $member context, specifically searching
-     * through the traits that are used by the provided $class.
+     * Attempts to resolve the FQN of the provided $type based on the $class and $member context, specifically
+     * searching through the traits that are used by the provided $class.
      *
      * @param string $type
      * @param ReflectionClass $class
@@ -136,7 +139,9 @@ class Hydrator implements HydratorInterface
                 continue;
             } elseif ($member instanceof ReflectionMethod && !$trait->hasMethod($member->name)) {
                 continue;
-            } elseif ($member instanceof ReflectionParameter && !$trait->hasMethod($member->getDeclaringFunction()->name)) {
+            } elseif ($member instanceof ReflectionParameter &&
+                !$trait->hasMethod($member->getDeclaringFunction()->name)
+            ) {
                 continue;
             }
 
@@ -234,7 +239,7 @@ class Hydrator implements HydratorInterface
      * @throws AnnotationException
      * @return array Type of the property (content of var annotation)
      */
-    public function getParameterClass(ReflectionParameter $parameter)
+    public function getParameterType(ReflectionParameter $parameter)
     {
         // Use reflection
         $parameterClass = $parameter->getClass();
@@ -245,7 +250,8 @@ class Hydrator implements HydratorInterface
         $parameterName = $parameter->name;
         // Get the content of the @param annotation
         $method = $parameter->getDeclaringFunction();
-        if (!preg_match('/@param\s+([^\s]+)\s+\$' . $parameterName . '/', $method->getDocComment(), $matches)) {
+        $comment = $method->getDocComment();
+        if (!preg_match('/@param\s+([^\s]+)\s+\$' . $parameterName . '/', $comment, $matches)) {
             return [null, false];
         }
 
@@ -253,14 +259,13 @@ class Hydrator implements HydratorInterface
 
         $isArray = substr($type, -2) == '[]';
 
-
         if ($isArray) {
             $type = substr($type, 0, -2);
         }
 
         // Ignore primitive types
         if (in_array($type, $this->primitiveTypes)) {
-            return [null, false];
+            return [$type, $isArray];
         }
 
         $class = $parameter->getDeclaringClass();
@@ -305,10 +310,15 @@ class Hydrator implements HydratorInterface
         if (null === $value) {
             return [];
         }
+
         if (is_array($value) || $value instanceof Traversable) {
             $result = [];
             foreach ($value as $k => $v) {
-                $result[$k] = $this->hydrate($v, $class);
+                if (is_array($v)) {
+                    $result[$k] = $this->hydrate($v, $class);
+                } else {
+                    $result[$k] = $v;
+                }
             }
             return $result;
         }
@@ -346,7 +356,7 @@ class Hydrator implements HydratorInterface
         $args = [];
 
         foreach ($method->getParameters() as $parameter) {
-            [$type, $isArray] = $this->getParameterClass($parameter);
+            [$type, $isArray] = $this->getParameterType($parameter);
             $args[] = $this->resolveParameter($parameter, $data, $type, $isArray);
         }
 

@@ -1,7 +1,6 @@
 <?php
 namespace Keycloak\Admin\Token;
 
-use Carbon\Carbon;
 use function date_create;
 use DateInterval;
 use GuzzleHttp\Client;

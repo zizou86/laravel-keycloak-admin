@@ -20,27 +20,32 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
         return $this->setAttribute('displayName', $displayName);
     }
 
-    public function withAccessCodeLifespan(int $accessCodeLifespan): RealmRepresentationBuilderInterface
+    public function withAccessCodeLifespan(int $accessCodeLifespan)
+        : RealmRepresentationBuilderInterface
     {
         return $this->setAttribute('accessCodeLifespan', $accessCodeLifespan);
     }
 
-    public function withAccessCodeLifespanLogin(int $accessCodeLifespanLogin): RealmRepresentationBuilderInterface
+    public function withAccessCodeLifespanLogin(int $accessCodeLifespanLogin)
+        : RealmRepresentationBuilderInterface
     {
         return $this->setAttribute('accessCodeLifespanLogin', $accessCodeLifespanLogin);
     }
 
-    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction): RealmRepresentationBuilderInterface
+    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction)
+        : RealmRepresentationBuilderInterface
     {
         return $this->setAttribute('accessCodeLifespanUserAction', $accessCodeLifespanUserAction);
     }
 
-    public function withAccessTokenLifespan(int $accessTokenLifespan): RealmRepresentationBuilderInterface
+    public function withAccessTokenLifespan(int $accessTokenLifespan)
+        : RealmRepresentationBuilderInterface
     {
         return $this->setAttribute('accessTokenLifespan', $accessTokenLifespan);
     }
 
-    public function withAccessTokenLifespanForImplicitFlow(int $accessTokenLifespanForImplicitFlow): RealmRepresentationBuilderInterface
+    public function withAccessTokenLifespanForImplicitFlow(int $accessTokenLifespanForImplicitFlow)
+        : RealmRepresentationBuilderInterface
     {
         return $this->setAttribute('accessTokenLifespanForImplicitFlow', $accessTokenLifespanForImplicitFlow);
     }
@@ -50,17 +55,20 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
         return $this->setAttribute('accountTheme', $accountTheme);
     }
 
-    public function withActionTokenGeneratedByAdminLifespan(int $actionTokenGeneratedByAdminLifespan): RealmRepresentationBuilderInterface
+    public function withActionTokenGeneratedByAdminLifespan(int $actionTokenGeneratedByAdminLifespan)
+        : RealmRepresentationBuilderInterface
     {
         return $this->setAttribute('actionTokenGeneratedByAdminLifespan', $actionTokenGeneratedByAdminLifespan);
     }
 
-    public function withActionTokenGeneratedByUserLifespan(int $actionTokenGeneratedByUserLifespan): RealmRepresentationBuilderInterface
+    public function withActionTokenGeneratedByUserLifespan(int $actionTokenGeneratedByUserLifespan)
+        : RealmRepresentationBuilderInterface
     {
         // TODO: Implement withActionTokenGeneratedByUserLifespan() method.
     }
 
-    public function withAdminEventsDetailsEnabled(bool $adminEventsDetailsEnabled): RealmRepresentationBuilderInterface
+    public function withAdminEventsDetailsEnabled(bool $adminEventsDetailsEnabled)
+        : RealmRepresentationBuilderInterface
     {
         return $this->setAttribute('adminEventsDetailsEnabled', $adminEventsDetailsEnabled);
     }

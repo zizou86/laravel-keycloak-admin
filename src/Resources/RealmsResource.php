@@ -21,8 +21,11 @@ class RealmsResource implements RealmsResourceInterface
      */
     private $hydrator;
 
-    public function __construct(ClientInterface $client, ResourceFactoryInterface $resourceFactory, HydratorInterface $hydrator)
-    {
+    public function __construct(
+        ClientInterface $client,
+        ResourceFactoryInterface $resourceFactory,
+        HydratorInterface $hydrator
+    ) {
         $this->client = $client;
         $this->resourceFactory = $resourceFactory;
         $this->hydrator = $hydrator;
@@ -31,8 +34,8 @@ class RealmsResource implements RealmsResourceInterface
     public function create(?array $options = null): RealmCreateResourceInterface
     {
         $createResource = $this->resourceFactory->createRealmCreateResource();
-        if(null !== $options) {
-            foreach($options as $key => $value) {
+        if (null !== $options) {
+            foreach ($options as $key => $value) {
                 $createResource->$key($value);
             }
         }
@@ -56,7 +59,7 @@ class RealmsResource implements RealmsResourceInterface
             'body' => json_encode($data)
         ]);
 
-        if(201 !== $response->getStatusCode()) {
+        if (201 !== $response->getStatusCode()) {
             throw new CannotCreateRealmException("Cannot create realm $data[realm]");
         }
     }

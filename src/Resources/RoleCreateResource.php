@@ -18,8 +18,11 @@ class RoleCreateResource implements RoleCreateResourceInterface
      */
     private $builder;
 
-    public function __construct(RolesResourceInterface $rolesResource, RoleRepresentationBuilderInterface $builder, string $realm)
-    {
+    public function __construct(
+        RolesResourceInterface $rolesResource,
+        RoleRepresentationBuilderInterface $builder,
+        string $realm
+    ) {
         $this->rolesResource = $rolesResource;
         $this->realm = $realm;
         $this->builder = $builder;

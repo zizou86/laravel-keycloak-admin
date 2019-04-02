@@ -34,11 +34,22 @@ interface ResourceFactoryInterface
 
     /**
      * @param string $realm
-     * @return UsersSearchResourceInterface
+     * @return UserSearchResourceInterface
      */
-    public function createUsersSearchResource(string $realm): UsersSearchResourceInterface;
+    public function createUserSearchResource(string $realm): UserSearchResourceInterface;
 
-    public function createUsersCreateResource(string $realm): UserCreateResourceInterface;
+    /**
+     * @param string $realm
+     * @return UserCreateResourceInterface
+     */
+    public function createUserCreateResource(string $realm): UserCreateResourceInterface;
+
+    /**
+     * @param string $realm
+     * @param string $id
+     * @return UserUpdateResourceInterface
+     */
+    public function createUserUpdateResource(string $realm, string $id): UserUpdateResourceInterface;
 
     /**
      * @param string $realm

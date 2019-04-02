@@ -39,6 +39,11 @@ phpunit:
     - composer
   script:
     - vendor/phpunit/phpunit/phpunit --coverage-text --colors=never
+  artifacts:
+    paths:
+      - ./tests/Browser/screenshots
+    expire_in: 7 days
+    when: always
 
 codestyle:
   stage: test

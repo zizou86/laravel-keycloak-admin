@@ -61,7 +61,7 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
             $password = $data['password'];
             unset($data['password']);
 
-            if (!is_array($data['credentials'])) {
+            if (!isset($data['credentials']) || !is_array($data['credentials'])) {
                 $data['credentials'] = [];
             }
 

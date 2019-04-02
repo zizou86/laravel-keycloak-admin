@@ -1,9 +1,9 @@
 image: registry.gitlab.com/scito/keycloak-admin:latest
 
 services:
-  - name: selenium/standalone-chrome-debug
+  - name: selenium/standalone-chrome-debug:latest
     alias: selenium
-  - name: jboss/keycloak
+  - name: jboss/keycloak:latest
     alias: keycloak
 
 variables:

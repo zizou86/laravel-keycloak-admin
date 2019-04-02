@@ -30,6 +30,16 @@ class LoginTest extends TestCase
             ->save();
 
         $this->browse(function(Browser $browser) use ($username, $email, $password) {
+
+            $browser->visit('http://keycloak/auth/realms')
+                ->screenshot('test-page.png');
+
+            $browser->visit('http://keycloak:8080/auth/realms')
+                ->screenshot('test-page-2.png');
+
+            $browser->visit('http://www.google.com')
+                ->screenshot('google.png');
+
             $browser->visit("http://keycloak:8080/auth/realms/{$this->temporaryRealm}/account")
                 ->type('username', $username)
                 ->type('password', $password)

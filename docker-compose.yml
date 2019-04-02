@@ -1,7 +1,10 @@
 version: '3.7'
 services:
-  php:
-    image: php:7.3-cli
+  app:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    image: keycloak-admin/app
     volumes:
        - .:/var/www/html
     networks:

@@ -3,5 +3,5 @@ namespace Keycloak\Admin\Representations;
 
 interface RealmRepresentationInterface
 {
-
+    
 }

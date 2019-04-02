@@ -1,8 +1,6 @@
 <?php
 namespace Keycloak\Admin\Representations;
 
-use function array_key_exists;
-
 abstract class AbstractRepresentationBuilder
 {
     protected $attributes = [];

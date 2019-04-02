@@ -16,6 +16,10 @@ interface RealmsResourceInterface
      */
     public function add(RealmRepresentationInterface $realm): void;
 
+    /**
+     * @param array|null $options
+     * @return RealmCreateResourceInterface
+     */
     public function create(?array $options = null): RealmCreateResourceInterface;
 
     /**

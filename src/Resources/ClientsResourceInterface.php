@@ -9,7 +9,9 @@ interface ClientsResourceInterface
      */
     public function get(string $id): ClientResourceInterface;
 
-    public function create(ClientRepresentationInterface $client): void;
+    public function add(ClientRepresentationInterface $client): void;
+
+    public function create(): ClientCreateResourceInterface;
 
     /**
      * @return ClientRepresentationInterface[]

@@ -1,3 +1,0 @@
-[runners.docker]
-  image = "registry.gitlab.com/scito/keycloak-admin:latest"
-  services = ["selenium/standalone-chrome-debug:latest", "jboss/keycloak:latest"]

@@ -37,6 +37,10 @@ composer:
 
 phpunit:
   stage: test
+  before_script:
+    - cat /etc/hosts
+    - cp /etc/hosts "${CI_PROJECT_DIR}/"
+    - chmod 0777 "${CI_PROJECT_DIR}/hosts"
   dependencies:
     - composer
   script:

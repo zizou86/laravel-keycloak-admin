@@ -117,6 +117,10 @@ trait WithDuskBrowser
 
         $host = 'app';
         if(false != ($dir = getenv('CI_PROJECT_DIR'))) {
+
+            print "FILES IN CI_PROJECT_DIR\n";
+            print_r(scandir($dir));
+
             $hostFile = rtrim($dir, '/\\').DIRECTORY_SEPARATOR.'hosts';
 
             print "\nHOSTFILE {$hostFile}:\n\n";

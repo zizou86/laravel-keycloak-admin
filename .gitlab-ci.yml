@@ -39,7 +39,8 @@ phpunit:
   dependencies:
     - composer
   script:
-    - CI_PROJECT_DIR=$CI_PROJECT_DIR vendor/phpunit/phpunit/phpunit --coverage-text --colors=never
+    - export CI_PROJECT_DIR=$CI_PROJECT_DIR
+    - FOO="BAR";vendor/phpunit/phpunit/phpunit --coverage-text --colors=never
   artifacts:
     paths:
       - ./tests/Browser/screenshots

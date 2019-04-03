@@ -10,6 +10,7 @@ use function file_get_contents;
 use Illuminate\Support\Collection;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Chrome\SupportsChrome;
+use function preg_match;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -93,16 +94,14 @@ trait WithDuskBrowser
     private function findRunnerInHostFile($content)
     {
         $lines = explode("\n", $content);
-
-        print_r($lines);
-
         foreach($lines as $line) {
-            list($ip, $host) = explode("\t", $lines, 2);
+            [$ip, $host] = explode("\t", $line, 2);
 
-            var_dump($ip);
-            var_dump($host);
-
+            if(preg_match('/^runner-/', $host)) {
+                return $host;
+            }
         }
+        return false;
     }
 
     protected function createWebDriver()
@@ -117,15 +116,11 @@ trait WithDuskBrowser
 
         $host = 'app';
         if(false != ($dir = getenv('CI_PROJECT_DIR'))) {
-
-            print "FILES IN CI_PROJECT_DIR\n";
-            print_r(scandir($dir));
-
             $hostFile = rtrim($dir, '/\\').DIRECTORY_SEPARATOR.'hosts';
 
-            print "\nHOSTFILE {$hostFile}:\n\n";
             $str = file_get_contents($hostFile);
             if(false != ($runner = $this->findRunnerInHostFile($str))) {
+                var_dump("USE HOST {$runner}\n");
                 $host = $runner;
             }
         }

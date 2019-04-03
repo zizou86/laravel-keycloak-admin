@@ -9,12 +9,6 @@ services:
        - .:/var/www/html
     networks:
      - keycloak_admin_network
-  selenium:
-    image: selenium/standalone-chrome-debug
-    ports:
-      - "4444:4444"
-    networks:
-      - keycloak_admin_network
   keycloak:
     image: jboss/keycloak
     environment:

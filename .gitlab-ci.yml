@@ -1,13 +1,8 @@
 image: registry.gitlab.com/scito/keycloak-admin:latest
 
 services:
-  - name: selenium/standalone-chrome-debug
-    alias: selenium
-    entrypoint: ["/bin/sh", "-c", "while [ ! -f /$CI_PROJECT_DIR/hosts ]; do sleep 1; done && cat /$CI_PROJECT_DIR/hosts > /etc/hosts && /opt/bin/entry_point.sh"]
   - name: jboss/keycloak
     alias: keycloak
-    entrypoint: ["/bin/sh", "-c", "while [ ! -f /$CI_PROJECT_DIR/hosts ]; do sleep 1; done && cat /$CI_PROJECT_DIR/hosts > /etc/hosts && /opt/jboss/tools/docker-entrypoint.sh"]
-
 
 variables:
   DB_VENDOR: h2

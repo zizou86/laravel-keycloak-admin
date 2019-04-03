@@ -1,6 +1,7 @@
 <?php
 namespace Keycloak\Admin\Tests\Traits;
 
+use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Illuminate\Support\Collection;
@@ -87,9 +88,24 @@ trait WithDuskBrowser
     }
     protected function createWebDriver()
     {
-        return RemoteWebDriver::create(
-            'http://selenium:4444/wd/hub', DesiredCapabilities::chrome()
-        );
+        $options = (new ChromeOptions())->addArguments([
+            '--disable-gpu',
+            '--headless',
+            '--no-sandbox',
+            '--window-size=1920,1080',
+        ]);
+
+        try {
+            return RemoteWebDriver::create(
+                'http://app:4444/wd/hub', DesiredCapabilities::chrome()->setCapability(
+                ChromeOptions::CAPABILITY, $options
+            ));
+        } catch(\Exception $e) {
+            return RemoteWebDriver::create(
+                'http://127.0.0.1:4444/wd/hub', DesiredCapabilities::chrome()->setCapability(
+                ChromeOptions::CAPABILITY, $options
+            ));
+        }
     }
     protected function captureFailuresFor(Collection $browsers)
     {

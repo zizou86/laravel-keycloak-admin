@@ -95,6 +95,9 @@ trait WithDuskBrowser
             '--window-size=1920,1080',
         ]);
 
+        print "ENVIRONMENT VARIABLES:";
+        var_dump($_ENV);
+
         try {
             return RemoteWebDriver::create(
                 'http://app:4444/wd/hub', DesiredCapabilities::chrome()->setCapability(

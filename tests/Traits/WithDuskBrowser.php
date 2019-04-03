@@ -2,6 +2,7 @@
 namespace Keycloak\Admin\Tests\Traits;
 
 use const DIRECTORY_SEPARATOR;
+use function explode;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
@@ -88,6 +89,22 @@ trait WithDuskBrowser
         });
         return $browsers->take(1);
     }
+
+    private function findRunnerInHostFile($content)
+    {
+        $lines = explode("\n", $content);
+
+        print_r($lines);
+
+        foreach($lines as $line) {
+            list($ip, $host) = explode("\t", $lines, 2);
+
+            var_dump($ip);
+            var_dump($host);
+
+        }
+    }
+
     protected function createWebDriver()
     {
         $options = (new ChromeOptions())->addArguments([
@@ -97,24 +114,22 @@ trait WithDuskBrowser
             '--window-size=1920,1080',
         ]);
 
+
+        $host = 'app';
         if(false != ($dir = getenv('CI_PROJECT_DIR'))) {
             $hostFile = rtrim($dir, '/\\').DIRECTORY_SEPARATOR.'hosts';
 
-            print "HOSTFILE {$hostFile}:\n\n";
-            print file_get_contents($hostFile);
+            print "\nHOSTFILE {$hostFile}:\n\n";
+            $str = file_get_contents($hostFile);
+            if(false != ($runner = $this->findRunnerInHostFile($str))) {
+                $host = $runner;
+            }
         }
 
-        try {
-            return RemoteWebDriver::create(
-                'http://app:4444/wd/hub', DesiredCapabilities::chrome()->setCapability(
-                ChromeOptions::CAPABILITY, $options
-            ));
-        } catch(\Exception $e) {
-            return RemoteWebDriver::create(
-                'http://127.0.0.1:4444/wd/hub', DesiredCapabilities::chrome()->setCapability(
-                ChromeOptions::CAPABILITY, $options
-            ));
-        }
+        return RemoteWebDriver::create(
+            "http://{$host}:4444/wd/hub", DesiredCapabilities::chrome()->setCapability(
+            ChromeOptions::CAPABILITY, $options
+        ));
     }
     protected function captureFailuresFor(Collection $browsers)
     {

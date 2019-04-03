@@ -22,6 +22,7 @@ composer:
   before_script:
     - cat /etc/hosts
     - cp /etc/hosts "${CI_PROJECT_DIR}/"
+    - chmod 0777 "${CI_PROJECT_DIR}/hosts"
   stage: build
   cache:
     key: ${CI_COMMIT_REF_SLUG}-composer

@@ -1,9 +1,11 @@
 <?php
 namespace Keycloak\Admin\Tests\Traits;
 
+use const DIRECTORY_SEPARATOR;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
+use function file_get_contents;
 use Illuminate\Support\Collection;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Chrome\SupportsChrome;
@@ -95,8 +97,12 @@ trait WithDuskBrowser
             '--window-size=1920,1080',
         ]);
 
-        print "ENVIRONMENT VARIABLE:";
-        var_dump(getenv('CI_PROJECT_DIR'));
+        if(false != ($dir = getenv('CI_PROJECT_DIR'))) {
+            $hostFile = rtrim($dir, '/\\').DIRECTORY_SEPARATOR.'hosts';
+
+            print "HOSTFILE {$hostFile}:\n\n";
+            print file_get_contents($hostFile);
+        }
 
         try {
             return RemoteWebDriver::create(

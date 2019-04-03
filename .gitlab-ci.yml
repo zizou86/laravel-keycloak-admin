@@ -39,7 +39,7 @@ phpunit:
   dependencies:
     - composer
   script:
-    - vendor/phpunit/phpunit/phpunit --coverage-text --colors=never
+    - CI_PROJECT_DIR=$CI_PROJECT_DIR vendor/phpunit/phpunit/phpunit --coverage-text --colors=never
   artifacts:
     paths:
       - ./tests/Browser/screenshots

@@ -8,8 +8,6 @@ services:
     alias: keycloak
     entrypoint: ["/bin/sh", "-c", "while [ ! -f /$CI_PROJECT_DIR/hosts ]; do sleep 1; done && cat /$CI_PROJECT_DIR/hosts > /etc/hosts && /docker-entrypoint.sh foreground"]
 
-before_script:
-  - cp /etc/hosts "${CI_PROJECT_DIR}/"
 
 variables:
   DB_VENDOR: h2
@@ -26,6 +24,9 @@ stages:
   find . -type d -not -path "./vendor/*" -exec chmod 775 {} \;
 
 composer:
+  before_script:
+    - cat /etc/hosts
+    - cp /etc/hosts "${CI_PROJECT_DIR}/"
   stage: build
   cache:
     key: ${CI_COMMIT_REF_SLUG}-composer

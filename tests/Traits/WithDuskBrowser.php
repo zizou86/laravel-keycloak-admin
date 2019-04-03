@@ -95,8 +95,8 @@ trait WithDuskBrowser
             '--window-size=1920,1080',
         ]);
 
-        print "ENVIRONMENT VARIABLES:";
-        var_dump($_ENV);
+        print "ENVIRONMENT VARIABLE:";
+        var_dump(getenv('CI_PROJECT_DIR'));
 
         try {
             return RemoteWebDriver::create(

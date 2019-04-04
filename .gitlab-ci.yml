@@ -45,7 +45,7 @@ phpunit:
     - composer
   script:
     - export CI_PROJECT_DIR=$CI_PROJECT_DIR
-    - vendor/phpunit/phpunit/phpunit --coverage-text --colors=never
+    - vendor/phpunit/phpunit/phpunit --exclude-group=browser --coverage-text --colors=never
   artifacts:
     paths:
       - ./tests/Browser/screenshots

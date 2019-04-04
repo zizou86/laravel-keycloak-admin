@@ -6,6 +6,11 @@ use Keycloak\Admin\Tests\Traits\WithDuskBrowser;
 use Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
 use Laravel\Dusk\Browser;
 
+/**
+ * Class LoginTest
+ * @package Keycloak\Admin\Tests\Browser
+ * @group browser
+ */
 class LoginTest extends TestCase
 {
     use WithTemporaryRealm, WithDuskBrowser;

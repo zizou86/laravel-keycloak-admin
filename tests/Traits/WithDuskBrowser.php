@@ -91,19 +91,6 @@ trait WithDuskBrowser
         return $browsers->take(1);
     }
 
-    private function findRunnerInHostFile($content)
-    {
-        $lines = explode("\n", $content);
-        foreach($lines as $line) {
-            [$ip, $host] = explode("\t", $line, 2);
-
-            if(preg_match('/^runner-/', $host)) {
-                return $ip;
-            }
-        }
-        return false;
-    }
-
     protected function createWebDriver()
     {
         $options = (new ChromeOptions())->addArguments([
@@ -112,21 +99,8 @@ trait WithDuskBrowser
             '--no-sandbox',
             '--window-size=1920,1080',
         ]);
-
-
-        $host = 'app';
-        if(false != ($dir = getenv('CI_PROJECT_DIR'))) {
-            $hostFile = rtrim($dir, '/\\').DIRECTORY_SEPARATOR.'hosts';
-
-            $str = file_get_contents($hostFile);
-            if(false != ($runner = $this->findRunnerInHostFile($str))) {
-                var_dump("USE HOST {$runner}\n");
-                $host = $runner;
-            }
-        }
-
         return RemoteWebDriver::create(
-            "http://{$host}:4444/wd/hub", DesiredCapabilities::chrome()->setCapability(
+            "http://selenium:4444/wd/hub", DesiredCapabilities::chrome()->setCapability(
             ChromeOptions::CAPABILITY, $options
         ));
     }

@@ -32,27 +32,25 @@ RUN apt-get update \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-RUN sudo apt-get update
-RUN sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4 default-jdk gnupg2
-RUN sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
-RUN sudo echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-RUN sudo apt-get -y update
-RUN sudo apt-get -y install google-chrome-stable
-RUN wget https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip
-RUN unzip chromedriver_linux64.zip
-RUN sudo mv chromedriver /usr/bin/chromedriver \
-    && sudo chown root:root /usr/bin/chromedriver \
-    && sudo chmod +x /usr/bin/chromedriver
-RUN wget https://selenium-release.storage.googleapis.com/3.13/selenium-server-standalone-3.13.0.jar
-RUN mv selenium-server-standalone-3.13.0.jar /home/selenium-server-standalone.jar
-RUN wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
-RUN unzip testng-6.8.7.jar.zip
+#RUN sudo apt-get update
+#RUN sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4 default-jdk gnupg2
+#RUN sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+#RUN sudo echo "deb [arch=amd64]  http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+#RUN sudo apt-get -y update
+#RUN sudo apt-get -y install google-chrome-stable
+#RUN wget https://chromedriver.storage.googleapis.com/73.0.3683.68/chromedriver_linux64.zip
+#RUN unzip chromedriver_linux64.zip
+#RUN sudo mv chromedriver /usr/bin/chromedriver \
+#    && sudo chown root:root /usr/bin/chromedriver \
+#    && sudo chmod +x /usr/bin/chromedriver
+#RUN wget https://selenium-release.storage.googleapis.com/3.13/selenium-server-standalone-3.13.0.jar
+#RUN mv selenium-server-standalone-3.13.0.jar /home/selenium-server-standalone.jar
+#RUN wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
+#RUN unzip testng-6.8.7.jar.zip
 
 COPY php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 
 EXPOSE 80
-EXPOSE 9515
-EXPOSE 4444
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 

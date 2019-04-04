@@ -1,8 +1,10 @@
-image: registry.gitlab.com/scito/keycloak-admin:latest
+image: registry.gitlab.com/scito-performance/keycloak-admin:latest
 
 services:
   - name: jboss/keycloak
     alias: keycloak
+  - name: selenium/standalone-chrome
+    alias: selenium
 
 variables:
   DB_VENDOR: h2

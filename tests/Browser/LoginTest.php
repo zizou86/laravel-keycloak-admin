@@ -1,9 +1,9 @@
 <?php
-namespace Keycloak\Admin\Tests\Browser;
+namespace Scito\Keycloak\Admin\Tests\Browser;
 
-use Keycloak\Admin\Tests\TestCase;
-use Keycloak\Admin\Tests\Traits\WithDuskBrowser;
-use Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
+use Scito\Keycloak\Admin\Tests\TestCase;
+use Scito\Keycloak\Admin\Tests\Traits\WithDuskBrowser;
+use Scito\Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
 use Laravel\Dusk\Browser;
 
 /**
@@ -35,30 +35,18 @@ class LoginTest extends TestCase
             ->save();
 
         $this->browse(function(Browser $browser) use ($username, $email, $password) {
-
-            $browser->visit('http://keycloak/auth/realms')
-                ->screenshot('test-page.png');
-
-            $browser->visit('http://keycloak:8080/auth/realms')
-                ->screenshot('test-page-2.png');
-
-            $browser->visit('http://www.google.com')
-                ->screenshot('google.png');
-
             $browser->visit("http://keycloak:8080/auth/realms/{$this->temporaryRealm}/account")
                 ->type('username', $username)
                 ->type('password', $password)
                 ->press('login')
                 ->assertInputValue('#email', $email);
         });
-
     }
 
     /**
      * @test
      */
     public function a_user_must_change_his_password_when_a_temporary_password_was_configured() {
-
 
         $username = $this->faker->userName;
         $email = $this->faker->email;

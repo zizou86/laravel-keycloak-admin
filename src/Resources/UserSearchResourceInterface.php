@@ -1,9 +1,9 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use IteratorAggregate;
-use Keycloak\Admin\Representations\RepresentationCollectionInterface;
-use Keycloak\Admin\Representations\UserRepresentationInterface;
+use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
+use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
 
 interface UserSearchResourceInterface extends IteratorAggregate
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Representations;
+namespace Scito\Keycloak\Admin\Representations;
 
 class RealmRepresentation extends AbstractRepresentation implements RealmRepresentationInterface
 {

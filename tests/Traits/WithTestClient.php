@@ -1,9 +1,8 @@
 <?php
-namespace Keycloak\Admin\Tests\Traits;
+namespace Scito\Keycloak\Admin\Tests\Traits;
 
-use Faker\Factory;
-use Keycloak\Admin\Client;
-use Keycloak\Admin\ClientBuilder;
+use Scito\Keycloak\Admin\Client;
+use Scito\Keycloak\Admin\ClientBuilder;
 
 trait WithTestClient
 {

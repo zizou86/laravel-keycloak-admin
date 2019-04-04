@@ -1,7 +1,7 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
-use Keycloak\Admin\Representations\UserRepresentationInterface;
+use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
 
 interface UserResourceInterface
 {

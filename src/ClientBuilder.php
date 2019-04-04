@@ -1,13 +1,13 @@
 <?php
-namespace Keycloak\Admin;
+namespace Scito\Keycloak\Admin;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\HandlerStack;
-use Keycloak\Admin\Guzzle\DefaultHeadersMiddleware;
-use Keycloak\Admin\Guzzle\TokenMiddleware;
-use Keycloak\Admin\Hydrator\Hydrator;
-use Keycloak\Admin\Resources\ResourceFactory;
-use Keycloak\Admin\Token\TokenManager;
+use Scito\Keycloak\Admin\Guzzle\DefaultHeadersMiddleware;
+use Scito\Keycloak\Admin\Guzzle\TokenMiddleware;
+use Scito\Keycloak\Admin\Hydrator\Hydrator;
+use Scito\Keycloak\Admin\Resources\ResourceFactory;
+use Scito\Keycloak\Admin\Token\TokenManager;
 use GuzzleHttp\Client as GuzzleClient;
 
 class ClientBuilder

@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Representations;
+namespace Scito\Keycloak\Admin\Representations;
 
 use function array_key_exists;
 use function is_array;

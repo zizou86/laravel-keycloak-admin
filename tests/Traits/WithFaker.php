@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Tests\Traits;
+namespace Scito\Keycloak\Admin\Tests\Traits;
 
 use Faker\Factory;
 use Faker\Generator;

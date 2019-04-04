@@ -1,15 +1,15 @@
 <?php
 
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use Keycloak\Admin\Exceptions\CannotCreateUserException;
-use Keycloak\Admin\Exceptions\CannotDeleteUserException;
-use Keycloak\Admin\Exceptions\CannotUpdateUserException;
-use Keycloak\Admin\Exceptions\UnknownUserException;
-use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\UserRepresentationInterface;
+use Scito\Keycloak\Admin\Exceptions\CannotCreateUserException;
+use Scito\Keycloak\Admin\Exceptions\CannotDeleteUserException;
+use Scito\Keycloak\Admin\Exceptions\CannotUpdateUserException;
+use Scito\Keycloak\Admin\Exceptions\UnknownUserException;
+use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
 
 class UsersResource implements UsersResourceInterface
 {

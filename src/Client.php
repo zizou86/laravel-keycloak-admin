@@ -1,11 +1,11 @@
 <?php
-namespace Keycloak\Admin;
+namespace Scito\Keycloak\Admin;
 
-use Keycloak\Admin\Exceptions\DefaultRealmMissingException;
-use Keycloak\Admin\Resources\ClientsResourceInterface;
-use Keycloak\Admin\Resources\ResourceFactoryInterface;
-use Keycloak\Admin\Resources\RolesResourceInterface;
-use Keycloak\Admin\Resources\UsersResourceInterface;
+use Scito\Keycloak\Admin\Exceptions\DefaultRealmMissingException;
+use Scito\Keycloak\Admin\Resources\ClientsResourceInterface;
+use Scito\Keycloak\Admin\Resources\ResourceFactoryInterface;
+use Scito\Keycloak\Admin\Resources\RolesResourceInterface;
+use Scito\Keycloak\Admin\Resources\UsersResourceInterface;
 
 class Client
 {

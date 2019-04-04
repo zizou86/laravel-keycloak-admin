@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Guzzle;
+namespace Scito\Keycloak\Admin\Guzzle;
 
 use Psr\Http\Message\RequestInterface;
 

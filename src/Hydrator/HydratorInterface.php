@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Hydrator;
+namespace Scito\Keycloak\Admin\Hydrator;
 
 interface HydratorInterface
 {

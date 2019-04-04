@@ -1,7 +1,7 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
-use Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
 use RuntimeException;
 
 class RoleUpdateResource implements RoleUpdateResourceInterface

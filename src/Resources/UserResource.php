@@ -1,11 +1,11 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
-use Keycloak\Admin\Exceptions\CannotRetrieveUserException;
-use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\UserRepresentationInterface;
-use Keycloak\Admin\Representations\UserRepresentation;
+use Scito\Keycloak\Admin\Exceptions\CannotRetrieveUserException;
+use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
+use Scito\Keycloak\Admin\Representations\UserRepresentation;
 
 class UserResource implements UserResourceInterface
 {

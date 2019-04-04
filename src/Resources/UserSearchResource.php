@@ -1,13 +1,13 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use function http_build_query;
 use function json_decode;
-use Keycloak\Admin\Exceptions\CannotRetrieveUsersException;
-use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\RepresentationCollection;
-use Keycloak\Admin\Representations\UserRepresentation;
+use Scito\Keycloak\Admin\Exceptions\CannotRetrieveUsersException;
+use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\RepresentationCollection;
+use Scito\Keycloak\Admin\Representations\UserRepresentation;
 use RuntimeException;
 
 class UserSearchResource implements UserSearchResourceInterface

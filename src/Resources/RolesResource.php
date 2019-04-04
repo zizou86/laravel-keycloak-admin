@@ -1,17 +1,17 @@
 <?php
 
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use function json_encode;
-use Keycloak\Admin\Exceptions\CannotCreateRoleException;
-use Keycloak\Admin\Exceptions\CannotUpdateRoleException;
-use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\RepresentationCollection;
-use Keycloak\Admin\Representations\RepresentationCollectionInterface;
-use Keycloak\Admin\Representations\RoleRepresentation;
-use Keycloak\Admin\Representations\RoleRepresentationInterface;
+use Scito\Keycloak\Admin\Exceptions\CannotCreateRoleException;
+use Scito\Keycloak\Admin\Exceptions\CannotUpdateRoleException;
+use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\RepresentationCollection;
+use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
+use Scito\Keycloak\Admin\Representations\RoleRepresentation;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
 
 class RolesResource implements RolesResourceInterface
 {

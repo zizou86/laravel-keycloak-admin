@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Representations;
+namespace Scito\Keycloak\Admin\Representations;
 
 interface RealmRepresentationInterface
 {

@@ -1,6 +1,6 @@
 {
     "name": "scito/keycloak-admin",
-    "description": "PHP client for the Keyadmin Admin API",
+    "description": "PHP client for the Keycloak Admin API",
     "type": "library",
     "authors": [
         {
@@ -10,12 +10,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Keycloak\\Admin\\": "src/"
+            "Scito\\Keycloak\\Admin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Keycloak\\Admin\\Tests\\": "tests/"
+            "Scito\\Keycloak\\Admin\\Tests\\": "tests/"
         }
     },
     "require": {

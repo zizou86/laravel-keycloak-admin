@@ -1,7 +1,7 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
-use Keycloak\Admin\Representations\UserRepresentationBuilderInterface;
+use Scito\Keycloak\Admin\Representations\UserRepresentationBuilderInterface;
 
 class UserUpdateResource implements UserUpdateResourceInterface
 {

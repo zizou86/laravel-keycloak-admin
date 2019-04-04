@@ -1,8 +1,8 @@
 <?php
-namespace Keycloak\Admin\Guzzle;
+namespace Scito\Keycloak\Admin\Guzzle;
 
 use function array_key_exists;
-use Keycloak\Admin\Auth\TokenManager;
+use Scito\Keycloak\Admin\Auth\TokenManager;
 use function parse_url;
 use const PHP_URL_PATH;
 use function preg_match;

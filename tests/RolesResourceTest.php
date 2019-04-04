@@ -1,12 +1,12 @@
 <?php
-namespace Keycloak\Admin\Tests;
+namespace Scito\Keycloak\Admin\Tests;
 
-use Keycloak\Admin\Exceptions\CannotDeleteRoleException;
-use Keycloak\Admin\Representations\RoleRepresentationBuilder;
-use Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
-use Keycloak\Admin\Representations\RoleRepresentationInterface;
-use Keycloak\Admin\Resources\RolesResourceInterface;
-use Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
+use Scito\Keycloak\Admin\Exceptions\CannotDeleteRoleException;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilder;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
+use Scito\Keycloak\Admin\Resources\RolesResourceInterface;
+use Scito\Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
 
 class RolesResourceTest extends TestCase
 {

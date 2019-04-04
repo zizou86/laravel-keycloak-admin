@@ -1,15 +1,11 @@
 <?php
-namespace Keycloak\Admin\Tests;
+namespace Scito\Keycloak\Admin\Tests;
 
-use Keycloak\Admin\Hydrator\Hydrator;
-use Keycloak\Admin\Representations\RepresentationCollectionInterface;
-use Keycloak\Admin\Representations\UserRepresentationBuilder;
-use Keycloak\Admin\Representations\UserRepresentationInterface;
-use Keycloak\Admin\Resources\UsersResourceInterface;
-use Keycloak\Admin\Tests\Traits\WithFaker;
-use Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
-use Keycloak\Admin\Tests\Traits\WithTestClient;
-use RuntimeException;
+use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
+use Scito\Keycloak\Admin\Representations\UserRepresentationBuilder;
+use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
+use Scito\Keycloak\Admin\Resources\UsersResourceInterface;
+use Scito\Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
 
 class UsersResourceTest extends TestCase
 {

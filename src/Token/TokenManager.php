@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Token;
+namespace Scito\Keycloak\Admin\Token;
 
 use function date_create;
 use DateInterval;

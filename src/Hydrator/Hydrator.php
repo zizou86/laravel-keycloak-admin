@@ -1,9 +1,9 @@
 <?php
-namespace Keycloak\Admin\Hydrator;
+namespace Scito\Keycloak\Admin\Hydrator;
 
 use function is_array;
 use function is_object;
-use Keycloak\Admin\Exceptions\AnnotationException;
+use Scito\Keycloak\Admin\Exceptions\AnnotationException;
 use function preg_replace;
 use ReflectionClass;
 use ReflectionMethod;

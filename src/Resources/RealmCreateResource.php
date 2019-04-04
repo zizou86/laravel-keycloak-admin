@@ -1,7 +1,7 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
-use Keycloak\Admin\Representations\RealmRepresentationBuilder;
+use Scito\Keycloak\Admin\Representations\RealmRepresentationBuilder;
 
 class RealmCreateResource implements RealmCreateResourceInterface
 {

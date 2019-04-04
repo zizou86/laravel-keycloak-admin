@@ -1,13 +1,13 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use function json_decode;
-use Keycloak\Admin\Exceptions\CannotDeleteRoleException;
-use Keycloak\Admin\Exceptions\CannotRetrieveRoleRepresentationException;
-use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\RoleRepresentation;
-use Keycloak\Admin\Representations\RoleRepresentationInterface;
+use Scito\Keycloak\Admin\Exceptions\CannotDeleteRoleException;
+use Scito\Keycloak\Admin\Exceptions\CannotRetrieveRoleRepresentationException;
+use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\RoleRepresentation;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
 
 class RoleResource implements RoleResourceInterface
 {

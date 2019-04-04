@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Tests\Traits;
+namespace Scito\Keycloak\Admin\Tests\Traits;
 
 use const DIRECTORY_SEPARATOR;
 use function explode;

@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Tests;
+namespace Scito\Keycloak\Admin\Tests;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {

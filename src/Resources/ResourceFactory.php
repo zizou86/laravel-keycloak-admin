@@ -1,11 +1,11 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
-use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\RealmRepresentationBuilder;
-use Keycloak\Admin\Representations\RoleRepresentationBuilder;
-use Keycloak\Admin\Representations\UserRepresentationBuilder;
+use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\RealmRepresentationBuilder;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilder;
+use Scito\Keycloak\Admin\Representations\UserRepresentationBuilder;
 
 class ResourceFactory implements ResourceFactoryInterface
 {

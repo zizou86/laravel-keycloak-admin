@@ -1,10 +1,8 @@
 <?php
-namespace Keycloak\Admin\Tests;
+namespace Scito\Keycloak\Admin\Tests;
 
-use Keycloak\Admin\Representations\RealmRepresentationInterface;
-use Keycloak\Admin\Tests\Traits\WithFaker;
-use Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
-use Keycloak\Admin\Tests\Traits\WithTestClient;
+use Scito\Keycloak\Admin\Representations\RealmRepresentationInterface;
+use Scito\Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
 
 class RealmResourceTest extends TestCase
 {
@@ -21,7 +19,6 @@ class RealmResourceTest extends TestCase
     public function realm_details_can_be_retrieved()
     {
         $realm = $this->client->realm($this->temporaryRealm)->toRepresentation();
-
         $this->assertInstanceOf(RealmRepresentationInterface::class, $realm);
     }
     

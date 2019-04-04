@@ -1,5 +1,5 @@
 <?php
-namespace Keycloak\Admin\Exceptions;
+namespace Scito\Keycloak\Admin\Exceptions;
 
 class ApiConnectionException
 {

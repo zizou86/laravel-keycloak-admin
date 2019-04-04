@@ -1,8 +1,8 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
-use Keycloak\Admin\Representations\RepresentationCollectionInterface;
-use Keycloak\Admin\Representations\RoleRepresentationInterface;
+use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
 
 interface RolesResourceInterface
 {

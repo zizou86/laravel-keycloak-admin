@@ -1,7 +1,7 @@
 <?php
-namespace Keycloak\Admin\Representations;
+namespace Scito\Keycloak\Admin\Representations;
 
-use Keycloak\Admin\Hydrator\Hydrator;
+use Scito\Keycloak\Admin\Hydrator\Hydrator;
 
 class RoleRepresentationBuilder extends AbstractRepresentationBuilder implements RoleRepresentationBuilderInterface
 {

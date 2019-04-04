@@ -1,10 +1,10 @@
 <?php
-namespace Keycloak\Admin\Resources;
+namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
-use Keycloak\Admin\Exceptions\CannotCreateRealmException;
-use Keycloak\Admin\Hydrator\HydratorInterface;
-use Keycloak\Admin\Representations\RealmRepresentationInterface;
+use Scito\Keycloak\Admin\Exceptions\CannotCreateRealmException;
+use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\RealmRepresentationInterface;
 
 class RealmsResource implements RealmsResourceInterface
 {

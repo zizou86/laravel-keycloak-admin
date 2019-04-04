@@ -98,7 +98,7 @@ trait WithDuskBrowser
             [$ip, $host] = explode("\t", $line, 2);
 
             if(preg_match('/^runner-/', $host)) {
-                return $host;
+                return $ip;
             }
         }
         return false;

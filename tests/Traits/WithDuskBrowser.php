@@ -100,14 +100,18 @@ trait WithDuskBrowser
             '--window-size=1920,1080',
         ]);
         return RemoteWebDriver::create(
-            "http://selenium:4444/wd/hub", DesiredCapabilities::chrome()->setCapability(
-            ChromeOptions::CAPABILITY, $options
-        ));
+            "http://selenium:4444/wd/hub",
+            DesiredCapabilities::chrome()->setCapability(
+                ChromeOptions::CAPABILITY,
+                $options
+            )
+        );
     }
     protected function captureFailuresFor(Collection $browsers)
     {
         $browsers->each(function (Browser $browser, $key) {
-            $browser->screenshot(sprintf('%s-%s',
+            $browser->screenshot(sprintf(
+                '%s-%s',
                 $this->getScreenshotPrefix(),
                 $key
             ));
@@ -115,7 +119,8 @@ trait WithDuskBrowser
     }
     protected function getScreenshotPrefix()
     {
-        return sprintf('failure-%s-%s',
+        return sprintf(
+            'failure-%s-%s',
             class_basename($this),
             $this->getName()
         );

@@ -72,125 +72,127 @@ class UserRolesTest extends TestCase
     /**
      * @test
      */
-     public function client_level_roles_can_be_added() {
+    public function client_level_roles_can_be_added()
+    {
 
-         $username = $this->faker->userName;
-         $email = $this->faker->email;
-         $password = $this->faker->password;
-         $clientId = $this->faker->slug;
-         $roleName = $this->faker->slug;
+        $username = $this->faker->userName;
+        $email = $this->faker->email;
+        $password = $this->faker->password;
+        $clientId = $this->faker->slug;
+        $roleName = $this->faker->slug;
 
-         $user = $this->realmResource
-             ->users()
-             ->create([
-                 'username' => $username,
-                 'email' => $email,
-                 'password' => $password
-             ])
-             ->save()
-             ->toRepresentation();
+        $user = $this->realmResource
+            ->users()
+            ->create([
+                'username' => $username,
+                'email' => $email,
+                'password' => $password
+            ])
+            ->save()
+            ->toRepresentation();
 
-         // Create a new client
-         $client = $this->realmResource
-             ->clients()
-             ->create()
-             ->clientId($clientId)
-             ->save()
-             ->toRepresentation();
+        // Create a new client
+        $client = $this->realmResource
+            ->clients()
+            ->create()
+            ->clientId($clientId)
+            ->save()
+            ->toRepresentation();
 
-         $role = $this->realmResource
-             ->clients()
-             ->get($client->getId())
-             ->roles()
-             ->create()
-             ->name($roleName)
-             ->save()
-             ->toRepresentation();
+        $role = $this->realmResource
+            ->clients()
+            ->get($client->getId())
+            ->roles()
+            ->create()
+            ->name($roleName)
+            ->save()
+            ->toRepresentation();
 
-         $this->realmResource
-             ->users()
-             ->get($user->getId())
-             ->roles()
-             ->client($client->getId())
-             ->add($role);
+        $this->realmResource
+            ->users()
+            ->get($user->getId())
+            ->roles()
+            ->client($client->getId())
+            ->add($role);
 
-         // Check if the user has the role
-         $addedRole = $this->realmResource
-             ->users()
-             ->get($user->getId())
-             ->roles()
-             ->client($client->getId())
-             ->all()
-             ->first(function(RoleRepresentationInterface $role) use ($roleName) {
+        // Check if the user has the role
+        $addedRole = $this->realmResource
+            ->users()
+            ->get($user->getId())
+            ->roles()
+            ->client($client->getId())
+            ->all()
+            ->first(function (RoleRepresentationInterface $role) use ($roleName) {
                 return $roleName === $role->getName();
-             });
+            });
 
-         $this->assertInstanceOf(RoleRepresentationInterface::class, $addedRole);
-     }
+        $this->assertInstanceOf(RoleRepresentationInterface::class, $addedRole);
+    }
 
      /**
       * @test
       */
-      public function client_level_roles_can_be_deleted() {
+    public function client_level_roles_can_be_deleted()
+    {
 
-          $username = $this->faker->userName;
-          $email = $this->faker->email;
-          $password = $this->faker->password;
-          $clientId = $this->faker->slug;
-          $roleName = $this->faker->slug;
+        $username = $this->faker->userName;
+        $email = $this->faker->email;
+        $password = $this->faker->password;
+        $clientId = $this->faker->slug;
+        $roleName = $this->faker->slug;
 
-          $user = $this->realmResource
-              ->users()
-              ->create([
-                  'username' => $username,
-                  'email' => $email,
-                  'password' => $password
-              ])
-              ->save()
-              ->toRepresentation();
+        $user = $this->realmResource
+            ->users()
+            ->create([
+                'username' => $username,
+                'email' => $email,
+                'password' => $password
+            ])
+            ->save()
+            ->toRepresentation();
 
-          // Create a new client
-          $client = $this->realmResource
-              ->clients()
-              ->create()
-              ->clientId($clientId)
-              ->save()
-              ->toRepresentation();
+        // Create a new client
+        $client = $this->realmResource
+            ->clients()
+            ->create()
+            ->clientId($clientId)
+            ->save()
+            ->toRepresentation();
 
-          $role = $this->realmResource
-              ->clients()
-              ->get($client->getId())
-              ->roles()
-              ->create()
-              ->name($roleName)
-              ->save()
-              ->toRepresentation();
+        $role = $this->realmResource
+            ->clients()
+            ->get($client->getId())
+            ->roles()
+            ->create()
+            ->name($roleName)
+            ->save()
+            ->toRepresentation();
 
-          $this->realmResource
-              ->users()
-              ->get($user->getId())
-              ->roles()
-              ->client($client->getId())
-              ->add($role);
+        $this->realmResource
+            ->users()
+            ->get($user->getId())
+            ->roles()
+            ->client($client->getId())
+            ->add($role);
 
-          $this->realmResource
-              ->users()
-              ->get($user->getId())
-              ->roles()
-              ->client($client->getId())
-              ->delete($role);
+        $this->realmResource
+            ->users()
+            ->get($user->getId())
+            ->roles()
+            ->client($client->getId())
+            ->delete($role);
 
-          // Check if the user has the role
-          $addedRole = $this->realmResource
-              ->users()
-              ->get($user->getId())
-              ->roles()
-              ->client($client->getId())
-              ->all()
-              ->first(function(RoleRepresentationInterface $role) use ($roleName) {
-                  return $roleName === $role->getName();
-              });
+        // Check if the user has the role
+        $addedRole = $this->realmResource
+            ->users()
+            ->get($user->getId())
+            ->roles()
+            ->client($client->getId())
+            ->all()
+            ->first(function (RoleRepresentationInterface $role) use ($roleName) {
+                return $roleName === $role->getName();
+            });
 
-          $this->assertNull($addedRole);
-      }
+        $this->assertNull($addedRole);
+    }
 }

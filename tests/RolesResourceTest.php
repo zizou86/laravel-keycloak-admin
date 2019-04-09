@@ -54,20 +54,19 @@ class RolesResourceTest extends TestCase
         $this->assertGreaterThan(1, count($roles));
 
         /* @var RoleRepresentationInterface $adminRole */
-        $adminRole = $roles->first(function(RoleRepresentationInterface $role) {
+        $adminRole = $roles->first(function (RoleRepresentationInterface $role) {
             return 'offline_access' == $role->getName();
         });
 
         $this->assertInstanceOf(RoleRepresentationInterface::class, $adminRole);
-        $matches = filter_var(preg_match('/^([a-z0-9\-]){36}$/', $adminRole->getId()), FILTER_VALIDATE_BOOLEAN);
-        $this->assertTrue($matches);
+        $this->assertValidKeycloakId($adminRole->getId());
     }
 
     private function roleExists($roleName)
     {
         $roles = $this->resource->all();
 
-        $role = $roles->first(function(RoleRepresentationInterface $role) use ($roleName) {
+        $role = $roles->first(function (RoleRepresentationInterface $role) use ($roleName) {
             return $roleName == $role->getName();
         });
 
@@ -77,15 +76,17 @@ class RolesResourceTest extends TestCase
     /**
      * @test
      */
-    public function roles_can_be_created() {
+    public function roles_can_be_created()
+    {
         $roleName = $this->faker->slug;
 
-        $this->resource->add(
+        $id = $this->resource->add(
             $this->builder
                 ->withName($roleName)
                 ->build()
-        );
+        )->getId();
         $this->assertTrue($this->roleExists($roleName));
+        $this->assertValidKeycloakId($id);
     }
 
     /**
@@ -139,7 +140,8 @@ class RolesResourceTest extends TestCase
     /**
      * @test
      */
-    public function roles_can_be_updated() {
+    public function roles_can_be_updated()
+    {
 
         $roleName = $this->faker->slug;
 
@@ -163,6 +165,7 @@ class RolesResourceTest extends TestCase
             ->get($roleId)
             ->toRepresentation();
 
+        $this->assertValidKeycloakId($roleId);
         $this->assertEquals($newDescription, $role->getDescription());
     }
 }

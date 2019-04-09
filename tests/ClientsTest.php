@@ -11,15 +11,16 @@ class ClientsTest extends TestCase
     /**
      * @test
      */
-     public function clients_can_be_retrieved() {
-         $client = $this->client
-             ->realm('master')
-             ->clients()
-             ->all()
-             ->first(function(ClientRepresentationInterface $client) {
-                 return 'account' === $client->getClientId();
-             });
+    public function clients_can_be_retrieved()
+    {
+        $client = $this->client
+            ->realm('master')
+            ->clients()
+            ->all()
+            ->first(function (ClientRepresentationInterface $client) {
+                return 'account' === $client->getClientId();
+            });
 
-         $this->assertInstanceOf(ClientRepresentationInterface::class, $client);
-     }
+        $this->assertInstanceOf(ClientRepresentationInterface::class, $client);
+    }
 }

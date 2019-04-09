@@ -25,7 +25,8 @@ class RealmResourceTest extends TestCase
     /**
      * @test
      */
-    public function realms_can_be_created() {
+    public function realms_can_be_created()
+    {
         
         $name = $this->faker->name;
         

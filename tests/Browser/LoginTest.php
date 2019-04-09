@@ -18,7 +18,8 @@ class LoginTest extends TestCase
     /**
      * @test
      */
-    public function a_user_can_login_with_the_password_which_was_used_during_creation() {
+    public function a_user_can_login_with_the_password_which_was_used_during_creation()
+    {
 
         $username = $this->faker->userName;
         $email = $this->faker->email;
@@ -34,7 +35,7 @@ class LoginTest extends TestCase
             ->enabled(true)
             ->save();
 
-        $this->browse(function(Browser $browser) use ($username, $email, $password) {
+        $this->browse(function (Browser $browser) use ($username, $email, $password) {
             $browser->visit("http://keycloak:8080/auth/realms/{$this->temporaryRealm}/account")
                 ->type('username', $username)
                 ->type('password', $password)
@@ -46,7 +47,8 @@ class LoginTest extends TestCase
     /**
      * @test
      */
-    public function a_user_must_change_his_password_when_a_temporary_password_was_configured() {
+    public function a_user_must_change_his_password_when_a_temporary_password_was_configured()
+    {
 
         $username = $this->faker->userName;
         $email = $this->faker->email;
@@ -62,7 +64,7 @@ class LoginTest extends TestCase
             ->enabled(true)
             ->save();
 
-        $this->browse(function(Browser $browser) use ($username, $email, $password) {
+        $this->browse(function (Browser $browser) use ($username, $email, $password) {
             $browser->visit("http://keycloak:8080/auth/realms/{$this->temporaryRealm}/account")
                 ->type('username', $username)
                 ->type('password', $password)

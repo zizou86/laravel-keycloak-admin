@@ -30,7 +30,8 @@ class UsersResourceTest extends TestCase
     /**
      * @test
      */
-    public function users_can_be_retrieved() {
+    public function users_can_be_retrieved()
+    {
 
         $username = $this->faker->userName;
         $email = $this->faker->email;
@@ -47,7 +48,7 @@ class UsersResourceTest extends TestCase
             ->resource
             ->search()
             ->get()
-            ->first(function(UserRepresentationInterface $user) use ($username) {
+            ->first(function (UserRepresentationInterface $user) use ($username) {
                 return $username === $user->getUsername();
             });
 
@@ -58,7 +59,8 @@ class UsersResourceTest extends TestCase
     /**
      * @test
      */
-    public function users_can_be_searched_using_an_option_array() {
+    public function users_can_be_searched_using_an_option_array()
+    {
 
         $username = $this->faker->userName;
         $email = $this->faker->email;
@@ -85,10 +87,11 @@ class UsersResourceTest extends TestCase
     /**
      * @test
      */
-    public function user_search_can_be_limited() {
+    public function user_search_can_be_limited()
+    {
 
         // Create multiple users for the test realm
-        for($i=0;$i<5;$i++) {
+        for ($i=0; $i<5; $i++) {
             $this->createUser();
         }
 
@@ -121,8 +124,8 @@ class UsersResourceTest extends TestCase
             ->resource
             ->search()
             ->get()
-            ->filter(function(UserRepresentationInterface $user) use ($username) {
-               return $user->getUsername() === $username;
+            ->filter(function (UserRepresentationInterface $user) use ($username) {
+                return $user->getUsername() === $username;
             });
 
         $this->assertInstanceOf(RepresentationCollectionInterface::class, $users);
@@ -150,16 +153,22 @@ class UsersResourceTest extends TestCase
         $this->assertEquals($username, $user->getUsername());
     }
 
-    private function createUser($username = null, $email = null, $password = null)
+    private function createUser($username = null, $email = null, $password = null, $firstName = null, $lastName = null)
     {
-        if(null === $username) {
+        if (null === $username) {
             $username = $this->faker->userName;
         }
-        if(null === $email) {
+        if (null === $email) {
             $email = $this->faker->email;
         }
-        if(null === $password) {
+        if (null === $password) {
             $password = $this->faker->password;
+        }
+        if (null === $firstName) {
+            $firstName = $this->faker->firstName;
+        }
+        if (null === $lastName) {
+            $lastName = $this->faker->lastName;
         }
 
         $this->resource->add(
@@ -167,9 +176,11 @@ class UsersResourceTest extends TestCase
                 ->withUsername($username)
                 ->withPassword($password)
                 ->withEmail($email)
+                ->withFirstName($firstName)
+                ->withLastName($lastName)
                 ->build()
         );
-        return [$username, $email, $password];
+        return [$username, $email, $password, $firstName, $lastName];
     }
 
     /**
@@ -200,8 +211,8 @@ class UsersResourceTest extends TestCase
             ->username($username);
 
         $exists = false;
-        foreach($users as $user) {
-            if($user->getUsername() == $username) {
+        foreach ($users as $user) {
+            if ($user->getUsername() == $username) {
                 $exists = true;
             }
         }
@@ -211,16 +222,19 @@ class UsersResourceTest extends TestCase
     /**
      * @test
      */
-    public function users_can_be_created() {
+    public function users_can_be_created()
+    {
 
-        [$username,$email] = $this->createUser();
+        [$username,$email,$password,$firstName,$lastName] = $this->createUser();
 
         $user = $this->resource->getByUsername($username);
 
         $this->assertInstanceOf(UserRepresentationInterface::class, $user);
         $this->assertEquals($username, $user->getUsername());
         $this->assertEquals($email, $user->getEmail());
-
+        $this->assertEquals($firstName, $user->getFirstName());
+        $this->assertEquals($lastName, $user->getLastName());
+        $this->assertValidKeycloakId($user->getId());
     }
 
     /**
@@ -231,25 +245,23 @@ class UsersResourceTest extends TestCase
         $username = $this->faker->userName;
         $password = $this->faker->password;
 
-        $this->resource
+        $user = $this->resource
             ->create()
             ->username($username)
             ->password($password)
             ->enabled(true)
-            ->save();
-
-        $user = $this->resource
-            ->search()
-            ->username($username)
-            ->first();
+            ->save()
+            ->toRepresentation();
 
         $this->assertEquals($username, $user->getUsername());
+        $this->assertValidKeycloakId($user->getId());
     }
     
     /**
      * @test
      */
-    public function users_can_be_updated_using_the_fluent_api() {
+    public function users_can_be_updated_using_the_fluent_api()
+    {
 
         [$username,$email] = $this->createUser();
 
@@ -281,7 +293,8 @@ class UsersResourceTest extends TestCase
     /**
      * @test
      */
-    public function users_can_be_retrieved_by_email() {
+    public function users_can_be_retrieved_by_email()
+    {
 
         $email = $this->faker->email;
         $username = $this->faker->userName;

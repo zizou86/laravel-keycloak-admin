@@ -84,7 +84,7 @@ class UsersResource implements UsersResourceInterface
         return $this->search()->email($email)->first();
     }
 
-    public function add(UserRepresentationInterface $user): void
+    public function add(UserRepresentationInterface $user): UserResourceInterface
     {
         $data = $this->hydrator->extract($user);
         unset($data['id'], $data['created']);
@@ -96,6 +96,11 @@ class UsersResource implements UsersResourceInterface
         if (201 !== $response->getStatusCode()) {
             throw new CannotCreateUserException("Unable to create user");
         }
+
+        $location = $response->getHeaderLine('Location');
+        $parts = array_filter(explode('/', $location), 'strlen');
+        $id = end($parts);
+        return $this->get($id);
     }
 
     /**
@@ -144,14 +149,16 @@ class UsersResource implements UsersResourceInterface
             ->createUserResource($this->realm, $id);
     }
 
-    public function search(array $options = []): UserSearchResourceInterface
+    public function search(?array $options = null): UserSearchResourceInterface
     {
         $searchResource = $this
             ->resourceFactory
             ->createUserSearchResource($this->realm);
 
-        foreach ($options as $k => $v) {
-            $searchResource->$k($v);
+        if (null !== $options) {
+            foreach ($options as $k => $v) {
+                $searchResource->$k($v);
+            }
         }
 
         return $searchResource;

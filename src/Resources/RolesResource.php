@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use function json_encode;
 use Scito\Keycloak\Admin\Exceptions\CannotCreateRoleException;
+use Scito\Keycloak\Admin\Exceptions\CannotRetrieveRoleException;
 use Scito\Keycloak\Admin\Exceptions\CannotUpdateRoleException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
 use Scito\Keycloak\Admin\Representations\RepresentationCollection;
@@ -44,23 +45,30 @@ class RolesResource implements RolesResourceInterface
         $this->resourceFactory = $resourceFactory;
     }
 
-    public function get($name): RoleResourceInterface
+    public function get($id): RoleResourceInterface
     {
-        return $this->resourceFactory
-            ->createRoleResource($this->realm, $name);
+        $response = $this->client->get("/auth/admin/realms/{$this->realm}/roles-by-id/{$id}");
+
+        if (200 !== $response->getStatusCode()) {
+            throw new CannotRetrieveRoleException();
+        }
+
+        $json = (string)$response->getBody();
+        $data = json_decode($json, true);
+        return $this->getByName($data['name']);
     }
 
     public function delete($name): void
     {
         $this
-            ->get($name)
+            ->getByName($name)
             ->delete();
     }
 
     /**
      * @return RepresentationCollectionInterface
      */
-    public function list(): RepresentationCollectionInterface
+    public function all(): RepresentationCollectionInterface
     {
         $response = $this->client->get("/auth/admin/realms/{$this->realm}/roles");
 
@@ -74,12 +82,13 @@ class RolesResource implements RolesResourceInterface
         return new RepresentationCollection($items);
     }
 
-    public function getByName($name)
+    public function getByName($name): RoleResourceInterface
     {
-        $response = $this->get("/auth/{$this->realm}/roles/{$name}");
+        return $this->resourceFactory
+            ->createRoleResource($this->realm, $name);
     }
 
-    public function add(RoleRepresentationInterface $role): void
+    public function add(RoleRepresentationInterface $role): RoleResourceInterface
     {
         $data = $this->hydrator->extract($role);
         unset($data['id']);
@@ -91,14 +100,25 @@ class RolesResource implements RolesResourceInterface
         if (201 != $response->getStatusCode()) {
             throw new CannotCreateRoleException("Unable to create role");
         }
+
+        $location = $response->getHeaderLine('Location');
+        $parts = array_filter(explode('/', $location), 'strlen');
+        $name = end($parts);
+        return $this->getByName($name);
     }
 
     public function create(?array $options = null): RoleCreateResourceInterface
     {
-        return $this->resourceFactory->createRolesCreateResource($this->realm);
+        $resource = $this->resourceFactory->createRolesCreateResource($this->realm);
+        if (null !== $options) {
+            foreach ($options as $key => $value) {
+                $resource->$key($value);
+            }
+        }
+        return $resource;
     }
 
-    public function update(RoleRepresentationInterface $role): void
+    public function update(RoleRepresentationInterface $role): RoleResourceInterface
     {
         $data = $this->hydrator->extract($role);
         $roleName = $data['name'];
@@ -110,5 +130,7 @@ class RolesResource implements RolesResourceInterface
         if (204 != $response->getStatusCode()) {
             throw new CannotUpdateRoleException("Unable to update role $roleName");
         }
+
+        return $this->getByName($roleName);
     }
 }

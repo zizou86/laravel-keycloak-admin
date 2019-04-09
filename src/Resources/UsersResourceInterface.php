@@ -15,14 +15,15 @@ interface UsersResourceInterface
 
     public function getByUsername(string $username): ?UserRepresentationInterface;
 
-    public function add(UserRepresentationInterface $user): void;
+    public function add(UserRepresentationInterface $user): UserResourceInterface;
 
     public function update(UserRepresentationInterface $user): void;
 
     /**
+     * @param array $options
      * @return UserSearchResourceInterface
      */
-    public function search(): UserSearchResourceInterface;
+    public function search(?array $options = null): UserSearchResourceInterface;
 
     public function create(?array $options = null): UserCreateResourceInterface;
 }

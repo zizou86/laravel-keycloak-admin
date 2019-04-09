@@ -1,6 +1,9 @@
 <?php
 namespace Scito\Keycloak\Admin\Resources;
 
+use Scito\Keycloak\Admin\Representations\ClientRepresentationInterface;
+use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
+
 interface ClientsResourceInterface
 {
     /**
@@ -9,12 +12,12 @@ interface ClientsResourceInterface
      */
     public function get(string $id): ClientResourceInterface;
 
-    public function add(ClientRepresentationInterface $client): void;
+    public function add(ClientRepresentationInterface $client): ClientResourceInterface;
 
     public function create(): ClientCreateResourceInterface;
 
     /**
-     * @return ClientRepresentationInterface[]
+     * @return RepresentationCollectionInterface
      */
-    public function all(): array;
+    public function all(): RepresentationCollectionInterface;
 }

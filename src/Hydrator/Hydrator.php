@@ -46,10 +46,10 @@ class Hydrator implements HydratorInterface
         $methods = get_class_methods($class);
 
         foreach ($methods as $method) {
-            if (!preg_match(' /^(get)(.*?)$/i', $method, $results)) {
+            if (!preg_match(' /^(get|is)(.*?)$/i', $method, $results)) {
                 continue;
             }
-
+            
             $k = $results[2];
 
             $k = strtolower(substr($k, 0, 1)) . substr($k, 1);

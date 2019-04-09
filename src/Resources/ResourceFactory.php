@@ -3,6 +3,7 @@ namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\ClientRepresentationBuilder;
 use Scito\Keycloak\Admin\Representations\RealmRepresentationBuilder;
 use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilder;
 use Scito\Keycloak\Admin\Representations\UserRepresentationBuilder;
@@ -34,6 +35,11 @@ class ResourceFactory implements ResourceFactoryInterface
         return new RealmCreateResource($this->createRealmsResource(), new RealmRepresentationBuilder());
     }
 
+    public function createUserRolesResource(string $realm, string $id): UserRolesResourceInterface
+    {
+        return new UserRolesResource($this, $this->hydrator, $this->client, $realm, $id);
+    }
+
     public function createUsersResource(string $realm): UsersResourceInterface
     {
         return new UsersResource($this->client, $this, $this->hydrator, $realm);
@@ -56,7 +62,30 @@ class ResourceFactory implements ResourceFactoryInterface
 
     public function createClientsResource(string $realm): ClientsResourceInterface
     {
-        return new ClientsResource();
+        return new ClientsResource($this, $this->client, $this->hydrator, $realm);
+    }
+
+    public function createClientRoleCreateResource(string $realm, string $id): ClientRoleCreateResourceInterface
+    {
+        return new ClientRoleCreateResource(
+            $this->createClientRolesResource($realm, $id),
+            new RoleRepresentationBuilder()
+        );
+    }
+
+    public function createClientResource(string $realm, string $id): ClientResourceInterface
+    {
+        return new ClientResource($this, $this->client, $this->hydrator, $realm, $id);
+    }
+
+    public function createClientRolesResource(string $realm, string $id): ClientRolesResourceInterface
+    {
+        return new ClientRolesResource($this, $this->client, $this->hydrator, $realm, $id);
+    }
+
+    public function createClientRoleResource(string $realm, string $id, string $name): ClientRoleResourceInterface
+    {
+        return new ClientRoleResource($this->client, $this->hydrator, $realm, $id, $name);
     }
 
     public function createUserSearchResource(string $realm): UserSearchResourceInterface
@@ -76,6 +105,25 @@ class ResourceFactory implements ResourceFactoryInterface
         return new UserUpdateResource($usersResource, new UserRepresentationBuilder(), $realm, $id);
     }
 
+    public function createRealmLevelUserRolesResource(string $realm, string $id): RealmLevelUserRolesResourceInterface
+    {
+        return new RealmLevelUserRolesResource($this, $this->client, $realm, $id);
+    }
+
+    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId)
+        : ClientLevelUserRolesResourceInterface
+    {
+        return new ClientLevelUserRolesResource($this->client, $this->hydrator, $realm, $userId, $clientId);
+    }
+
+    public function createClientCreateResource(string $realm): ClientCreateResourceInterface
+    {
+        return new ClientCreateResource(
+            $this->createClientsResource($realm),
+            new ClientRepresentationBuilder(),
+            $realm
+        );
+    }
 
     public function createRoleResource(string $realm, string $role)
     {

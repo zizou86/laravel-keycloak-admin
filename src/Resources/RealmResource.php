@@ -40,7 +40,7 @@ class RealmResource implements RealmResourceInterface
     public function clients(): ClientsResourceInterface
     {
         return $this->resourceFactory
-            ->createClientsResource();
+            ->createClientsResource($this->realm);
     }
 
     public function toRepresentation(): RealmRepresentationInterface

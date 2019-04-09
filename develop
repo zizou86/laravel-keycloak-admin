@@ -32,6 +32,13 @@ if [ $# -gt 0 ];then
             app \
             ./vendor/bin/phpunit "$@"
 
+    elif [ "$1" == "coverage" ]; then
+        shift 1
+        $COMPOSE run --rm \
+            -w /var/www/html \
+            app \
+            ./vendor/bin/phpunit "$@" --coverage-text
+
     # Else, pass-thru args to docker-compose
     else
         $COMPOSE "$@"

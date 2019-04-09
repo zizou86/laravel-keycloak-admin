@@ -11,5 +11,5 @@ interface RoleUpdateResourceInterface
 
     public function containerId(string $containerId): RoleUpdateResourceInterface;
 
-    public function save(): void;
+    public function save(): RoleResourceInterface;
 }

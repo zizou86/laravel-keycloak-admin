@@ -46,14 +46,20 @@ class RoleCreateResource implements RoleCreateResourceInterface
         return $this;
     }
 
+    public function containerId(string $containerId): RoleCreateResourceInterface
+    {
+        $this->builder->withContainerId($containerId);
+        return $this;
+    }
+
     public function clientRole(bool $clientRole): RoleCreateResourceInterface
     {
         $this->builder->withClientRole($clientRole);
         return $this;
     }
 
-    public function save(): void
+    public function save(): RoleResourceInterface
     {
-        $this->rolesResource->add($this->builder->build());
+        return $this->rolesResource->add($this->builder->build());
     }
 }

@@ -34,8 +34,10 @@ class RolesResourceTest extends TestCase
     public function role_details_can_be_retrieved()
     {
         $role = $this
-            ->resource
-            ->get('offline_access')
+            ->client
+            ->realm('master')
+            ->roles()
+            ->getByName('offline_access')
             ->toRepresentation();
 
         $this->assertInstanceOf(RoleRepresentationInterface::class, $role);
@@ -47,14 +49,14 @@ class RolesResourceTest extends TestCase
      */
     public function roles_can_be_retrieved()
     {
-        $roles = $this->resource->list();
+        $roles = $this->resource->all();
 
         $this->assertGreaterThan(1, count($roles));
 
         /* @var RoleRepresentationInterface $adminRole */
         $adminRole = $roles->first(function(RoleRepresentationInterface $role) {
             return 'offline_access' == $role->getName();
-        }, false);
+        });
 
         $this->assertInstanceOf(RoleRepresentationInterface::class, $adminRole);
         $matches = filter_var(preg_match('/^([a-z0-9\-]){36}$/', $adminRole->getId()), FILTER_VALIDATE_BOOLEAN);
@@ -63,7 +65,7 @@ class RolesResourceTest extends TestCase
 
     private function roleExists($roleName)
     {
-        $roles = $this->resource->list();
+        $roles = $this->resource->all();
 
         $role = $roles->first(function(RoleRepresentationInterface $role) use ($roleName) {
             return $roleName == $role->getName();
@@ -123,12 +125,11 @@ class RolesResourceTest extends TestCase
         $roleName = $this->faker->slug;
 
         $this->resource
-            ->create()
-            ->name($roleName)
+            ->create(['name' => $roleName])
             ->save();
 
         $this->resource
-            ->get($roleName)
+            ->getByName($roleName)
             ->delete();
 
         $this->assertFalse($this->roleExists($roleName));
@@ -144,20 +145,21 @@ class RolesResourceTest extends TestCase
         $oldDescription = $this->faker->text;
         $newDescription = $this->faker->text;
 
-        $this->resource
+        $roleId = $this->resource
             ->create()
             ->name($roleName)
             ->description($oldDescription)
-            ->save();
+            ->save()
+            ->getId();
 
         $this->resource
-            ->get($roleName)
+            ->get($roleId)
             ->update()
             ->description($newDescription)
             ->save();
 
         $role = $this->resource
-            ->get($roleName)
+            ->get($roleId)
             ->toRepresentation();
 
         $this->assertEquals($newDescription, $role->getDescription());

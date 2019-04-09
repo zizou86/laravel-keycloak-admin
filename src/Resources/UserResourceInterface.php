@@ -6,10 +6,12 @@ use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
 interface UserResourceInterface
 {
     public function toRepresentation(): UserRepresentationInterface;
-    /**
-     * @return RoleMappingResourceInterface
-     */
-    public function roles();
+
+    public function roles(): UserRolesResourceInterface;
 
     public function update(?array $options = null): UserUpdateResourceInterface;
+
+    public function getRealm(): string;
+
+    public function getId(): string;
 }

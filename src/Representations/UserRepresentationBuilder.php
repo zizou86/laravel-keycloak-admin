@@ -35,6 +35,16 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
         return $this->setAttribute('password', $password);
     }
 
+    public function withFirstName(string $firstName): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('firstName', $firstName);
+    }
+
+    public function withLastName(string $lastName): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('lastName', $lastName);
+    }
+
     public function withPasswordIsTemporary(bool $temporary): UserRepresentationBuilderInterface
     {
         return $this->setAttribute('passwordIsTemporary', $temporary);

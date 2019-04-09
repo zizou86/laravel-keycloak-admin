@@ -1,7 +1,7 @@
 <?php
 namespace Scito\Keycloak\Admin\Representations;
 
-interface RoleRepresentationInterface
+interface RoleRepresentationInterface extends RepresentationInterface
 {
     public function getId(): ?string;
 

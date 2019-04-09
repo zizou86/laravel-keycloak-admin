@@ -17,24 +17,20 @@ interface RepresentationCollectionInterface extends Countable, IteratorAggregate
      * @param callable $filter
      * @return RepresentationCollectionInterface
      */
-    public function filter(callable $filter);
+    public function filter(callable $filter): RepresentationCollectionInterface;
     /**
      * @param callable $callback
      * @return RepresentationCollectionInterface
      */
-    public function map(callable $callback);
-
+    public function map(callable $callback): RepresentationCollectionInterface;
     /**
-     * @return Iterator<T>
+     * @return RepresentationInterface[]
      */
-    public function getIterator();
-
-    public function toArray();
-
+    public function getIterator(): iterable;
     /**
-     * @param callable|null $callback
-     * @param bool $default
-     * @return T
+     * @return RepresentationInterface[]
      */
-    public function first(?callable $callback = null, $default = false);
+    public function toArray(): array;
+
+    public function first(?callable $callback = null): ?RepresentationInterface;
 }

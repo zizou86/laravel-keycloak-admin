@@ -40,10 +40,10 @@ class RoleUpdateResource implements RoleUpdateResourceInterface
         throw new RuntimeException("Unknown updateable role property [$name]");
     }
 
-    public function save(): void
+    public function save(): RoleResourceInterface
     {
         $this->builder->withName($this->role);
-        $this->rolesResource->update($this->builder->build());
+        return $this->rolesResource->update($this->builder->build());
     }
 
     public function description(string $description): RoleUpdateResourceInterface

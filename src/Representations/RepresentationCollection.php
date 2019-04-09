@@ -17,7 +17,7 @@ class RepresentationCollection implements RepresentationCollectionInterface
         $this->items = $items;
     }
 
-    public function getIterator()
+    public function getIterator(): iterable
     {
         return new ArrayObject($this->items);
     }
@@ -27,17 +27,17 @@ class RepresentationCollection implements RepresentationCollectionInterface
         return count($this->items);
     }
 
-    public function filter(callable $filter)
+    public function filter(callable $filter): RepresentationCollectionInterface
     {
         return new RepresentationCollection(array_filter(iterator_to_array($this), $filter));
     }
 
-    public function map(callable $callback)
+    public function map(callable $callback): RepresentationCollectionInterface
     {
         return new RepresentationCollection(array_map($callback, iterator_to_array($this)));
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->items;
     }
@@ -62,16 +62,16 @@ class RepresentationCollection implements RepresentationCollectionInterface
         unset($this->items[$offset]);
     }
 
-    public function first(?callable $callback = null, $default = false)
+    public function first(?callable $callback = null): ?RepresentationInterface
     {
         if (!is_callable($callback)) {
-            return count($this->items) > 0 ? reset($this->items) : $default;
+            return count($this->items) > 0 ? reset($this->items) : null;
         }
         foreach ($this->getIterator() as $item) {
             if (call_user_func($callback, $item)) {
                 return $item;
             }
         }
-        return $default;
+        return null;
     }
 }

@@ -67,9 +67,21 @@ class UserCreateResource extends AbstractCreateResource implements UserCreateRes
         return $this;
     }
 
-    public function save(): void
+    public function firstName(string $firstName): UserCreateResourceInterface
+    {
+        $this->builder->withFirstName($firstName);
+        return $this;
+    }
+
+    public function lastName(string $lastName): UserCreateResourceInterface
+    {
+        $this->builder->withLastName($lastName);
+        return $this;
+    }
+
+    public function save(): UserResourceInterface
     {
         $user = $this->builder->build();
-        $this->usersResource->add($user);
+        return $this->usersResource->add($user);
     }
 }

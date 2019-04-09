@@ -16,4 +16,10 @@ interface RoleResourceInterface
     public function delete(): void;
     
     public function update(?array $options = null): RoleUpdateResourceInterface;
+
+    public function getRealm(): string;
+
+    public function getId(): string;
+
+    public function getName(): string;
 }

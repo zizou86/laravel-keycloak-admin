@@ -9,19 +9,25 @@ interface RolesResourceInterface
     /**
      * @return RepresentationCollectionInterface
      */
-    public function list(): RepresentationCollectionInterface;
+    public function all(): RepresentationCollectionInterface;
 
-    public function add(RoleRepresentationInterface $role): void;
+    public function add(RoleRepresentationInterface $role): RoleResourceInterface;
 
     public function create(?array $options = null): RoleCreateResourceInterface;
 
-    public function update(RoleRepresentationInterface $role): void;
+    public function update(RoleRepresentationInterface $role): RoleResourceInterface;
 
     /**
-     * @param $name
-     * @return mixed
+     * @param string $id
+     * @return RoleResourceInterface
      */
-    public function get($name): RoleResourceInterface;
+    public function get($id): RoleResourceInterface;
+
+    /**
+     * @param string $name
+     * @return RoleResourceInterface
+     */
+    public function getByName($name): RoleResourceInterface;
 
     /**
      * @param $name

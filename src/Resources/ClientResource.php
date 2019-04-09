@@ -2,12 +2,12 @@
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
-use Scito\Keycloak\Admin\Exceptions\CannotRetrieveUserException;
+use Scito\Keycloak\Admin\Exceptions\CannotRetrieveClientException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
-use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
-use Scito\Keycloak\Admin\Representations\UserRepresentation;
+use Scito\Keycloak\Admin\Representations\ClientRepresentation;
+use Scito\Keycloak\Admin\Representations\ClientRepresentationInterface;
 
-class UserResource implements UserResourceInterface
+class ClientResource implements ClientResourceInterface
 {
     /**
      * @var ClientInterface
@@ -31,8 +31,8 @@ class UserResource implements UserResourceInterface
     private $resourceFactory;
 
     public function __construct(
-        ClientInterface $client,
         ResourceFactoryInterface $resourceFactory,
+        ClientInterface $client,
         HydratorInterface $hydrator,
         string $realm,
         string $id
@@ -44,22 +44,24 @@ class UserResource implements UserResourceInterface
         $this->resourceFactory = $resourceFactory;
     }
 
-    public function toRepresentation(): UserRepresentationInterface
+    public function roles(): ClientRolesResourceInterface
     {
-        $response = $this->client->get("/auth/admin/realms/{$this->realm}/users/{$this->id}");
+        return $this->resourceFactory
+            ->createClientRolesResource($this->realm, $this->id);
+    }
+
+    public function toRepresentation(): ClientRepresentationInterface
+    {
+        $response = $this->client->get("/auth/admin/realms/{$this->realm}/clients/{$this->id}");
 
         if (200 !== $response->getStatusCode()) {
-            throw new CannotRetrieveUserException("Cannot retrieve user details of user {$this->id}");
+            throw new CannotRetrieveClientException();
         }
 
         $json = (string)$response->getBody();
         $data = json_decode($json, true);
-        return $this->hydrator->hydrate($data, UserRepresentation::class);
-    }
 
-    public function getRealm(): string
-    {
-        return $this->realm;
+        return $this->hydrator->hydrate($data, ClientRepresentation::class);
     }
 
     public function getId(): string
@@ -67,14 +69,8 @@ class UserResource implements UserResourceInterface
         return $this->id;
     }
 
-    public function roles(): UserRolesResourceInterface
+    public function getRealm(): string
     {
-        return $this->resourceFactory->createUserRolesResource($this->realm, $this->id);
-    }
-
-    public function update(?array $options = null): UserUpdateResourceInterface
-    {
-        return $this->resourceFactory
-            ->createUserUpdateResource($this->realm, $this->id);
+        return $this->realm;
     }
 }

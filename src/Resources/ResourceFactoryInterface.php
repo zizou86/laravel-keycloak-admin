@@ -32,6 +32,16 @@ interface ResourceFactoryInterface
      */
     public function createClientsResource(string $realm): ClientsResourceInterface;
 
+    public function createClientResource(string $realm, string $id): ClientResourceInterface;
+
+    public function createClientCreateResource(string $realm): ClientCreateResourceInterface;
+
+    public function createClientRolesResource(string $realm, string $id): ClientRolesResourceInterface;
+
+    public function createClientRoleCreateResource(string $realm, string $id): ClientRoleCreateResourceInterface;
+
+    public function createClientRoleResource(string $realm, string $id, string $name): ClientRoleResourceInterface;
+
     /**
      * @param string $realm
      * @return UserSearchResourceInterface
@@ -51,6 +61,19 @@ interface ResourceFactoryInterface
      */
     public function createUserUpdateResource(string $realm, string $id): UserUpdateResourceInterface;
 
+    /**
+     * @param string $realm
+     * @param string $id
+     * @return UserRolesResourceInterface
+     */
+    public function createUserRolesResource(string $realm, string $id)
+        : UserRolesResourceInterface;
+
+    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId)
+        : ClientLevelUserRolesResourceInterface;
+
+    public function createRealmLevelUserRolesResource(string $realm, string $userId)
+        : RealmLevelUserRolesResourceInterface;
     /**
      * @param string $realm
      * @param string $role

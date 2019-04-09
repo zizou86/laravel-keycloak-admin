@@ -11,6 +11,10 @@ interface UserRepresentationBuilderInterface
 
     public function withPassword(string $password): self;
 
+    public function withFirstName(string $firstName): self;
+
+    public function withLastName(string $lastName): self;
+
     public function withTemporaryPassword(string $password): self;
 
     public function withPasswordIsTemporary(bool $temporary): self;

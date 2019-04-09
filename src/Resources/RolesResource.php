@@ -58,7 +58,14 @@ class RolesResource implements RolesResourceInterface
         return $this->getByName($data['name']);
     }
 
-    public function delete($name): void
+    public function delete(string $id): void
+    {
+        $this
+            ->get($id)
+            ->delete();
+    }
+
+    public function deleteByName(string $name): void
     {
         $this
             ->getByName($name)

@@ -30,7 +30,12 @@ interface RolesResourceInterface
     public function getByName($name): RoleResourceInterface;
 
     /**
-     * @param $name
+     * @param string $id
      */
-    public function delete($name): void;
+    public function delete(string $id): void;
+
+    /**
+     * @param string $name
+     */
+    public function deleteByName(string $name): void;
 }

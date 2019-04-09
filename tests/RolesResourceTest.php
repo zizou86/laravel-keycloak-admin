@@ -95,7 +95,7 @@ class RolesResourceTest extends TestCase
     {
         $roleName = $this->faker->slug;
         $this->expectException(CannotDeleteRoleException::class);
-        $this->resource->delete($roleName);
+        $this->resource->deleteByName($roleName);
     }
 
     /**
@@ -105,14 +105,15 @@ class RolesResourceTest extends TestCase
     {
         $roleName = $this->faker->slug;
 
-        $this->resource
+        $id = $this->resource
             ->create()
             ->name($roleName)
-            ->save();
+            ->save()
+            ->getId();
 
         $this->assertTrue($this->roleExists($roleName));
 
-        $this->resource->delete($roleName);
+        $this->resource->delete($id);
 
         $this->assertFalse($this->roleExists($roleName));
     }

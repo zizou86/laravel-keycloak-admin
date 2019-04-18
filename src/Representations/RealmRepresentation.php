@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
 class RealmRepresentation extends AbstractRepresentation implements RealmRepresentationInterface
@@ -8,7 +9,8 @@ class RealmRepresentation extends AbstractRepresentation implements RealmReprese
         ?string $name = null,
         ?string $displayName = null,
         ?bool $enabled = null
-    ) {
+    )
+    {
         $this->setAttributes(get_defined_vars());
     }
 

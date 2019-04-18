@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use function array_key_exists;

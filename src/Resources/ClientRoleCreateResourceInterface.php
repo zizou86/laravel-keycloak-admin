@@ -1,7 +1,6 @@
 <?php
-namespace Scito\Keycloak\Admin\Resources;
 
-use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
+namespace Scito\Keycloak\Admin\Resources;
 
 interface ClientRoleCreateResourceInterface
 {

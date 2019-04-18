@@ -31,7 +31,8 @@ class UsersResource implements UsersResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    ) {
+    )
+    {
         $this->client = $client;
         $this->realm = $realm;
         $this->hydrator = $hydrator;
@@ -41,18 +42,6 @@ class UsersResource implements UsersResourceInterface
     public function count()
     {
         $response = $this->client->post("/auth/admin/realms/{$this->realm}/users/count");
-    }
-
-    /**
-     * @param $username
-     * @return UserRepresentationInterface|null
-     */
-    public function getByUsername(string $username): ?UserRepresentationInterface
-    {
-        return $this
-            ->search()
-            ->username($username)
-            ->first();
     }
 
     public function update(UserRepresentationInterface $user): void
@@ -75,15 +64,6 @@ class UsersResource implements UsersResourceInterface
         }
     }
 
-    /**
-     * @param $email
-     * @return UserRepresentationInterface|null
-     */
-    public function getByEmail(string $email): ?UserRepresentationInterface
-    {
-        return $this->search()->email($email)->first();
-    }
-
     public function add(UserRepresentationInterface $user): UserResourceInterface
     {
         $data = $this->hydrator->extract($user);
@@ -101,6 +81,12 @@ class UsersResource implements UsersResourceInterface
         $parts = array_filter(explode('/', $location), 'strlen');
         $id = end($parts);
         return $this->get($id);
+    }
+
+    public function get($id): UserResourceInterface
+    {
+        return $this->resourceFactory
+            ->createUserResource($this->realm, $id);
     }
 
     /**
@@ -126,27 +112,18 @@ class UsersResource implements UsersResourceInterface
         return $this->deleteById($user->getId());
     }
 
-    public function deleteByUsername($username)
+    /**
+     * @param $email
+     * @return UserRepresentationInterface|null
+     */
+    public function getByEmail(string $email): ?UserResourceInterface
     {
-        if (false == ($user = $this->getByUsername($username))) {
-            throw new UnknownUserException("User with username [$username] does not exist");
+        $user = $this->search()->email($email)->first();
+
+        if ($user instanceof UserRepresentationInterface) {
+            return $this->get($user->getId());
         }
-        return $this->deleteById($user->getId());
-    }
-
-    public function deleteById($id)
-    {
-        $response = $this->client->delete("/auth/admin/realms/{$this->realm}/users/{$id}");
-
-        if (204 != $response->getStatusCode()) {
-            throw new CannotDeleteUserException("User with id [$id] cannot be deleted");
-        }
-    }
-
-    public function get($id)
-    {
-        return $this->resourceFactory
-            ->createUserResource($this->realm, $id);
+        return null;
     }
 
     public function search(?array $options = null): UserSearchResourceInterface
@@ -162,5 +139,39 @@ class UsersResource implements UsersResourceInterface
         }
 
         return $searchResource;
+    }
+
+    public function deleteById($id)
+    {
+        $response = $this->client->delete("/auth/admin/realms/{$this->realm}/users/{$id}");
+
+        if (204 != $response->getStatusCode()) {
+            throw new CannotDeleteUserException("User with id [$id] cannot be deleted");
+        }
+    }
+
+    public function deleteByUsername($username)
+    {
+        if (false == ($user = $this->getByUsername($username))) {
+            throw new UnknownUserException("User with username [$username] does not exist");
+        }
+        return $this->deleteById($user->getId());
+    }
+
+    /**
+     * @param $username
+     * @return UserResourceInterface|null
+     */
+    public function getByUsername(string $username): ?UserResourceInterface
+    {
+        $user = $this
+            ->search()
+            ->username($username)
+            ->first();
+
+        if ($user instanceof UserRepresentationInterface) {
+            return $this->get($user->getId());
+        }
+        return null;
     }
 }

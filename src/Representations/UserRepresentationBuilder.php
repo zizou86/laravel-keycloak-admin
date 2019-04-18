@@ -1,10 +1,11 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
+use Scito\Keycloak\Admin\Hydrator\Hydrator;
 use function array_key_exists;
 use function in_array;
 use function is_array;
-use Scito\Keycloak\Admin\Hydrator\Hydrator;
 
 class UserRepresentationBuilder extends AbstractRepresentationBuilder implements UserRepresentationBuilderInterface
 {
@@ -24,6 +25,11 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
         return $this->setAttribute('password', $password);
     }
 
+    public function withPasswordIsTemporary(bool $temporary): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('passwordIsTemporary', $temporary);
+    }
+
     public function withTemporaryPassword(string $password): UserRepresentationBuilderInterface
     {
         $this->withPasswordIsTemporary(true);
@@ -33,6 +39,11 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
             $this->withRequiredActions($actions);
         }
         return $this->setAttribute('password', $password);
+    }
+
+    public function withRequiredActions(?array $actions): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('requiredActions', $actions);
     }
 
     public function withFirstName(string $firstName): UserRepresentationBuilderInterface
@@ -45,16 +56,6 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
         return $this->setAttribute('lastName', $lastName);
     }
 
-    public function withPasswordIsTemporary(bool $temporary): UserRepresentationBuilderInterface
-    {
-        return $this->setAttribute('passwordIsTemporary', $temporary);
-    }
-
-    public function withRequiredActions(?array $actions): UserRepresentationBuilderInterface
-    {
-        return $this->setAttribute('requiredActions', $actions);
-    }
-
     public function withEnabled(bool $enabled): UserRepresentationBuilderInterface
     {
         return $this->setAttribute('enabled', $enabled);
@@ -63,6 +64,14 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
     public function withEmail(string $email): UserRepresentationBuilderInterface
     {
         return $this->setAttribute('email', $email);
+    }
+
+    public function build(): UserRepresentationInterface
+    {
+        $data = $this->getAttributes();
+        $this->buildCredentials($data);
+        $hydrator = new Hydrator();
+        return $hydrator->hydrate($data, UserRepresentation::class);
     }
 
     private function buildCredentials(&$data)
@@ -86,13 +95,5 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
 
             $data['credentials'][] = $passwordCredential;
         }
-    }
-
-    public function build(): UserRepresentationInterface
-    {
-        $data = $this->getAttributes();
-        $this->buildCredentials($data);
-        $hydrator = new Hydrator();
-        return $hydrator->hydrate($data, UserRepresentation::class);
     }
 }

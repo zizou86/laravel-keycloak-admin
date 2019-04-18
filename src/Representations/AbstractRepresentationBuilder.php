@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
 abstract class AbstractRepresentationBuilder
@@ -8,6 +9,11 @@ abstract class AbstractRepresentationBuilder
     protected function getAttribute($key, $default = null)
     {
         return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
+    }
+
+    protected function getAttributes()
+    {
+        return $this->attributes;
     }
 
     protected function setAttributes(array $attributes)
@@ -22,10 +28,5 @@ abstract class AbstractRepresentationBuilder
     {
         $this->attributes[$name] = $value;
         return $this;
-    }
-
-    protected function getAttributes()
-    {
-        return $this->attributes;
     }
 }

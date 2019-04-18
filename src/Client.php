@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin;
 
 use Scito\Keycloak\Admin\Exceptions\DefaultRealmMissingException;
@@ -16,9 +17,15 @@ class Client
     public function __construct(
         ResourceFactoryInterface $resourceFactory,
         ?string $defaultRealm = null
-    ) {
+    )
+    {
         $this->resourceFactory = $resourceFactory;
         $this->defaultRealm = $defaultRealm;
+    }
+
+    public function users(): UsersResourceInterface
+    {
+        return $this->resourceFactory->createUsersResource($this->checkDefaultRealm());
     }
 
     private function checkDefaultRealm()
@@ -27,11 +34,6 @@ class Client
             throw new DefaultRealmMissingException("The default realm is not set");
         }
         return $this->defaultRealm;
-    }
-
-    public function users(): UsersResourceInterface
-    {
-        return $this->resourceFactory->createUsersResource($this->checkDefaultRealm());
     }
 
     public function roles(): RolesResourceInterface

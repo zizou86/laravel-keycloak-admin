@@ -1,7 +1,7 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
-use GuzzleHttp\ClientInterface;
 use Scito\Keycloak\Admin\Representations\ClientRepresentationBuilderInterface;
 
 class ClientCreateResource implements ClientCreateResourceInterface
@@ -25,7 +25,8 @@ class ClientCreateResource implements ClientCreateResourceInterface
         ClientsResourceInterface $clientsResource,
         ClientRepresentationBuilderInterface $builder,
         string $realm
-    ) {
+    )
+    {
         $this->clientsResource = $clientsResource;
         $this->builder = $builder;
         $this->realm = $realm;

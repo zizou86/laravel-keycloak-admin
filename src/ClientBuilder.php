@@ -1,6 +1,8 @@
 <?php
+
 namespace Scito\Keycloak\Admin;
 
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\HandlerStack;
 use Scito\Keycloak\Admin\Guzzle\DefaultHeadersMiddleware;
@@ -8,7 +10,6 @@ use Scito\Keycloak\Admin\Guzzle\TokenMiddleware;
 use Scito\Keycloak\Admin\Hydrator\Hydrator;
 use Scito\Keycloak\Admin\Resources\ResourceFactory;
 use Scito\Keycloak\Admin\Token\TokenManager;
-use GuzzleHttp\Client as GuzzleClient;
 
 class ClientBuilder
 {
@@ -114,27 +115,6 @@ class ClientBuilder
         return $this;
     }
 
-    /**
-     * @return ClientInterface
-     */
-    private function buildGuzzle()
-    {
-        return new GuzzleClient([
-            'base_uri' => $this->serverUrl,
-            'http_errors' => false
-        ]);
-    }
-
-    private function buildTokenManager(ClientInterface $guzzle)
-    {
-        return new TokenManager(
-            $this->username,
-            $this->password,
-            $this->clientId,
-            $guzzle
-        );
-    }
-
     public function build()
     {
         $guzzle = $this->guzzle ?? $this->buildGuzzle();
@@ -159,5 +139,26 @@ class ClientBuilder
         $factory = new ResourceFactory($client, new Hydrator());
 
         return new Client($factory, $this->realm);
+    }
+
+    /**
+     * @return ClientInterface
+     */
+    private function buildGuzzle()
+    {
+        return new GuzzleClient([
+            'base_uri' => $this->serverUrl,
+            'http_errors' => false
+        ]);
+    }
+
+    private function buildTokenManager(ClientInterface $guzzle)
+    {
+        return new TokenManager(
+            $this->username,
+            $this->password,
+            $this->clientId,
+            $guzzle
+        );
     }
 }

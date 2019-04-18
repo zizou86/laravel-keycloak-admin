@@ -1,12 +1,13 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Guzzle;
 
-use function array_key_exists;
-use Scito\Keycloak\Admin\Token\TokenManager;
-use function parse_url;
-use const PHP_URL_PATH;
-use function preg_match;
 use Psr\Http\Message\RequestInterface;
+use Scito\Keycloak\Admin\Token\TokenManager;
+use function array_key_exists;
+use function parse_url;
+use function preg_match;
+use const PHP_URL_PATH;
 
 class TokenMiddleware
 {
@@ -21,27 +22,6 @@ class TokenMiddleware
     {
         $this->tokenManager = $tokenManager;
         $this->defaultRealm = $defaultRealm;
-    }
-
-    /**
-     * Determines the requested realm by inspecting the options and request uri
-     *
-     * @param RequestInterface $request
-     * @param array $options
-     * @param string $default
-     * @return bool|mixed
-     */
-    private function getRequestedRealm(RequestInterface $request, array $options)
-    {
-        $realm = array_key_exists('realm', $options) ? $options['realm'] : $this->defaultRealm;
-
-        if (!$realm) {
-            $path = parse_url((string)$request->getUri(), PHP_URL_PATH);
-            if (preg_match('(^/auth/admin/realms/(?P<realm>[^/]+)/)i', $path, $matches)) {
-                $realm = $matches['realm'];
-            }
-        }
-        return $realm;
     }
 
     /**
@@ -70,5 +50,26 @@ class TokenMiddleware
             }
             return $handler($request, $options);
         };
+    }
+
+    /**
+     * Determines the requested realm by inspecting the options and request uri
+     *
+     * @param RequestInterface $request
+     * @param array $options
+     * @param string $default
+     * @return bool|mixed
+     */
+    private function getRequestedRealm(RequestInterface $request, array $options)
+    {
+        $realm = array_key_exists('realm', $options) ? $options['realm'] : $this->defaultRealm;
+
+        if (!$realm) {
+            $path = parse_url((string)$request->getUri(), PHP_URL_PATH);
+            if (preg_match('(^/auth/admin/realms/(?P<realm>[^/]+)/)i', $path, $matches)) {
+                $realm = $matches['realm'];
+            }
+        }
+        return $realm;
     }
 }

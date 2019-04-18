@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
 class ClientRepresentation extends AbstractRepresentation implements ClientRepresentationInterface
@@ -7,7 +8,8 @@ class ClientRepresentation extends AbstractRepresentation implements ClientRepre
         ?string $id = null,
         ?string $clientId = null,
         ?string $name = null
-    ) {
+    )
+    {
         $this->setAttributes(get_defined_vars());
     }
 

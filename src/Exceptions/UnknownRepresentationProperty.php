@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Exceptions;
 
 use RuntimeException;

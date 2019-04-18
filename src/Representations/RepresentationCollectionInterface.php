@@ -1,10 +1,10 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
 use ArrayAccess;
 use Countable;
 use IteratorAggregate;
-use Iterator;
 
 /**
  * Interface RepresentationCollectionInterface
@@ -18,15 +18,18 @@ interface RepresentationCollectionInterface extends Countable, IteratorAggregate
      * @return RepresentationCollectionInterface
      */
     public function filter(callable $filter): RepresentationCollectionInterface;
+
     /**
      * @param callable $callback
      * @return RepresentationCollectionInterface
      */
     public function map(callable $callback): RepresentationCollectionInterface;
+
     /**
      * @return RepresentationInterface[]
      */
     public function getIterator(): iterable;
+
     /**
      * @return RepresentationInterface[]
      */

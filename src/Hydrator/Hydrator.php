@@ -1,18 +1,19 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Hydrator;
 
-use function is_array;
-use function is_object;
-use Scito\Keycloak\Admin\Exceptions\AnnotationException;
-use function preg_replace;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
 use Reflector;
 use RuntimeException;
+use Scito\Keycloak\Admin\Exceptions\AnnotationException;
 use SplFileObject;
-use function substr;
 use Traversable;
+use function is_array;
+use function is_object;
+use function preg_replace;
+use function substr;
 
 class Hydrator implements HydratorInterface
 {
@@ -49,7 +50,7 @@ class Hydrator implements HydratorInterface
             if (!preg_match(' /^(get|is)(.*?)$/i', $method, $results)) {
                 continue;
             }
-            
+
             $k = $results[2];
 
             $k = strtolower(substr($k, 0, 1)) . substr($k, 1);
@@ -71,45 +72,6 @@ class Hydrator implements HydratorInterface
         }
 
         return $attributes;
-    }
-
-    private function convertToBuiltinType($value, $type)
-    {
-        switch ($type) {
-            case 'string':
-                return (string)$value;
-            case 'bool':
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-        }
-        return $value;
-    }
-
-    /**
-     * @return array A list with use statements in the form (Alias => FQN).
-     */
-    public function parseUseStatements(ReflectionClass $class)
-    {
-        if (false === $filename = $class->getFilename()) {
-            return array();
-        }
-
-        $content = $this->getFileContent($filename, $class->getStartLine());
-
-        if (null === $content) {
-            return array();
-        }
-
-        $namespace = preg_quote($class->getNamespaceName());
-        $content = preg_replace(
-            '/^.*?(\bnamespace\s+' . $namespace . '\s*[;{].*)$/s',
-            '\\1',
-            $content
-        );
-        $tokenizer = new \PhpDocReader\PhpParser\TokenParser('<?php ' . $content);
-
-        $statements = $tokenizer->parseUseStatements($class->getNamespaceName());
-
-        return $statements;
     }
 
     /**
@@ -155,44 +117,6 @@ class Hydrator implements HydratorInterface
         return null;
     }
 
-
-    /**
-     * @param string $class
-     * @return bool
-     */
-    private function classExists($class)
-    {
-        return class_exists($class) || interface_exists($class);
-    }
-
-    /**
-     * Gets the content of the file right up to the given line number.
-     *
-     * @param string  $filename   The name of the file to load.
-     * @param integer $lineNumber The number of lines to read from file.
-     *
-     * @return string The content of the file.
-     */
-    private function getFileContent($filename, $lineNumber)
-    {
-        if (! is_file($filename)) {
-            return null;
-        }
-
-        $content = '';
-        $lineCnt = 0;
-        $file = new SplFileObject($filename);
-        while (!$file->eof()) {
-            if ($lineCnt++ == $lineNumber) {
-                break;
-            }
-
-            $content .= $file->fgets();
-        }
-
-        return $content;
-    }
-
     /**
      * Attempts to resolve the FQN of the provided $type based on the $class and $member context.
      *
@@ -232,12 +156,89 @@ class Hydrator implements HydratorInterface
     }
 
     /**
+     * @return array A list with use statements in the form (Alias => FQN).
+     */
+    public function parseUseStatements(ReflectionClass $class)
+    {
+        if (false === $filename = $class->getFilename()) {
+            return array();
+        }
+
+        $content = $this->getFileContent($filename, $class->getStartLine());
+
+        if (null === $content) {
+            return array();
+        }
+
+        $namespace = preg_quote($class->getNamespaceName());
+        $content = preg_replace(
+            '/^.*?(\bnamespace\s+' . $namespace . '\s*[;{].*)$/s',
+            '\\1',
+            $content
+        );
+        $tokenizer = new \PhpDocReader\PhpParser\TokenParser('<?php ' . $content);
+
+        $statements = $tokenizer->parseUseStatements($class->getNamespaceName());
+
+        return $statements;
+    }
+
+    /**
+     * Gets the content of the file right up to the given line number.
+     *
+     * @param string $filename The name of the file to load.
+     * @param integer $lineNumber The number of lines to read from file.
+     *
+     * @return string The content of the file.
+     */
+    private function getFileContent($filename, $lineNumber)
+    {
+        if (!is_file($filename)) {
+            return null;
+        }
+
+        $content = '';
+        $lineCnt = 0;
+        $file = new SplFileObject($filename);
+        while (!$file->eof()) {
+            if ($lineCnt++ == $lineNumber) {
+                break;
+            }
+
+            $content .= $file->fgets();
+        }
+
+        return $content;
+    }
+
+    /**
+     * @param string $class
+     * @return bool
+     */
+    private function classExists($class)
+    {
+        return class_exists($class) || interface_exists($class);
+    }
+
+    private function resolveParameters(ReflectionMethod $method, array $data)
+    {
+        $args = [];
+
+        foreach ($method->getParameters() as $parameter) {
+            [$type, $isArray] = $this->getParameterType($parameter);
+            $args[] = $this->resolveParameter($parameter, $data, $type, $isArray);
+        }
+
+        return $args;
+    }
+
+    /**
      * Parse the docblock of the property to get the class of the param annotation.
      *
      * @param ReflectionParameter $parameter
      *
-     * @throws AnnotationException
      * @return array Type of the property (content of var annotation)
+     * @throws AnnotationException
      */
     public function getParameterType(ReflectionParameter $parameter)
     {
@@ -305,26 +306,6 @@ class Hydrator implements HydratorInterface
         return [$type, $isArray];
     }
 
-    private function createArrayOfType($class, $value)
-    {
-        if (null === $value) {
-            return [];
-        }
-
-        if (is_array($value) || $value instanceof Traversable) {
-            $result = [];
-            foreach ($value as $k => $v) {
-                if (is_array($v)) {
-                    $result[$k] = $this->hydrate($v, $class);
-                } else {
-                    $result[$k] = $v;
-                }
-            }
-            return $result;
-        }
-    }
-
-
     private function resolveParameter(ReflectionParameter $parameter, array $data, $class, $isArray)
     {
         $name = $parameter->getName();
@@ -351,16 +332,23 @@ class Hydrator implements HydratorInterface
         return null;
     }
 
-    private function resolveParameters(ReflectionMethod $method, array $data)
+    private function createArrayOfType($class, $value)
     {
-        $args = [];
-
-        foreach ($method->getParameters() as $parameter) {
-            [$type, $isArray] = $this->getParameterType($parameter);
-            $args[] = $this->resolveParameter($parameter, $data, $type, $isArray);
+        if (null === $value) {
+            return [];
         }
 
-        return $args;
+        if (is_array($value) || $value instanceof Traversable) {
+            $result = [];
+            foreach ($value as $k => $v) {
+                if (is_array($v)) {
+                    $result[$k] = $this->hydrate($v, $class);
+                } else {
+                    $result[$k] = $v;
+                }
+            }
+            return $result;
+        }
     }
 
     public function hydrate(array $data, $class)
@@ -372,5 +360,16 @@ class Hydrator implements HydratorInterface
         $args = $this->resolveParameters($constructor, $data);
 
         return $ref->newInstanceArgs($args);
+    }
+
+    private function convertToBuiltinType($value, $type)
+    {
+        switch ($type) {
+            case 'string':
+                return (string)$value;
+            case 'bool':
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        }
+        return $value;
     }
 }

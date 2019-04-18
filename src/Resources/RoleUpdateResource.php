@@ -1,8 +1,9 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
-use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
 use RuntimeException;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
 
 class RoleUpdateResource implements RoleUpdateResourceInterface
 {
@@ -28,7 +29,8 @@ class RoleUpdateResource implements RoleUpdateResourceInterface
         RoleRepresentationBuilderInterface $builder,
         string $realm,
         string $role
-    ) {
+    )
+    {
         $this->rolesResource = $rolesResource;
         $this->realm = $realm;
         $this->role = $role;

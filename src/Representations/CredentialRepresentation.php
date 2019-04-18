@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
 class CredentialRepresentation extends AbstractRepresentation

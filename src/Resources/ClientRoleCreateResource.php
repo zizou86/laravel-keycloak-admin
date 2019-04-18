@@ -1,8 +1,8 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use Scito\Keycloak\Admin\Representations\RoleRepresentationBuilderInterface;
-use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
 
 class ClientRoleCreateResource implements ClientRoleCreateResourceInterface
 {
@@ -18,7 +18,8 @@ class ClientRoleCreateResource implements ClientRoleCreateResourceInterface
     public function __construct(
         ClientRolesResourceInterface $clientRolesResource,
         RoleRepresentationBuilderInterface $builder
-    ) {
+    )
+    {
         $this->clientRolesResource = $clientRolesResource;
         $this->builder = $builder;
     }

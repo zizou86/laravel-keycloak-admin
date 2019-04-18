@@ -1,13 +1,14 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
-use function json_decode;
 use Scito\Keycloak\Admin\Exceptions\CannotDeleteRoleException;
 use Scito\Keycloak\Admin\Exceptions\CannotRetrieveRoleRepresentationException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
 use Scito\Keycloak\Admin\Representations\RoleRepresentation;
 use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
+use function json_decode;
 
 class RoleResource implements RoleResourceInterface
 {
@@ -38,12 +39,23 @@ class RoleResource implements RoleResourceInterface
         HydratorInterface $hydrator,
         string $realm,
         string $name
-    ) {
+    )
+    {
         $this->client = $client;
         $this->resourceFactory = $resourceFactory;
         $this->realm = $realm;
         $this->name = $name;
         $this->hydrator = $hydrator;
+    }
+
+    public function getRealm(): string
+    {
+        return $this->realm;
+    }
+
+    public function getId(): string
+    {
+        return $this->toRepresentation()->getId();
     }
 
     public function toRepresentation(): RoleRepresentationInterface
@@ -56,18 +68,8 @@ class RoleResource implements RoleResourceInterface
 
         $json = (string)$response->getBody();
         $data = json_decode($json, true);
-        
+
         return $this->hydrator->hydrate($data, RoleRepresentation::class);
-    }
-
-    public function getRealm(): string
-    {
-        return $this->realm;
-    }
-
-    public function getId(): string
-    {
-        return $this->toRepresentation()->getId();
     }
 
     public function getName(): string

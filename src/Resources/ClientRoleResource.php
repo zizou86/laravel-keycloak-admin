@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
@@ -35,7 +36,8 @@ class ClientRoleResource implements ClientRoleResourceInterface
         string $realm,
         string $id,
         string $name
-    ) {
+    )
+    {
         $this->client = $client;
         $this->realm = $realm;
         $this->id = $id;

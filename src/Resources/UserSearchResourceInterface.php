@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use IteratorAggregate;
@@ -22,10 +23,12 @@ interface UserSearchResourceInterface extends IteratorAggregate
     public function briefRepresentation(bool $briefRepresentation): self;
 
     public function query(string $query): self;
+
     /**
      * @return RepresentationCollectionInterface
      */
     public function get();
+
     /**
      * @return UserRepresentationInterface|null
      */

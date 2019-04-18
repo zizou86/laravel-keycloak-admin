@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use Scito\Keycloak\Admin\Representations\RealmRepresentationBuilder;
@@ -17,7 +18,8 @@ class RealmCreateResource implements RealmCreateResourceInterface
     public function __construct(
         RealmsResourceInterface $realmsResource,
         RealmRepresentationBuilder $builder
-    ) {
+    )
+    {
         $this->realmsResource = $realmsResource;
         $this->builder = $builder;
     }

@@ -4,7 +4,6 @@ namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use function json_encode;
 use Scito\Keycloak\Admin\Exceptions\CannotCreateRoleException;
 use Scito\Keycloak\Admin\Exceptions\CannotRetrieveRoleException;
 use Scito\Keycloak\Admin\Exceptions\CannotUpdateRoleException;
@@ -13,6 +12,7 @@ use Scito\Keycloak\Admin\Representations\RepresentationCollection;
 use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
 use Scito\Keycloak\Admin\Representations\RoleRepresentation;
 use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
+use function json_encode;
 
 class RolesResource implements RolesResourceInterface
 {
@@ -38,11 +38,19 @@ class RolesResource implements RolesResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    ) {
+    )
+    {
         $this->client = $client;
         $this->realm = $realm;
         $this->hydrator = $hydrator;
         $this->resourceFactory = $resourceFactory;
+    }
+
+    public function delete(string $id): void
+    {
+        $this
+            ->get($id)
+            ->delete();
     }
 
     public function get($id): RoleResourceInterface
@@ -58,11 +66,10 @@ class RolesResource implements RolesResourceInterface
         return $this->getByName($data['name']);
     }
 
-    public function delete(string $id): void
+    public function getByName($name): RoleResourceInterface
     {
-        $this
-            ->get($id)
-            ->delete();
+        return $this->resourceFactory
+            ->createRoleResource($this->realm, $name);
     }
 
     public function deleteByName(string $name): void
@@ -87,12 +94,6 @@ class RolesResource implements RolesResourceInterface
         }, $users);
 
         return new RepresentationCollection($items);
-    }
-
-    public function getByName($name): RoleResourceInterface
-    {
-        return $this->resourceFactory
-            ->createRoleResource($this->realm, $name);
     }
 
     public function add(RoleRepresentationInterface $role): RoleResourceInterface

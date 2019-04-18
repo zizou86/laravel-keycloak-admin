@@ -1,13 +1,14 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
-use function json_decode;
 use Scito\Keycloak\Admin\Exceptions\CannotDeleteRealmException;
 use Scito\Keycloak\Admin\Exceptions\CannotRetrieveRealmRepresentationException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
 use Scito\Keycloak\Admin\Representations\RealmRepresentation;
 use Scito\Keycloak\Admin\Representations\RealmRepresentationInterface;
+use function json_decode;
 
 class RealmResource implements RealmResourceInterface
 {
@@ -30,7 +31,8 @@ class RealmResource implements RealmResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    ) {
+    )
+    {
         $this->resourceFactory = $resourceFactory;
         $this->client = $client;
         $this->realm = $realm;

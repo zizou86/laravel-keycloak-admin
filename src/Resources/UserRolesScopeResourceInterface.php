@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
@@ -10,10 +11,12 @@ interface UserRolesScopeResourceInterface
      * @return RepresentationCollectionInterface
      */
     public function all(): RepresentationCollectionInterface;
+
     /**
      * @return RepresentationCollectionInterface
      */
     public function available(): RepresentationCollectionInterface;
+
     /**
      * @return RepresentationCollectionInterface
      */

@@ -1,8 +1,9 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Token;
 
-use function date_create;
 use DateTime;
+use function date_create;
 
 class Token
 {
@@ -31,14 +32,14 @@ class Token
         return $this->type;
     }
 
-    public function getContent()
-    {
-        return $this->token;
-    }
-
     public function __toString()
     {
         return (string)$this->getContent();
+    }
+
+    public function getContent()
+    {
+        return $this->token;
     }
 
     /**

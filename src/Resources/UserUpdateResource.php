@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use Scito\Keycloak\Admin\Representations\UserRepresentationBuilderInterface;
@@ -27,7 +28,8 @@ class UserUpdateResource implements UserUpdateResourceInterface
         UserRepresentationBuilderInterface $builder,
         string $realm,
         string $id
-    ) {
+    )
+    {
         $this->usersResource = $usersResource;
         $this->realm = $realm;
         $this->id = $id;

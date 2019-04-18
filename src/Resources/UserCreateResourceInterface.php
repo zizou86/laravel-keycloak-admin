@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 interface UserCreateResourceInterface
@@ -18,6 +19,7 @@ interface UserCreateResourceInterface
     public function temporaryPassword(string $password): UserCreateResourceInterface;
 
     public function passwordIsTemporary(bool $temporary): UserCreateResourceInterface;
+
     /**
      * @param array|null $actions
      * @return UserCreateResourceInterface

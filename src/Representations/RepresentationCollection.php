@@ -1,9 +1,10 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
+use ArrayObject;
 use function array_filter;
 use function array_key_exists;
-use ArrayObject;
 use function call_user_func;
 use function is_callable;
 use function iterator_to_array;
@@ -15,11 +16,6 @@ class RepresentationCollection implements RepresentationCollectionInterface
     public function __construct(array $items = [])
     {
         $this->items = $items;
-    }
-
-    public function getIterator(): iterable
-    {
-        return new ArrayObject($this->items);
     }
 
     public function count()
@@ -73,5 +69,10 @@ class RepresentationCollection implements RepresentationCollectionInterface
             }
         }
         return null;
+    }
+
+    public function getIterator(): iterable
+    {
+        return new ArrayObject($this->items);
     }
 }

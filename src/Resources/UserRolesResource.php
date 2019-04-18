@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
@@ -36,7 +37,8 @@ class UserRolesResource implements UserRolesResourceInterface
         ClientInterface $client,
         string $realm,
         string $id
-    ) {
+    )
+    {
         $this->resourceFactory = $resourceFactory;
         $this->client = $client;
         $this->realm = $realm;
@@ -57,7 +59,7 @@ class UserRolesResource implements UserRolesResourceInterface
 
         $items = [];
         foreach (['client', 'realm'] as $scope) {
-            $key = $scope.'Mappings';
+            $key = $scope . 'Mappings';
             if (!array_key_exists($key, $data)) {
                 continue;
             }

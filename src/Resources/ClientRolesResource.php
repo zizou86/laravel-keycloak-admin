@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
@@ -35,7 +36,8 @@ class ClientRolesResource implements ClientRolesResourceInterface
         HydratorInterface $hydrator,
         string $realm,
         string $id
-    ) {
+    )
+    {
         $this->resourceFactory = $resourceFactory;
         $this->realm = $realm;
         $this->id = $id;
@@ -52,12 +54,6 @@ class ClientRolesResource implements ClientRolesResourceInterface
             }
         }
         return $resource;
-    }
-
-    public function getByName($name): ClientRoleResourceInterface
-    {
-        return $this->resourceFactory
-            ->createClientRoleResource($this->realm, $this->id, $name);
     }
 
     public function add(RoleRepresentationInterface $role): ClientRoleResourceInterface
@@ -81,5 +77,11 @@ class ClientRolesResource implements ClientRolesResourceInterface
         $parts = array_filter(explode('/', $location), 'strlen');
         $name = end($parts);
         return $this->getByName($name);
+    }
+
+    public function getByName($name): ClientRoleResourceInterface
+    {
+        return $this->resourceFactory
+            ->createClientRoleResource($this->realm, $this->id, $name);
     }
 }

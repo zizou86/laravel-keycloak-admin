@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 interface ResourceFactoryInterface
@@ -66,14 +67,12 @@ interface ResourceFactoryInterface
      * @param string $id
      * @return UserRolesResourceInterface
      */
-    public function createUserRolesResource(string $realm, string $id)
-        : UserRolesResourceInterface;
+    public function createUserRolesResource(string $realm, string $id): UserRolesResourceInterface;
 
-    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId)
-        : ClientLevelUserRolesResourceInterface;
+    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId): ClientLevelUserRolesResourceInterface;
 
-    public function createRealmLevelUserRolesResource(string $realm, string $userId)
-        : RealmLevelUserRolesResourceInterface;
+    public function createRealmLevelUserRolesResource(string $realm, string $userId): RealmLevelUserRolesResourceInterface;
+
     /**
      * @param string $realm
      * @param string $role
@@ -86,11 +85,13 @@ interface ResourceFactoryInterface
      * @return RolesResourceInterface
      */
     public function createRolesResource(string $realm): RolesResourceInterface;
+
     /**
      * @param string $realm
      * @return RoleCreateResourceInterface
      */
     public function createRolesCreateResource(string $realm): RoleCreateResourceInterface;
+
     /**
      * @param string $realm
      * @param string $role

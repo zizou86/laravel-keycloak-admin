@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Guzzle;
 
 use Psr\Http\Message\RequestInterface;

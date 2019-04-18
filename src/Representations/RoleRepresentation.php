@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
 class RoleRepresentation extends AbstractRepresentation implements RoleRepresentationInterface
@@ -11,7 +12,8 @@ class RoleRepresentation extends AbstractRepresentation implements RoleRepresent
         ?bool $composite = null,
         ?bool $clientRole = null,
         ?array $attributes = null
-    ) {
+    )
+    {
         $this->setAttributes(get_defined_vars());
     }
 

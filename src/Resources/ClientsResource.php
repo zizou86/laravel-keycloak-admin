@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
@@ -9,7 +10,6 @@ use Scito\Keycloak\Admin\Representations\ClientRepresentation;
 use Scito\Keycloak\Admin\Representations\ClientRepresentationInterface;
 use Scito\Keycloak\Admin\Representations\RepresentationCollection;
 use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
-use Scito\Keycloak\Admin\Representations\UserRepresentation;
 
 class ClientsResource implements ClientsResourceInterface
 {
@@ -33,17 +33,12 @@ class ClientsResource implements ClientsResourceInterface
         ClientInterface $client,
         HydratorInterface $hydrator,
         string $realm
-    ) {
+    )
+    {
         $this->resourceFactory = $resourceFactory;
         $this->client = $client;
         $this->realm = $realm;
         $this->hydrator = $hydrator;
-    }
-
-    public function get(string $id): ClientResourceInterface
-    {
-        return $this->resourceFactory
-            ->createClientResource($this->realm, $id);
     }
 
     public function add(ClientRepresentationInterface $client): ClientResourceInterface
@@ -61,6 +56,12 @@ class ClientsResource implements ClientsResourceInterface
         $parts = array_filter(explode('/', $location), 'strlen');
         $id = end($parts);
         return $this->get($id);
+    }
+
+    public function get(string $id): ClientResourceInterface
+    {
+        return $this->resourceFactory
+            ->createClientResource($this->realm, $id);
     }
 
     public function create(): ClientCreateResourceInterface

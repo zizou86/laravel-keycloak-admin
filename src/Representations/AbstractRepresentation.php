@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Representations;
 
 use function array_key_exists;
@@ -18,9 +19,36 @@ abstract class AbstractRepresentation
         return $instance;
     }
 
-    protected function getAttribute($key, $default = null)
+    protected function setAttribute($name, $value)
     {
-        return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
+        $this->attributes[$name] = $value;
+        return $this;
+    }
+
+    public function toJson(): string
+    {
+        return json_encode((object)$this->toArray());
+    }
+
+    public function toArray(): array
+    {
+        return $this->recursiveToArray();
+    }
+
+    protected function recursiveToArray()
+    {
+        $result = [];
+        foreach ($this->getAttributes() as $key => $value) {
+            if (null !== $value) {
+                $result[$key] = $this->convertValue($value);
+            }
+        }
+        return $result;
+    }
+
+    protected function getAttributes()
+    {
+        return $this->attributes;
     }
 
     protected function setAttributes(array $attributes)
@@ -29,17 +57,6 @@ abstract class AbstractRepresentation
             $this->setAttribute($k, $v);
         }
         return $this;
-    }
-
-    protected function setAttribute($name, $value)
-    {
-        $this->attributes[$name] = $value;
-        return $this;
-    }
-
-    protected function getAttributes()
-    {
-        return $this->attributes;
     }
 
     private function convertValue($value)
@@ -58,24 +75,8 @@ abstract class AbstractRepresentation
         return $value;
     }
 
-    protected function recursiveToArray()
+    protected function getAttribute($key, $default = null)
     {
-        $result = [];
-        foreach ($this->getAttributes() as $key => $value) {
-            if (null !== $value) {
-                $result[$key] = $this->convertValue($value);
-            }
-        }
-        return $result;
-    }
-
-    public function toArray(): array
-    {
-        return $this->recursiveToArray();
-    }
-
-    public function toJson(): string
-    {
-        return json_encode((object)$this->toArray());
+        return array_key_exists($key, $this->attributes) ? $this->attributes[$key] : $default;
     }
 }

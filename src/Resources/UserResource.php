@@ -1,11 +1,12 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use Scito\Keycloak\Admin\Exceptions\CannotRetrieveUserException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
-use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
 use Scito\Keycloak\Admin\Representations\UserRepresentation;
+use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
 
 class UserResource implements UserResourceInterface
 {
@@ -36,7 +37,8 @@ class UserResource implements UserResourceInterface
         HydratorInterface $hydrator,
         string $realm,
         string $id
-    ) {
+    )
+    {
         $this->client = $client;
         $this->realm = $realm;
         $this->id = $id;

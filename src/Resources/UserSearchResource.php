@@ -1,14 +1,15 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
-use function http_build_query;
-use function json_decode;
+use RuntimeException;
 use Scito\Keycloak\Admin\Exceptions\CannotRetrieveUsersException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
 use Scito\Keycloak\Admin\Representations\RepresentationCollection;
 use Scito\Keycloak\Admin\Representations\UserRepresentation;
-use RuntimeException;
+use function http_build_query;
+use function json_decode;
 
 class UserSearchResource implements UserSearchResourceInterface
 {
@@ -37,7 +38,8 @@ class UserSearchResource implements UserSearchResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    ) {
+    )
+    {
         $this->client = $client;
         $this->resourceFactory = $resourceFactory;
         $this->realm = $realm;
@@ -97,6 +99,11 @@ class UserSearchResource implements UserSearchResourceInterface
         throw new RuntimeException("Unknown searchable method [$name]");
     }
 
+    public function getIterator()
+    {
+        return $this->get();
+    }
+
     public function get()
     {
         $options = $this->getSearchOptions();
@@ -118,11 +125,6 @@ class UserSearchResource implements UserSearchResourceInterface
         }, $users);
 
         return new RepresentationCollection($items);
-    }
-
-    public function getIterator()
-    {
-        return $this->get();
     }
 
     public function first()

@@ -1,11 +1,12 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Token;
 
-use function date_create;
 use DateInterval;
 use GuzzleHttp\Client;
-use function json_decode;
 use RuntimeException;
+use function date_create;
+use function json_decode;
 
 class TokenManager
 {

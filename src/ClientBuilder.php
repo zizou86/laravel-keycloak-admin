@@ -143,7 +143,7 @@ class ClientBuilder
             $tokenManager = $this->buildTokenManager($guzzle);
         }
 
-        $tokenMiddleware = new TokenMiddleware($tokenManager);
+        $tokenMiddleware = new TokenMiddleware($tokenManager, $this->realm);
 
         $stack = HandlerStack::create();
 

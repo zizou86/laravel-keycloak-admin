@@ -15,9 +15,12 @@ class TokenMiddleware
      */
     private $tokenManager;
 
-    public function __construct(TokenManager $tokenManager)
+    private $defaultRealm;
+
+    public function __construct(TokenManager $tokenManager, string $defaultRealm)
     {
         $this->tokenManager = $tokenManager;
+        $this->defaultRealm = $defaultRealm;
     }
 
     /**
@@ -28,9 +31,9 @@ class TokenMiddleware
      * @param string $default
      * @return bool|mixed
      */
-    private function getRequestedRealm(RequestInterface $request, array $options, $default = 'master')
+    private function getRequestedRealm(RequestInterface $request, array $options)
     {
-        $realm = array_key_exists('realm', $options) ? $options['realm'] : $default;
+        $realm = array_key_exists('realm', $options) ? $options['realm'] : $this->defaultRealm;
 
         if (!$realm) {
             $path = parse_url((string)$request->getUri(), PHP_URL_PATH);

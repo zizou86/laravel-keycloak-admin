@@ -179,7 +179,7 @@ class UsersResourceTest extends TestCase
             ->password($password)
             ->save();
 
-        $user = $this->resource->getByUsername($username);
+        $user = $this->resource->getByUsername($username)->toRepresentation();
         $this->assertInstanceOf(UserRepresentationInterface::class, $user);
         $this->assertEquals($username, $user->getUsername());
     }
@@ -228,7 +228,7 @@ class UsersResourceTest extends TestCase
 
         [$username, $email, $password, $firstName, $lastName] = $this->createUser();
 
-        $user = $this->resource->getByUsername($username);
+        $user = $this->resource->getByUsername($username)->toRepresentation();
 
         $this->assertInstanceOf(UserRepresentationInterface::class, $user);
         $this->assertEquals($username, $user->getUsername());
@@ -303,7 +303,7 @@ class UsersResourceTest extends TestCase
 
         $this->createUser($username, $email, $password);
 
-        $user = $this->resource->getByEmail($email);
+        $user = $this->resource->getByEmail($email)->toRepresentation();
 
         $this->assertInstanceOf(UserRepresentationInterface::class, $user);
 
@@ -322,7 +322,7 @@ class UsersResourceTest extends TestCase
 
         $this->createUser($username, $email, $password);
 
-        $user = $this->resource->getByUsername($username);
+        $user = $this->resource->getByUsername($username)->toRepresentation();
 
         $this->assertInstanceOf(UserRepresentationInterface::class, $user);
         $this->assertEquals($username, $user->getUsername());
@@ -336,7 +336,7 @@ class UsersResourceTest extends TestCase
                 ->build()
         );
 
-        $user = $this->resource->getByUsername($username);
+        $user = $this->resource->getByUsername($username)->toRepresentation();
 
         $this->assertEquals($newEmail, $user->getEmail());
     }

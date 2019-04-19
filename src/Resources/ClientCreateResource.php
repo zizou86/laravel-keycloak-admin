@@ -25,8 +25,7 @@ class ClientCreateResource implements ClientCreateResourceInterface
         ClientsResourceInterface $clientsResource,
         ClientRepresentationBuilderInterface $builder,
         string $realm
-    )
-    {
+    ) {
         $this->clientsResource = $clientsResource;
         $this->builder = $builder;
         $this->realm = $realm;

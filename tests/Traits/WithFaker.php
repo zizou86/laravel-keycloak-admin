@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests\Traits;
 
 use Faker\Factory;
@@ -10,6 +11,7 @@ trait WithFaker
      * @var Generator
      */
     protected $faker;
+
     /**
      * @before
      */
@@ -17,16 +19,17 @@ trait WithFaker
     {
         $this->faker = $this->makeFaker();
     }
+
+    protected function makeFaker($locale = null)
+    {
+        return Factory::create($locale ?? Factory::DEFAULT_LOCALE);
+    }
+
     /**
      * @after
      */
     public function teardownFakerClass()
     {
         $this->faker = null;
-    }
-
-    protected function makeFaker($locale = null)
-    {
-        return Factory::create($locale ?? Factory::DEFAULT_LOCALE);
     }
 }

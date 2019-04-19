@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests;
 
 use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
@@ -91,7 +92,7 @@ class UsersResourceTest extends TestCase
     {
 
         // Create multiple users for the test realm
-        for ($i=0; $i<5; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $this->createUser();
         }
 
@@ -102,6 +103,36 @@ class UsersResourceTest extends TestCase
             ->get();
 
         $this->assertCount(1, $users);
+    }
+
+    private function createUser($username = null, $email = null, $password = null, $firstName = null, $lastName = null)
+    {
+        if (null === $username) {
+            $username = $this->faker->userName;
+        }
+        if (null === $email) {
+            $email = $this->faker->email;
+        }
+        if (null === $password) {
+            $password = $this->faker->password;
+        }
+        if (null === $firstName) {
+            $firstName = $this->faker->firstName;
+        }
+        if (null === $lastName) {
+            $lastName = $this->faker->lastName;
+        }
+
+        $this->resource->add(
+            $this->builder
+                ->withUsername($username)
+                ->withPassword($password)
+                ->withEmail($email)
+                ->withFirstName($firstName)
+                ->withLastName($lastName)
+                ->build()
+        );
+        return [$username, $email, $password, $firstName, $lastName];
     }
 
     /**
@@ -153,36 +184,6 @@ class UsersResourceTest extends TestCase
         $this->assertEquals($username, $user->getUsername());
     }
 
-    private function createUser($username = null, $email = null, $password = null, $firstName = null, $lastName = null)
-    {
-        if (null === $username) {
-            $username = $this->faker->userName;
-        }
-        if (null === $email) {
-            $email = $this->faker->email;
-        }
-        if (null === $password) {
-            $password = $this->faker->password;
-        }
-        if (null === $firstName) {
-            $firstName = $this->faker->firstName;
-        }
-        if (null === $lastName) {
-            $lastName = $this->faker->lastName;
-        }
-
-        $this->resource->add(
-            $this->builder
-                ->withUsername($username)
-                ->withPassword($password)
-                ->withEmail($email)
-                ->withFirstName($firstName)
-                ->withLastName($lastName)
-                ->build()
-        );
-        return [$username, $email, $password, $firstName, $lastName];
-    }
-
     /**
      * @test
      */
@@ -225,7 +226,7 @@ class UsersResourceTest extends TestCase
     public function users_can_be_created()
     {
 
-        [$username,$email,$password,$firstName,$lastName] = $this->createUser();
+        [$username, $email, $password, $firstName, $lastName] = $this->createUser();
 
         $user = $this->resource->getByUsername($username);
 
@@ -256,14 +257,14 @@ class UsersResourceTest extends TestCase
         $this->assertEquals($username, $user->getUsername());
         $this->assertValidKeycloakId($user->getId());
     }
-    
+
     /**
      * @test
      */
     public function users_can_be_updated_using_the_fluent_api()
     {
 
-        [$username,$email] = $this->createUser();
+        [$username, $email] = $this->createUser();
 
         $user = $this->resource
             ->search()

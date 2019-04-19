@@ -41,8 +41,7 @@ class ClientLevelUserRolesResource implements ClientLevelUserRolesResourceInterf
         string $realm,
         string $userId,
         string $clientId
-    )
-    {
+    ) {
         $this->client = $client;
         $this->realm = $realm;
         $this->userId = $userId;

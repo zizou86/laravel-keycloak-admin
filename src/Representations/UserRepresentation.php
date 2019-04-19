@@ -34,8 +34,7 @@ class UserRepresentation extends AbstractRepresentation implements UserRepresent
         array $attributes = [],
         array $requiredActions = [],
         DateTime $created = null
-    )
-    {
+    ) {
         $this->setAttributes(get_defined_vars());
     }
 

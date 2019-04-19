@@ -17,8 +17,7 @@ class Client
     public function __construct(
         ResourceFactoryInterface $resourceFactory,
         ?string $defaultRealm = null
-    )
-    {
+    ) {
         $this->resourceFactory = $resourceFactory;
         $this->defaultRealm = $defaultRealm;
     }

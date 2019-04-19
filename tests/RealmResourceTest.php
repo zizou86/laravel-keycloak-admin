@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests;
 
 use Scito\Keycloak\Admin\Representations\RealmRepresentationInterface;
@@ -8,11 +9,6 @@ class RealmResourceTest extends TestCase
 {
     use WithTemporaryRealm;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /**
      * @test
      */
@@ -21,15 +17,15 @@ class RealmResourceTest extends TestCase
         $realm = $this->client->realm($this->temporaryRealm)->toRepresentation();
         $this->assertInstanceOf(RealmRepresentationInterface::class, $realm);
     }
-    
+
     /**
      * @test
      */
     public function realms_can_be_created()
     {
-        
+
         $name = $this->faker->name;
-        
+
         $this->client->realms()
             ->create()
             ->name($name)
@@ -41,5 +37,10 @@ class RealmResourceTest extends TestCase
             ->toRepresentation();
 
         $this->assertInstanceOf(RealmRepresentationInterface::class, $realm);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
     }
 }

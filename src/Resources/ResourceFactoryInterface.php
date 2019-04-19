@@ -69,9 +69,11 @@ interface ResourceFactoryInterface
      */
     public function createUserRolesResource(string $realm, string $id): UserRolesResourceInterface;
 
-    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId): ClientLevelUserRolesResourceInterface;
+    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId)
+        : ClientLevelUserRolesResourceInterface;
 
-    public function createRealmLevelUserRolesResource(string $realm, string $userId): RealmLevelUserRolesResourceInterface;
+    public function createRealmLevelUserRolesResource(string $realm, string $userId)
+        : RealmLevelUserRolesResourceInterface;
 
     /**
      * @param string $realm

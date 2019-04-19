@@ -37,8 +37,7 @@ class UserRolesResource implements UserRolesResourceInterface
         ClientInterface $client,
         string $realm,
         string $id
-    )
-    {
+    ) {
         $this->resourceFactory = $resourceFactory;
         $this->client = $client;
         $this->realm = $realm;

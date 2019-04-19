@@ -21,6 +21,7 @@
     </filter>
     <php>
         <env name="SERVER_URL" value="http://keycloak:8080" />
+        <env name="REALM" value="master" />
         <env name="CLIENT_ID" value="admin-cli" />
         <env name="USERNAME" value="admin" />
         <env name="PASSWORD" value="secret" />

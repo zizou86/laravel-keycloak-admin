@@ -1,8 +1,8 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests;
 
 use Scito\Keycloak\Admin\Representations\ClientRepresentationInterface;
-use Scito\Keycloak\Admin\Representations\RealmRepresentationInterface;
 use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
 use Scito\Keycloak\Admin\Representations\UserRepresentationInterface;
 use Scito\Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
@@ -16,12 +16,6 @@ class UserRolesTest extends TestCase
      * @var \Scito\Keycloak\Admin\Resources\RealmResourceInterface
      */
     private $realmResource;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->realmResource = $this->client->realm($this->temporaryRealm);
-    }
 
     /**
      * @test
@@ -129,9 +123,9 @@ class UserRolesTest extends TestCase
         $this->assertInstanceOf(RoleRepresentationInterface::class, $addedRole);
     }
 
-     /**
-      * @test
-      */
+    /**
+     * @test
+     */
     public function client_level_roles_can_be_deleted()
     {
 
@@ -194,5 +188,11 @@ class UserRolesTest extends TestCase
             });
 
         $this->assertNull($addedRole);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->realmResource = $this->client->realm($this->temporaryRealm);
     }
 }

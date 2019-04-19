@@ -38,8 +38,7 @@ class UserSearchResource implements UserSearchResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    )
-    {
+    ) {
         $this->client = $client;
         $this->resourceFactory = $resourceFactory;
         $this->realm = $realm;

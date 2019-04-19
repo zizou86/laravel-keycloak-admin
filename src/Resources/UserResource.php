@@ -37,8 +37,7 @@ class UserResource implements UserResourceInterface
         HydratorInterface $hydrator,
         string $realm,
         string $id
-    )
-    {
+    ) {
         $this->client = $client;
         $this->realm = $realm;
         $this->id = $id;

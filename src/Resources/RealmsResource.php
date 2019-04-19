@@ -26,8 +26,7 @@ class RealmsResource implements RealmsResourceInterface
         ClientInterface $client,
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator
-    )
-    {
+    ) {
         $this->client = $client;
         $this->resourceFactory = $resourceFactory;
         $this->hydrator = $hydrator;

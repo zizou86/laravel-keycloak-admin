@@ -29,8 +29,7 @@ class RoleUpdateResource implements RoleUpdateResourceInterface
         RoleRepresentationBuilderInterface $builder,
         string $realm,
         string $role
-    )
-    {
+    ) {
         $this->rolesResource = $rolesResource;
         $this->realm = $realm;
         $this->role = $role;

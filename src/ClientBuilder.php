@@ -46,20 +46,20 @@ class ClientBuilder
     }
 
     /**
-     * @param null|string $realm
+     * @param string $realm
      * @return ClientBuilder
      */
-    public function withRealm(?string $realm): self
+    public function withRealm(string $realm): self
     {
         $this->realm = $realm;
         return $this;
     }
 
     /**
-     * @param null|string $url
+     * @param string $url
      * @return ClientBuilder
      */
-    public function withServerUrl(?string $url): self
+    public function withServerUrl(string $url): self
     {
         $this->serverUrl = $url;
         return $this;
@@ -86,20 +86,20 @@ class ClientBuilder
     }
 
     /**
-     * @param null|string $username
+     * @param string $username
      * @return ClientBuilder
      */
-    public function withUsername(?string $username): self
+    public function withUsername(string $username): self
     {
         $this->username = $username;
         return $this;
     }
 
     /**
-     * @param null|string $password
+     * @param string $password
      * @return ClientBuilder
      */
-    public function withPassword(?string $password): self
+    public function withPassword(string $password): self
     {
         $this->password = $password;
         return $this;

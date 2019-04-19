@@ -18,8 +18,7 @@ class ClientRoleCreateResource implements ClientRoleCreateResourceInterface
     public function __construct(
         ClientRolesResourceInterface $clientRolesResource,
         RoleRepresentationBuilderInterface $builder
-    )
-    {
+    ) {
         $this->clientRolesResource = $clientRolesResource;
         $this->builder = $builder;
     }

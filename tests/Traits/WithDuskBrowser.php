@@ -1,16 +1,13 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests\Traits;
 
-use const DIRECTORY_SEPARATOR;
-use function explode;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
-use function file_get_contents;
 use Illuminate\Support\Collection;
 use Laravel\Dusk\Browser;
 use Laravel\Dusk\Chrome\SupportsChrome;
-use function preg_match;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -20,6 +17,7 @@ trait WithDuskBrowser
 
     protected static $browsers = [];
     protected static $afterClassCallbacks = [];
+
     /**
      * @beforeClass
      */
@@ -27,6 +25,7 @@ trait WithDuskBrowser
     {
         static::startChromeDriver();
     }
+
     /**
      * @afterClass
      */
@@ -40,10 +39,12 @@ trait WithDuskBrowser
             $callback();
         }
     }
+
     public static function afterClass(\Closure $callback)
     {
         static::$afterClassCallbacks[] = $callback;
     }
+
     /**
      * @before
      */
@@ -53,6 +54,29 @@ trait WithDuskBrowser
         Browser::$storeScreenshotsAt = realpath($_SERVER['DUSK_SCREENSHOT_DIR']);
         $this->clearExistingScreenshots(Browser::$storeScreenshotsAt);
     }
+
+    protected function clearExistingScreenshots($dir)
+    {
+        $filesystem = new Filesystem();
+        if (!is_dir($dir)) {
+            $filesystem->mkdir($dir);
+        }
+        $files = Finder::create()
+            ->files()
+            ->in($dir)
+            ->name($this->getScreenshotPrefix() . '*');
+        $filesystem->remove($files);
+    }
+
+    protected function getScreenshotPrefix()
+    {
+        return sprintf(
+            'failure-%s-%s',
+            class_basename($this),
+            $this->getName()
+        );
+    }
+
     public function browse(\Closure $callback)
     {
         $browsers = $this->createBrowsersFor($callback);
@@ -68,6 +92,7 @@ trait WithDuskBrowser
             static::$browsers = $this->closeAllButPrimary($browsers);
         }
     }
+
     protected function createBrowsersFor(\Closure $callback)
     {
         if (count(static::$browsers) === 0) {
@@ -78,17 +103,6 @@ trait WithDuskBrowser
             static::$browsers->push(new Browser($this->createWebDriver()));
         }
         return static::$browsers;
-    }
-    protected function browsersNeededFor(\Closure $callback)
-    {
-        return (new \ReflectionFunction($callback))->getNumberOfParameters();
-    }
-    protected function closeAllButPrimary(Collection $browsers)
-    {
-        $browsers->slice(1)->each(function (Browser $browser) {
-            $browser->quit();
-        });
-        return $browsers->take(1);
     }
 
     protected function createWebDriver()
@@ -107,6 +121,12 @@ trait WithDuskBrowser
             )
         );
     }
+
+    protected function browsersNeededFor(\Closure $callback)
+    {
+        return (new \ReflectionFunction($callback))->getNumberOfParameters();
+    }
+
     protected function captureFailuresFor(Collection $browsers)
     {
         $browsers->each(function (Browser $browser, $key) {
@@ -117,25 +137,12 @@ trait WithDuskBrowser
             ));
         });
     }
-    protected function getScreenshotPrefix()
+
+    protected function closeAllButPrimary(Collection $browsers)
     {
-        return sprintf(
-            'failure-%s-%s',
-            class_basename($this),
-            $this->getName()
-        );
-    }
-    protected function clearExistingScreenshots($dir)
-    {
-        $filesystem = new Filesystem();
-        if (!is_dir($dir)) {
-            $filesystem->mkdir($dir);
-        }
-        $files = Finder::create()
-            ->files()
-            ->in($dir)
-            ->name($this->getScreenshotPrefix().'*')
-        ;
-        $filesystem->remove($files);
+        $browsers->slice(1)->each(function (Browser $browser) {
+            $browser->quit();
+        });
+        return $browsers->take(1);
     }
 }

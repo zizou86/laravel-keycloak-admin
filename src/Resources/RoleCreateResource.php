@@ -23,8 +23,7 @@ class RoleCreateResource implements RoleCreateResourceInterface
         RolesResourceInterface $rolesResource,
         RoleRepresentationBuilderInterface $builder,
         string $realm
-    )
-    {
+    ) {
         $this->rolesResource = $rolesResource;
         $this->realm = $realm;
         $this->builder = $builder;

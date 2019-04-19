@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests;
 
 use Scito\Keycloak\Admin\Representations\ClientRepresentationInterface;

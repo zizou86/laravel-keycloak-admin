@@ -36,8 +36,7 @@ class ClientRolesResource implements ClientRolesResourceInterface
         HydratorInterface $hydrator,
         string $realm,
         string $id
-    )
-    {
+    ) {
         $this->resourceFactory = $resourceFactory;
         $this->realm = $realm;
         $this->id = $id;

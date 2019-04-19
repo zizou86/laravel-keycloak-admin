@@ -1,4 +1,5 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests;
 
 use Scito\Keycloak\Admin\Exceptions\CannotDeleteRoleException;
@@ -62,17 +63,6 @@ class RolesResourceTest extends TestCase
         $this->assertValidKeycloakId($adminRole->getId());
     }
 
-    private function roleExists($roleName)
-    {
-        $roles = $this->resource->all();
-
-        $role = $roles->first(function (RoleRepresentationInterface $role) use ($roleName) {
-            return $roleName == $role->getName();
-        });
-
-        return $role instanceof RoleRepresentationInterface;
-    }
-
     /**
      * @test
      */
@@ -87,6 +77,17 @@ class RolesResourceTest extends TestCase
         )->getId();
         $this->assertTrue($this->roleExists($roleName));
         $this->assertValidKeycloakId($id);
+    }
+
+    private function roleExists($roleName)
+    {
+        $roles = $this->resource->all();
+
+        $role = $roles->first(function (RoleRepresentationInterface $role) use ($roleName) {
+            return $roleName == $role->getName();
+        });
+
+        return $role instanceof RoleRepresentationInterface;
     }
 
     /**

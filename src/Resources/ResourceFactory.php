@@ -101,7 +101,8 @@ class ResourceFactory implements ResourceFactoryInterface
         return new RealmLevelUserRolesResource($this, $this->client, $realm, $id);
     }
 
-    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId): ClientLevelUserRolesResourceInterface
+    public function createClientLevelUserRolesResource(string $realm, string $userId, string $clientId)
+        : ClientLevelUserRolesResourceInterface
     {
         return new ClientLevelUserRolesResource($this->client, $this->hydrator, $realm, $userId, $clientId);
     }

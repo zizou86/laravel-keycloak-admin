@@ -37,8 +37,7 @@ class ClientResource implements ClientResourceInterface
         HydratorInterface $hydrator,
         string $realm,
         string $id
-    )
-    {
+    ) {
         $this->client = $client;
         $this->realm = $realm;
         $this->id = $id;

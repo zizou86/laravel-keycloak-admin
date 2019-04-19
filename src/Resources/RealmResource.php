@@ -31,8 +31,7 @@ class RealmResource implements RealmResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    )
-    {
+    ) {
         $this->resourceFactory = $resourceFactory;
         $this->client = $client;
         $this->realm = $realm;

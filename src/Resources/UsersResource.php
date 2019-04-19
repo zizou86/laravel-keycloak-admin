@@ -31,8 +31,7 @@ class UsersResource implements UsersResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    )
-    {
+    ) {
         $this->client = $client;
         $this->realm = $realm;
         $this->hydrator = $hydrator;

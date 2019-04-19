@@ -33,8 +33,7 @@ class ClientsResource implements ClientsResourceInterface
         ClientInterface $client,
         HydratorInterface $hydrator,
         string $realm
-    )
-    {
+    ) {
         $this->resourceFactory = $resourceFactory;
         $this->client = $client;
         $this->realm = $realm;

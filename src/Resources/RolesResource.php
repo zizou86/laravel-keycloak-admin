@@ -38,8 +38,7 @@ class RolesResource implements RolesResourceInterface
         ResourceFactoryInterface $resourceFactory,
         HydratorInterface $hydrator,
         string $realm
-    )
-    {
+    ) {
         $this->client = $client;
         $this->realm = $realm;
         $this->hydrator = $hydrator;

@@ -1,10 +1,11 @@
 <?php
+
 namespace Scito\Keycloak\Admin\Tests\Browser;
 
+use Laravel\Dusk\Browser;
 use Scito\Keycloak\Admin\Tests\TestCase;
 use Scito\Keycloak\Admin\Tests\Traits\WithDuskBrowser;
 use Scito\Keycloak\Admin\Tests\Traits\WithTemporaryRealm;
-use Laravel\Dusk\Browser;
 
 /**
  * Class LoginTest

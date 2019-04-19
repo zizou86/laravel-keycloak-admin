@@ -16,14 +16,8 @@ class DefaultHeadersMiddleware
     public function __invoke(callable $handler)
     {
         return function (RequestInterface $request, array $options) use ($handler) {
-            $request = $request->withHeader(
-                'Accept',
-                'application/json'
-            );
-            $request = $request->withHeader(
-                'Content-Type',
-                'application/json'
-            );
+            $request = $request->withHeader('Accept', 'application/json');
+            $request = $request->withHeader('Content-Type', 'application/json');
             return $handler($request, $options);
         };
     }

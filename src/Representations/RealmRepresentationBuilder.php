@@ -3,7 +3,6 @@
 namespace Scito\Keycloak\Admin\Representations;
 
 use Scito\Keycloak\Admin\Hydrator\Hydrator;
-use RealmRepresentationBuilderInterface as BuilderInterface;
 
 class RealmRepresentationBuilder extends AbstractRepresentationBuilder implements RealmRepresentationBuilderInterface
 {
@@ -32,9 +31,8 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
         return $this->setAttribute('accessCodeLifespanLogin', $accessCodeLifespanLogin);
     }
 
-    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction)
-        : RealmRepresentationBuilderInterface
-    {
+    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction
+    ): RealmRepresentationBuilderInterface {
         return $this->setAttribute('accessCodeLifespanUserAction', $accessCodeLifespanUserAction);
     }
 
@@ -43,9 +41,8 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
         return $this->setAttribute('accessTokenLifespan', $accessTokenLifespan);
     }
 
-    public function withAccessTokenLifespanForImplicitFlow(int $accessTokenLifespanForImplicitFlow)
-        : RealmRepresentationBuilderInterface
-    {
+    public function withAccessTokenLifespanForImplicitFlow(int $accessTokenLifespanForImplicitFlow
+    ): RealmRepresentationBuilderInterface {
         return $this->setAttribute('accessTokenLifespanForImplicitFlow', $accessTokenLifespanForImplicitFlow);
     }
 
@@ -54,15 +51,13 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
         return $this->setAttribute('accountTheme', $accountTheme);
     }
 
-    public function withActionTokenGeneratedByAdminLifespan(int $actionTokenGeneratedByAdminLifespan)
-        : RealmRepresentationBuilderInterface
-    {
+    public function withActionTokenGeneratedByAdminLifespan(int $actionTokenGeneratedByAdminLifespan
+    ): RealmRepresentationBuilderInterface {
         return $this->setAttribute('actionTokenGeneratedByAdminLifespan', $actionTokenGeneratedByAdminLifespan);
     }
 
-    public function withActionTokenGeneratedByUserLifespan(int $actionTokenGeneratedByUserLifespan)
-        : RealmRepresentationBuilderInterface
-    {
+    public function withActionTokenGeneratedByUserLifespan(int $actionTokenGeneratedByUserLifespan
+    ): RealmRepresentationBuilderInterface {
         return $this->setAttribute('actionTokenGeneratedByUserLifespan', $actionTokenGeneratedByUserLifespan);
     }
 

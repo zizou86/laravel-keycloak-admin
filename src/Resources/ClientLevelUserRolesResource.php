@@ -79,9 +79,7 @@ class ClientLevelUserRolesResource implements ClientLevelUserRolesResourceInterf
         $data = $this->hydrator->extract($role);
         $url = "/auth/admin/realms/{$this->realm}/users/{$this->userId}/role-mappings/clients/{$this->clientId}";
 
-        $response = $this->client->post($url, [
-            'body' => json_encode([$data])
-        ]);
+        $response = $this->client->post($url, ['body' => json_encode([$data])]);
 
         if (204 !== $response->getStatusCode()) {
             throw new CannotAssignRoleException();
@@ -93,9 +91,7 @@ class ClientLevelUserRolesResource implements ClientLevelUserRolesResourceInterf
         $data = $this->hydrator->extract($role);
         $url = "/auth/admin/realms/{$this->realm}/users/{$this->userId}/role-mappings/clients/{$this->clientId}";
 
-        $response = $this->client->delete($url, [
-            'body' => json_encode([$data])
-        ]);
+        $response = $this->client->delete($url, ['body' => json_encode([$data])]);
 
         if (204 !== $response->getStatusCode()) {
             throw new CannotUnlinkRoleException();

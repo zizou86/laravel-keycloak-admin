@@ -4,7 +4,11 @@ namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use Scito\Keycloak\Admin\Exceptions\CannotCreateRoleException;
+use Scito\Keycloak\Admin\Exceptions\CannotRetrieveRolesException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
+use Scito\Keycloak\Admin\Representations\RepresentationCollection;
+use Scito\Keycloak\Admin\Representations\RepresentationCollectionInterface;
+use Scito\Keycloak\Admin\Representations\RoleRepresentation;
 use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
 
 class ClientRolesResource implements ClientRolesResourceInterface
@@ -44,6 +48,25 @@ class ClientRolesResource implements ClientRolesResourceInterface
         $this->hydrator = $hydrator;
     }
 
+    public function all(): RepresentationCollectionInterface
+    {
+        $response = $this->client->get("/auth/admin/realms/{$this->realm}/clients/{$this->id}/roles");
+
+        if (200 !== $response->getStatusCode()) {
+            throw new CannotRetrieveRolesException();
+        }
+
+        $json = (string)$response->getBody();
+        $data = json_decode($json, true);
+
+        $items = [];
+        foreach ($data as $role) {
+            $items[] = $this->hydrator->hydrate($role, RoleRepresentation::class);
+        }
+
+        return new RepresentationCollection($items);
+    }
+
     public function create(?array $options = null): ClientRoleCreateResourceInterface
     {
         $resource = $this->resourceFactory->createClientRoleCreateResource($this->realm, $this->id);
@@ -64,9 +87,7 @@ class ClientRolesResource implements ClientRolesResourceInterface
         $data = $this->hydrator->extract($role);
 
         $url = "/auth/admin/realms/{$this->realm}/clients/{$this->id}/roles";
-        $response = $this->client->post($url, [
-            'body' => json_encode($data)
-        ]);
+        $response = $this->client->post($url, ['body' => json_encode($data)]);
 
         if (201 !== $response->getStatusCode()) {
             throw new CannotCreateRoleException();
@@ -80,7 +101,6 @@ class ClientRolesResource implements ClientRolesResourceInterface
 
     public function getByName($name): ClientRoleResourceInterface
     {
-        return $this->resourceFactory
-            ->createClientRoleResource($this->realm, $this->id, $name);
+        return $this->resourceFactory->createClientRoleResource($this->realm, $this->id, $name);
     }
 }

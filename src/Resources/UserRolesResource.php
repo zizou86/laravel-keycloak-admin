@@ -71,13 +71,11 @@ class UserRolesResource implements UserRolesResourceInterface
 
     public function realm(): RealmLevelUserRolesResourceInterface
     {
-        return $this->resourceFactory
-            ->createRealmLevelUserRolesResource($this->realm, $this->id);
+        return $this->resourceFactory->createRealmLevelUserRolesResource($this->realm, $this->id);
     }
 
     public function client(string $id): ClientLevelUserRolesResourceInterface
     {
-        return $this->resourceFactory
-            ->createClientLevelUserRolesResource($this->realm, $this->id, $id);
+        return $this->resourceFactory->createClientLevelUserRolesResource($this->realm, $this->id, $id);
     }
 }

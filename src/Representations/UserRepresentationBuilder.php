@@ -84,10 +84,7 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
                 $data['credentials'] = [];
             }
 
-            $passwordCredential = [
-                'type' => 'password',
-                'value' => $password
-            ];
+            $passwordCredential = ['type' => 'password', 'value' => $password];
 
             if (array_key_exists('passwordIsTemporary', $data)) {
                 $passwordCredential['temporary'] = $data['passwordIsTemporary'];

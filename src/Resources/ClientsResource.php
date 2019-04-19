@@ -44,9 +44,7 @@ class ClientsResource implements ClientsResourceInterface
     {
         $data = $this->hydrator->extract($client);
         unset($data['id']);
-        $response = $this->client->post("/auth/admin/realms/{$this->realm}/clients", [
-            'body' => json_encode($data)
-        ]);
+        $response = $this->client->post("/auth/admin/realms/{$this->realm}/clients", ['body' => json_encode($data)]);
 
         if (201 !== $response->getStatusCode()) {
             throw new CannotCreateClientException();
@@ -59,14 +57,12 @@ class ClientsResource implements ClientsResourceInterface
 
     public function get(string $id): ClientResourceInterface
     {
-        return $this->resourceFactory
-            ->createClientResource($this->realm, $id);
+        return $this->resourceFactory->createClientResource($this->realm, $id);
     }
 
     public function create(): ClientCreateResourceInterface
     {
-        return $this->resourceFactory
-            ->createClientCreateResource($this->realm);
+        return $this->resourceFactory->createClientCreateResource($this->realm);
     }
 
     public function all(): RepresentationCollectionInterface

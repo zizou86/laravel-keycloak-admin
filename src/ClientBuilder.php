@@ -130,11 +130,7 @@ class ClientBuilder
         $stack->push($tokenMiddleware);
         $stack->push(new DefaultHeadersMiddleware());
 
-        $client = new GuzzleClient([
-            'http_errors' => false,
-            'handler' => $stack,
-            'base_uri' => $this->serverUrl
-        ]);
+        $client = new GuzzleClient(['http_errors' => false, 'handler' => $stack, 'base_uri' => $this->serverUrl]);
 
         $factory = new ResourceFactory($client, new Hydrator());
 
@@ -146,19 +142,11 @@ class ClientBuilder
      */
     private function buildGuzzle()
     {
-        return new GuzzleClient([
-            'base_uri' => $this->serverUrl,
-            'http_errors' => false
-        ]);
+        return new GuzzleClient(['base_uri' => $this->serverUrl, 'http_errors' => false]);
     }
 
     private function buildTokenManager(ClientInterface $guzzle)
     {
-        return new TokenManager(
-            $this->username,
-            $this->password,
-            $this->clientId,
-            $guzzle
-        );
+        return new TokenManager($this->username, $this->password, $this->clientId, $guzzle);
     }
 }

@@ -15,9 +15,7 @@ trait SearchableResource
 
     protected function getSearchOption($key, $default = null)
     {
-        return array_key_exists($key, $this->searchOptions)
-            ? $this->searchOptions[$key]
-            : $default;
+        return array_key_exists($key, $this->searchOptions) ? $this->searchOptions[$key] : $default;
     }
 
     protected function getSearchOptions()

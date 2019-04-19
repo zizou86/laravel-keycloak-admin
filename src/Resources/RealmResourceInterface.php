@@ -19,6 +19,12 @@ interface RealmResourceInterface
     public function clients(): ClientsResourceInterface;
 
     /**
+     * @param $id
+     * @return ClientResourceInterface
+     */
+    public function client(string $id): ClientResourceInterface;
+
+    /**
      * @return UsersResourceInterface
      */
     public function users(): UsersResourceInterface;

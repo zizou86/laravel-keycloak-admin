@@ -41,14 +41,7 @@ class TokenManager
             return $this->tokens[$realm];
         }
 
-        $response = $this->client->post("/auth/realms/{$realm}/protocol/openid-connect/token", [
-            'form_params' => [
-                'username' => $this->username,
-                'password' => $this->password,
-                'client_id' => $this->clientId,
-                'grant_type' => 'password',
-            ]
-        ]);
+        $response = $this->client->post("/auth/realms/{$realm}/protocol/openid-connect/token", ['form_params' => ['username' => $this->username, 'password' => $this->password, 'client_id' => $this->clientId, 'grant_type' => 'password',]]);
 
         if (200 !== $response->getStatusCode()) {
             throw new RuntimeException("Error getting token");
@@ -56,14 +49,9 @@ class TokenManager
 
         $data = json_decode((string)$response->getBody(), true);
 
-        $expires = date_create()
-            ->add(new DateInterval(sprintf('PT%dS', $data['expires_in'])));
+        $expires = date_create()->add(new DateInterval(sprintf('PT%dS', $data['expires_in'])));
 
-        $this->tokens[$realm] = new Token(
-            $data['token_type'],
-            $data['access_token'],
-            $expires
-        );
+        $this->tokens[$realm] = new Token($data['token_type'], $data['access_token'], $expires);
 
         return $this->tokens[$realm];
     }

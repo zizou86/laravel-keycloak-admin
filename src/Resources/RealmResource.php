@@ -40,8 +40,12 @@ class RealmResource implements RealmResourceInterface
 
     public function clients(): ClientsResourceInterface
     {
-        return $this->resourceFactory
-            ->createClientsResource($this->realm);
+        return $this->resourceFactory->createClientsResource($this->realm);
+    }
+
+    public function client(string $id): ClientResourceInterface
+    {
+        return $this->resourceFactory->createClientResource($this->realm, $id);
     }
 
     public function toRepresentation(): RealmRepresentationInterface
@@ -66,14 +70,12 @@ class RealmResource implements RealmResourceInterface
 
     public function users(): UsersResourceInterface
     {
-        return $this->resourceFactory
-            ->createUsersResource($this->realm);
+        return $this->resourceFactory->createUsersResource($this->realm);
     }
 
     public function roles(): RolesResourceInterface
     {
-        return $this->resourceFactory
-            ->createRolesResource($this->realm);
+        return $this->resourceFactory->createRolesResource($this->realm);
     }
 
     public function groups(): GroupsResourceInterface

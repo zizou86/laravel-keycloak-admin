@@ -45,8 +45,7 @@ class RealmsResource implements RealmsResourceInterface
 
     public function realm($realm): RealmResourceInterface
     {
-        return $this->resourceFactory
-            ->createRealmResource($realm);
+        return $this->resourceFactory->createRealmResource($realm);
     }
 
     public function add(RealmRepresentationInterface $realm): void
@@ -56,9 +55,7 @@ class RealmsResource implements RealmsResourceInterface
         $data['realm'] = $data['name'];
         unset($data['name'], $data['id'], $data['created']);
 
-        $response = $this->client->post('/auth/admin/realms', [
-            'body' => json_encode($data)
-        ]);
+        $response = $this->client->post('/auth/admin/realms', ['body' => json_encode($data)]);
 
         if (201 !== $response->getStatusCode()) {
             throw new CannotCreateRealmException("Cannot create realm $data[realm]");

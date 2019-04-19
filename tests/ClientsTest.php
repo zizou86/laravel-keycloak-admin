@@ -1,8 +1,8 @@
 <?php
-
 namespace Scito\Keycloak\Admin\Tests;
 
 use Scito\Keycloak\Admin\Representations\ClientRepresentationInterface;
+use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
 use Scito\Keycloak\Admin\Tests\Traits\WithTestClient;
 
 class ClientsTest extends TestCase
@@ -24,4 +24,33 @@ class ClientsTest extends TestCase
 
         $this->assertInstanceOf(ClientRepresentationInterface::class, $client);
     }
+
+    /**
+     * @test
+     */
+     public function client_roles_can_be_retrieved() {
+
+         // Find the id of the client "account"
+         /* @var $client ClientRepresentationInterface */
+         $client = $this->client
+             ->realm('master')
+             ->clients()
+             ->all()
+             ->filter(function(ClientRepresentationInterface $client) {
+                 return $client->getClientId() == 'account';
+             })
+             ->first();
+
+         $role = $this->client
+             ->realm('master')
+             ->client($client->getId())
+             ->roles()
+             ->all()
+             ->first(function (RoleRepresentationInterface $role) {
+                 return 'manage-account' === $role->getName();
+             });
+
+         $this->assertInstanceOf(RoleRepresentationInterface::class, $role);
+
+     }
 }

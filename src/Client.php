@@ -3,6 +3,7 @@
 namespace Scito\Keycloak\Admin;
 
 use Scito\Keycloak\Admin\Exceptions\DefaultRealmMissingException;
+use Scito\Keycloak\Admin\Resources\ClientResourceInterface;
 use Scito\Keycloak\Admin\Resources\ClientsResourceInterface;
 use Scito\Keycloak\Admin\Resources\ResourceFactoryInterface;
 use Scito\Keycloak\Admin\Resources\RolesResourceInterface;
@@ -45,15 +46,21 @@ class Client
         return $this->resourceFactory->createClientsResource($this->checkDefaultRealm());
     }
 
-    public function realms()
+    public function client(string $id): ClientResourceInterface
     {
-        return $this->resourceFactory
-            ->createRealmsResource();
+        return $this->resourceFactory->createClientResource($this->checkDefaultRealm(), $id);
     }
 
-    public function realm(string $realm)
+    public function realms()
     {
-        return $this->resourceFactory
-            ->createRealmResource($realm);
+        return $this->resourceFactory->createRealmsResource();
+    }
+
+    public function realm(?string $realm = null)
+    {
+        if (null === $realm) {
+            $realm = $this->checkDefaultRealm();
+        }
+        return $this->resourceFactory->createRealmResource($realm);
     }
 }

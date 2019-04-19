@@ -47,9 +47,7 @@ class RolesResource implements RolesResourceInterface
 
     public function delete(string $id): void
     {
-        $this
-            ->get($id)
-            ->delete();
+        $this->get($id)->delete();
     }
 
     public function get($id): RoleResourceInterface
@@ -67,15 +65,12 @@ class RolesResource implements RolesResourceInterface
 
     public function getByName($name): RoleResourceInterface
     {
-        return $this->resourceFactory
-            ->createRoleResource($this->realm, $name);
+        return $this->resourceFactory->createRoleResource($this->realm, $name);
     }
 
     public function deleteByName(string $name): void
     {
-        $this
-            ->getByName($name)
-            ->delete();
+        $this->getByName($name)->delete();
     }
 
     /**
@@ -100,9 +95,7 @@ class RolesResource implements RolesResourceInterface
         $data = $this->hydrator->extract($role);
         unset($data['id']);
 
-        $response = $this->client->post("/auth/admin/realms/{$this->realm}/roles", [
-            'body' => json_encode($data)
-        ]);
+        $response = $this->client->post("/auth/admin/realms/{$this->realm}/roles", ['body' => json_encode($data)]);
 
         if (201 != $response->getStatusCode()) {
             throw new CannotCreateRoleException("Unable to create role");
@@ -130,9 +123,7 @@ class RolesResource implements RolesResourceInterface
         $data = $this->hydrator->extract($role);
         $roleName = $data['name'];
 
-        $response = $this->client->put("/auth/admin/realms/{$this->realm}/roles/{$roleName}", [
-            'body' => json_encode($data)
-        ]);
+        $response = $this->client->put("/auth/admin/realms/{$this->realm}/roles/{$roleName}", ['body' => json_encode($data)]);
 
         if (204 != $response->getStatusCode()) {
             throw new CannotUpdateRoleException("Unable to update role $roleName");

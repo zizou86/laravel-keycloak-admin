@@ -54,9 +54,7 @@ class UsersResource implements UsersResourceInterface
         $data = $this->hydrator->extract($user);
         unset($data['created'], $data['username']);
 
-        $response = $this->client->put("/auth/admin/realms/{$this->realm}/users/{$id}", [
-            'body' => json_encode($data)
-        ]);
+        $response = $this->client->put("/auth/admin/realms/{$this->realm}/users/{$id}", ['body' => json_encode($data)]);
 
         if (204 !== $response->getStatusCode()) {
             throw new CannotUpdateUserException("User [$id] cannot be updated");
@@ -68,9 +66,7 @@ class UsersResource implements UsersResourceInterface
         $data = $this->hydrator->extract($user);
         unset($data['id'], $data['created']);
 
-        $response = $this->client->post("/auth/admin/realms/{$this->realm}/users", [
-            'body' => json_encode($data)
-        ]);
+        $response = $this->client->post("/auth/admin/realms/{$this->realm}/users", ['body' => json_encode($data)]);
 
         if (201 !== $response->getStatusCode()) {
             throw new CannotCreateUserException("Unable to create user");
@@ -84,8 +80,7 @@ class UsersResource implements UsersResourceInterface
 
     public function get($id): UserResourceInterface
     {
-        return $this->resourceFactory
-            ->createUserResource($this->realm, $id);
+        return $this->resourceFactory->createUserResource($this->realm, $id);
     }
 
     /**
@@ -127,9 +122,7 @@ class UsersResource implements UsersResourceInterface
 
     public function search(?array $options = null): UserSearchResourceInterface
     {
-        $searchResource = $this
-            ->resourceFactory
-            ->createUserSearchResource($this->realm);
+        $searchResource = $this->resourceFactory->createUserSearchResource($this->realm);
 
         if (null !== $options) {
             foreach ($options as $k => $v) {
@@ -163,10 +156,7 @@ class UsersResource implements UsersResourceInterface
      */
     public function getByUsername(string $username): ?UserResourceInterface
     {
-        $user = $this
-            ->search()
-            ->username($username)
-            ->first();
+        $user = $this->search()->username($username)->first();
 
         if ($user instanceof UserRepresentationInterface) {
             return $this->get($user->getId());

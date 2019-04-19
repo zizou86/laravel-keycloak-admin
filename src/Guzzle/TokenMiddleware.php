@@ -43,10 +43,7 @@ class TokenMiddleware
         ) {
             if (false !== ($realm = $this->getRequestedRealm($request, $options))) {
                 $token = $manager->getToken($realm);
-                $request = $request->withHeader(
-                    'Authorization',
-                    sprintf('%s %s', $token->getType(), (string)$token)
-                );
+                $request = $request->withHeader('Authorization', sprintf('%s %s', $token->getType(), (string)$token));
             }
             return $handler($request, $options);
         };

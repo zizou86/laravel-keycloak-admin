@@ -47,8 +47,7 @@ class ClientResource implements ClientResourceInterface
 
     public function roles(): ClientRolesResourceInterface
     {
-        return $this->resourceFactory
-            ->createClientRolesResource($this->realm, $this->id);
+        return $this->resourceFactory->createClientRolesResource($this->realm, $this->id);
     }
 
     public function toRepresentation(): ClientRepresentationInterface

@@ -134,7 +134,7 @@ class ClientBuilder
 
         $factory = new ResourceFactory($client, new Hydrator());
 
-        return new Client($factory, $this->realm);
+        return new Client($factory, $this->realm, $this->clientId);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Scito\Keycloak\Admin;
 
+use Scito\Keycloak\Admin\Exceptions\DefaultClientIdMissingException;
 use Scito\Keycloak\Admin\Exceptions\DefaultRealmMissingException;
 use Scito\Keycloak\Admin\Resources\ClientResourceInterface;
 use Scito\Keycloak\Admin\Resources\ClientsResourceInterface;
@@ -12,16 +13,27 @@ use Scito\Keycloak\Admin\Resources\UsersResourceInterface;
 
 class Client
 {
+    /**
+     * @var string|null
+     */
     private $defaultRealm;
-
+    /**
+     * @var ResourceFactoryInterface
+     */
     private $resourceFactory;
+    /**
+     * @var string|null
+     */
+    private $defaultClientId;
 
     public function __construct(
         ResourceFactoryInterface $resourceFactory,
-        ?string $defaultRealm = null
+        ?string $defaultRealm = null,
+        ?string $defaultClientId = null
     ) {
         $this->resourceFactory = $resourceFactory;
         $this->defaultRealm = $defaultRealm;
+        $this->defaultClientId = $defaultClientId;
     }
 
     public function users(): UsersResourceInterface
@@ -42,6 +54,14 @@ class Client
         return $this->defaultRealm;
     }
 
+    private function checkDefaultClientId()
+    {
+        if (null === $this->defaultClientId) {
+            throw new DefaultClientIdMissingException("The default client id is not set");
+        }
+        return $this->defaultClientId;
+    }
+
     public function roles(): RolesResourceInterface
     {
         return $this->resourceFactory->createRolesResource($this->checkDefaultRealm());
@@ -52,8 +72,11 @@ class Client
         return $this->resourceFactory->createClientsResource($this->checkDefaultRealm());
     }
 
-    public function client(string $id): ClientResourceInterface
+    public function client(?string $id = null): ClientResourceInterface
     {
+        if (null === $id) {
+            $id = $this->checkDefaultClientId();
+        }
         return $this->resourceFactory->createClientResource($this->checkDefaultRealm(), $id);
     }
 

@@ -7,6 +7,7 @@ use Scito\Keycloak\Admin\Resources\ClientResourceInterface;
 use Scito\Keycloak\Admin\Resources\ClientsResourceInterface;
 use Scito\Keycloak\Admin\Resources\ResourceFactoryInterface;
 use Scito\Keycloak\Admin\Resources\RolesResourceInterface;
+use Scito\Keycloak\Admin\Resources\UserResourceInterface;
 use Scito\Keycloak\Admin\Resources\UsersResourceInterface;
 
 class Client
@@ -26,6 +27,11 @@ class Client
     public function users(): UsersResourceInterface
     {
         return $this->resourceFactory->createUsersResource($this->checkDefaultRealm());
+    }
+
+    public function user(string $id): UserResourceInterface
+    {
+        return $this->resourceFactory->createUserResource($this->checkDefaultRealm(), $id);
     }
 
     private function checkDefaultRealm()

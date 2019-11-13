@@ -69,6 +69,11 @@ class UsersResource implements UsersResourceInterface
         $response = $this->client->post("/auth/admin/realms/{$this->realm}/users", ['body' => json_encode($data)]);
 
         if (201 !== $response->getStatusCode()) {
+            $body = (string)$response->getBody();
+            $data = json_decode($body, true);
+            if (!empty($data['errorMessage'])) {
+                throw new CannotCreateUserException($data['errorMessage']);
+            }
             throw new CannotCreateUserException("Unable to create user");
         }
 

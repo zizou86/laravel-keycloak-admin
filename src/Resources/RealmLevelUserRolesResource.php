@@ -4,6 +4,7 @@ namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
 use Scito\Keycloak\Admin\Exceptions\CannotAssignRoleException;
+use Scito\Keycloak\Admin\Exceptions\CannotDeleteRoleException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
 use Scito\Keycloak\Admin\Representations\RealmRepresentationBuilder;
 use Scito\Keycloak\Admin\Representations\RoleRepresentationInterface;
@@ -57,12 +58,18 @@ class RealmLevelUserRolesResource implements RealmLevelUserRolesResourceInterfac
         }
     }
 
-    /*
     public function remove(RoleRepresentationInterface $role)
     {
-        // TODO: Implement remove() method.
+        $role = $this->hydrator->extract($role);
+
+        $response = $this->client->delete("/auth/admin/realms/{$this->realm}/users/{$this->userId}/role-mappings/realm", ['body' => json_encode([$role])]);
+        
+        if (204 !== $response->getStatusCode()) {
+            throw new CannotDeleteRoleException();
+        }
     }
 
+    /*
     public function available()
     {
         // TODO: Implement available() method.

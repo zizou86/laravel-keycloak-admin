@@ -75,6 +75,12 @@ class UserResource implements UserResourceInterface
 
     public function update(?array $options = null): UserUpdateResourceInterface
     {
-        return $this->resourceFactory->createUserUpdateResource($this->realm, $this->id);
+        $resource = $this->resourceFactory->createUserUpdateResource($this->realm, $this->id);
+        if (null !== $options) {
+            foreach ($options as $key => $value) {
+                $resource->$key($value);
+            }
+        }
+        return $resource;
     }
 }

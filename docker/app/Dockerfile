@@ -19,8 +19,7 @@ RUN apt-get update \
     && wget -O - https://packagecloud.io/gpg.key | sudo apt-key add - \
     && add-apt-repository -y ppa:ondrej/php \
     && apt-get update \
-    && apt-get install -y wget beanstalkd 7.1-fpm 7.1-cli php-memcached \
-        7.1-curl 7.1-xdebug \
+    && apt-get install -y wget beanstalkd 7.3-dom 7.3-fpm 7.3-cli php-memcached 7.3-curl 7.3-xdebug \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && mkdir /run/php \
     && apt-get remove -y --purge software-properties-common \
@@ -47,7 +46,7 @@ RUN apt-get update \
 #RUN wget http://www.java2s.com/Code/JarDownload/testng/testng-6.8.7.jar.zip
 #RUN unzip testng-6.8.7.jar.zip
 
-COPY php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf
+COPY php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 
 EXPOSE 80
 

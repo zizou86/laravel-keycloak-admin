@@ -15,4 +15,6 @@ interface UserResourceInterface
     public function getRealm(): string;
 
     public function getId(): string;
+
+    public function delete();
 }

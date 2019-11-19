@@ -3,6 +3,7 @@
 namespace Scito\Keycloak\Admin\Resources;
 
 use GuzzleHttp\ClientInterface;
+use Scito\Keycloak\Admin\Exceptions\CannotDeleteUserException;
 use Scito\Keycloak\Admin\Exceptions\CannotRetrieveUserException;
 use Scito\Keycloak\Admin\Hydrator\HydratorInterface;
 use Scito\Keycloak\Admin\Representations\UserRepresentation;
@@ -82,5 +83,14 @@ class UserResource implements UserResourceInterface
             }
         }
         return $resource;
+    }
+
+    public function delete()
+    {
+        $response = $this->client->delete("/auth/admin/realms/{$this->realm}/users/{$this->id}");
+
+        if (204 !== $response->getStatusCode()) {
+            throw new CannotDeleteUserException();
+        }
     }
 }

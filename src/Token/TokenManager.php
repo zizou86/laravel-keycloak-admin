@@ -44,7 +44,7 @@ class TokenManager
         $response = $this->client->post("/auth/realms/{$realm}/protocol/openid-connect/token", ['form_params' => ['username' => $this->username, 'password' => $this->password, 'client_id' => $this->clientId, 'grant_type' => 'password',]]);
 
         if (200 !== $response->getStatusCode()) {
-            throw new RuntimeException("Error getting token");
+            throw new RuntimeException(sprintf('Error getting token (%s): BODY: %s', $response->getStatusCode(), (string)$response->getBody()));
         }
 
         $data = json_decode((string)$response->getBody(), true);

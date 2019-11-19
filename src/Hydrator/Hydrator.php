@@ -19,7 +19,20 @@ class Hydrator implements HydratorInterface
 {
     private $docReader;
 
-    private $primitiveTypes = ['bool', 'boolean', 'string', 'int', 'integer', 'float', 'double', 'array', 'object', 'callable', 'resource', 'mixed'];
+    private $primitiveTypes = [
+        'bool',
+        'boolean',
+        'string',
+        'int',
+        'integer',
+        'float',
+        'double',
+        'array',
+        'object',
+        'callable',
+        'resource',
+        'mixed'
+    ];
 
     public function __construct()
     {
@@ -88,7 +101,8 @@ class Hydrator implements HydratorInterface
                 continue;
             } elseif ($member instanceof ReflectionMethod && !$trait->hasMethod($member->name)) {
                 continue;
-            } elseif ($member instanceof ReflectionParameter && !$trait->hasMethod($member->getDeclaringFunction()->name)) {
+            } elseif ($member instanceof ReflectionParameter &&
+                !$trait->hasMethod($member->getDeclaringFunction()->name)) {
                 continue;
             }
 
@@ -258,14 +272,27 @@ class Hydrator implements HydratorInterface
             $resolvedType = $this->tryResolveFqn($type, $class, $parameter);
 
             if (!$resolvedType) {
-                throw new AnnotationException(sprintf('The @param annotation for parameter "%s" of %s::%s contains a non existent class "%s". ' . 'Did you maybe forget to add a "use" statement for this annotation?', $parameterName, $class->name, $method->name, $type));
+                throw new AnnotationException(sprintf(
+                    'The @param annotation for parameter "%s" of %s::%s contains a non existent class "%s". ' .
+                    'Did you maybe forget to add a "use" statement for this annotation?',
+                    $parameterName,
+                    $class->name,
+                    $method->name,
+                    $type
+                ));
             }
 
             $type = $resolvedType;
         }
 
         if (!$this->classExists($type)) {
-            throw new AnnotationException(sprintf('The @param annotation for parameter "%s" of %s::%s contains a non existent class "%s"', $parameterName, $class->name, $method->name, $type));
+            throw new AnnotationException(sprintf(
+                'The @param annotation for parameter "%s" of %s::%s contains a non existent class "%s"',
+                $parameterName,
+                $class->name,
+                $method->name,
+                $type
+            ));
         }
 
         // Remove the leading \ (FQN shouldn't contain it)

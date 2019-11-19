@@ -51,7 +51,9 @@ class RealmLevelUserRolesResource implements RealmLevelUserRolesResourceInterfac
     {
         $role = $this->hydrator->extract($role);
 
-        $response = $this->client->post("/auth/admin/realms/{$this->realm}/users/{$this->userId}/role-mappings/realm", ['body' => json_encode([$role])]);
+        $response = $this->client->post("/auth/admin/realms/{$this->realm}/users/{$this->userId}/role-mappings/realm", [
+            'body' => json_encode([$role])
+        ]);
 
         if (204 !== $response->getStatusCode()) {
             throw new CannotAssignRoleException();
@@ -61,9 +63,13 @@ class RealmLevelUserRolesResource implements RealmLevelUserRolesResourceInterfac
     public function remove(RoleRepresentationInterface $role)
     {
         $role = $this->hydrator->extract($role);
+        $realm = $this->realm;
+        $userId = $this->userId;
 
-        $response = $this->client->delete("/auth/admin/realms/{$this->realm}/users/{$this->userId}/role-mappings/realm", ['body' => json_encode([$role])]);
-        
+        $response = $this->client->delete("/auth/admin/realms/{$realm}/users/{$userId}/role-mappings/realm", [
+            'body' => json_encode([$role])
+        ]);
+
         if (204 !== $response->getStatusCode()) {
             throw new CannotDeleteRoleException();
         }

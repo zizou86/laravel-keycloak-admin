@@ -142,7 +142,7 @@ class ClientBuilder
      */
     private function buildGuzzle()
     {
-        return new GuzzleClient(['base_uri' => $this->serverUrl, 'http_errors' => false]);
+        return new GuzzleClient(['base_uri' => $this->serverUrl]);
     }
 
     private function buildTokenManager(ClientInterface $guzzle)

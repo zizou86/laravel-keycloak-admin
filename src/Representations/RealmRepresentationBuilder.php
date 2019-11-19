@@ -31,8 +31,9 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
         return $this->setAttribute('accessCodeLifespanLogin', $accessCodeLifespanLogin);
     }
 
-    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction
-    ): RealmRepresentationBuilderInterface {
+    public function withAccessCodeLifespanUserAction(int $accessCodeLifespanUserAction)
+        : RealmRepresentationBuilderInterface
+    {
         return $this->setAttribute('accessCodeLifespanUserAction', $accessCodeLifespanUserAction);
     }
 
@@ -42,7 +43,8 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
     }
 
     public function withAccessTokenLifespanForImplicitFlow(int $accessTokenLifespanForImplicitFlow
-    ): RealmRepresentationBuilderInterface {
+    ): RealmRepresentationBuilderInterface
+    {
         return $this->setAttribute('accessTokenLifespanForImplicitFlow', $accessTokenLifespanForImplicitFlow);
     }
 
@@ -52,12 +54,14 @@ class RealmRepresentationBuilder extends AbstractRepresentationBuilder implement
     }
 
     public function withActionTokenGeneratedByAdminLifespan(int $actionTokenGeneratedByAdminLifespan
-    ): RealmRepresentationBuilderInterface {
+    ): RealmRepresentationBuilderInterface
+    {
         return $this->setAttribute('actionTokenGeneratedByAdminLifespan', $actionTokenGeneratedByAdminLifespan);
     }
 
     public function withActionTokenGeneratedByUserLifespan(int $actionTokenGeneratedByUserLifespan
-    ): RealmRepresentationBuilderInterface {
+    ): RealmRepresentationBuilderInterface
+    {
         return $this->setAttribute('actionTokenGeneratedByUserLifespan', $actionTokenGeneratedByUserLifespan);
     }
 

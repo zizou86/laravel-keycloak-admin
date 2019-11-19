@@ -53,7 +53,10 @@ class ResourceFactory implements ResourceFactoryInterface
 
     public function createClientRoleCreateResource(string $realm, string $id): ClientRoleCreateResourceInterface
     {
-        return new ClientRoleCreateResource($this->createClientRolesResource($realm, $id), new RoleRepresentationBuilder());
+        return new ClientRoleCreateResource(
+            $this->createClientRolesResource($realm, $id),
+            new RoleRepresentationBuilder()
+        );
     }
 
     public function createClientRolesResource(string $realm, string $id): ClientRolesResourceInterface
@@ -108,7 +111,11 @@ class ResourceFactory implements ResourceFactoryInterface
 
     public function createClientCreateResource(string $realm): ClientCreateResourceInterface
     {
-        return new ClientCreateResource($this->createClientsResource($realm), new ClientRepresentationBuilder(), $realm);
+        return new ClientCreateResource(
+            $this->createClientsResource($realm),
+            new ClientRepresentationBuilder(),
+            $realm
+        );
     }
 
     public function createClientsResource(string $realm): ClientsResourceInterface
@@ -133,6 +140,11 @@ class ResourceFactory implements ResourceFactoryInterface
 
     public function createRoleUpdateResource(string $realm, string $role): RoleUpdateResourceInterface
     {
-        return new RoleUpdateResource($this->createRolesResource($realm), new RoleRepresentationBuilder(), $realm, $role);
+        return new RoleUpdateResource(
+            $this->createRolesResource($realm),
+            new RoleRepresentationBuilder(),
+            $realm,
+            $role
+        );
     }
 }

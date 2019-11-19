@@ -123,7 +123,9 @@ class RolesResource implements RolesResourceInterface
         $data = $this->hydrator->extract($role);
         $roleName = $data['name'];
 
-        $response = $this->client->put("/auth/admin/realms/{$this->realm}/roles/{$roleName}", ['body' => json_encode($data)]);
+        $response = $this->client->put("/auth/admin/realms/{$this->realm}/roles/{$roleName}", [
+            'body' => json_encode($data)
+        ]);
 
         if (204 != $response->getStatusCode()) {
             throw new CannotUpdateRoleException("Unable to update role $roleName");

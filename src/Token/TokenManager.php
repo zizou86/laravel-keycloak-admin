@@ -41,7 +41,7 @@ class TokenManager
             return $this->tokens[$realm];
         }
 
-        $response = $this->client->post("/auth/realms/{$realm}/protocol/openid-connect/token", [
+        $response = $this->client->post("/auth/realms/master/protocol/openid-connect/token", [
             'form_params' => [
                 'username' => $this->username,
                 'password' => $this->password,

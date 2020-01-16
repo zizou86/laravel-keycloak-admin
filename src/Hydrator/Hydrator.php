@@ -304,7 +304,9 @@ class Hydrator implements HydratorInterface
     private function resolveParameter(ReflectionParameter $parameter, array $data, $class, $isArray)
     {
         $name = $parameter->getName();
-        $type = (string)$parameter->getType();
+        if (null !== ($type = $parameter->getType())) {
+            $type = $parameter->getType()->getName();
+        }
 
         $value = $data[$name] ?? null;
 
@@ -317,11 +319,7 @@ class Hydrator implements HydratorInterface
         }
 
         if ($parameter->getType()->isBuiltin()) {
-            return $this->convertToBuiltinType($value, (string)$type);
-        }
-
-        if ($isArray) {
-            die("aha is array " . $class);
+            return $this->convertToBuiltinType($value, $type);
         }
 
         return null;

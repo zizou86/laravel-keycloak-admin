@@ -25,6 +25,7 @@ class TokenManager
 
     public function __construct($username, $password, $clientId, Client $client)
     {
+        $this->tokens = [];
         $this->username = $username;
         $this->password = $password;
         $this->clientId = $clientId;
@@ -37,11 +38,11 @@ class TokenManager
      */
     public function getToken($realm)
     {
-        if ($this->tokens[$realm] && $this->tokens[$realm]->isValid()) {
+        if (isset($this->tokens[$realm]) && $this->tokens[$realm]->isValid()) {
             return $this->tokens[$realm];
         }
 
-        $response = $this->client->post("/auth/realms/master/protocol/openid-connect/token", [
+        $response = $this->client->post("/auth/realms/{$realm}/protocol/openid-connect/token", [
             'form_params' => [
                 'username' => $this->username,
                 'password' => $this->password,

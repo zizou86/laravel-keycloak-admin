@@ -52,7 +52,7 @@ class UsersResource implements UsersResourceInterface
         }
 
         $data = $this->hydrator->extract($user);
-        unset($data['created'], $data['username']);
+        unset($data['created']);
 
         $response = $this->client->put("/auth/admin/realms/{$this->realm}/users/{$id}", ['body' => json_encode($data)]);
 

@@ -8,6 +8,8 @@ interface UserUpdateResourceInterface
 
     public function password(?string $password): self;
 
+    public function temporaryPassword(?string $password): self;
+
     public function enabled(?bool $enabled): self;
 
     public function email(?string $email): self;

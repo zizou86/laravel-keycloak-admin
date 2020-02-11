@@ -47,6 +47,12 @@ class UserUpdateResource implements UserUpdateResourceInterface
         return $this;
     }
 
+    public function temporaryPassword(?string $password): UserUpdateResourceInterface
+    {
+        $this->builder->withTemporaryPassword($password);
+        return $this;
+    }
+
     public function enabled(?bool $enabled): UserUpdateResourceInterface
     {
         $this->builder->withEnabled($enabled);

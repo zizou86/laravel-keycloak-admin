@@ -134,7 +134,7 @@ class ClientBuilder
 
         $factory = new ResourceFactory($client, new Hydrator());
 
-        return new Client($factory, $this->realm, $this->clientId);
+        return new Client($factory, $this->realm, $this->clientId, $this->clientSecret);
     }
 
     /**
@@ -147,6 +147,6 @@ class ClientBuilder
 
     private function buildTokenManager(ClientInterface $guzzle)
     {
-        return new TokenManager($this->username, $this->password, $this->clientId, $guzzle);
+        return new TokenManager($this->username, $this->password, $this->clientId, $guzzle, $this->clientSecret);
     }
 }

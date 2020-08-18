@@ -23,12 +23,15 @@ class TokenManager
 
     private $clientId;
 
-    public function __construct($username, $password, $clientId, Client $client)
+    private $clientSecret;
+
+    public function __construct($username, $password, $clientId, Client $client, $clientSecret = null)
     {
         $this->tokens = [];
         $this->username = $username;
         $this->password = $password;
         $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
         $this->client = $client;
     }
 
@@ -42,13 +45,20 @@ class TokenManager
             return $this->tokens[$realm];
         }
 
+        $params = [
+            'username' => $this->username,
+            'password' => $this->password,
+            'client_id' => $this->clientId,
+            'grant_type' => 'password'
+        ];
+
+        if(!is_null($this->clientSecret)){
+            $params['client_secret'] = $this->clientSecret;
+        }
+
+
         $response = $this->client->post("/auth/realms/master/protocol/openid-connect/token", [
-            'form_params' => [
-                'username' => $this->username,
-                'password' => $this->password,
-                'client_id' => $this->clientId,
-                'grant_type' => 'password'
-            ]
+            'form_params' => $params
         ]);
 
         if (200 !== $response->getStatusCode()) {

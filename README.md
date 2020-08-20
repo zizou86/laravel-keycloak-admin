@@ -16,5 +16,11 @@ $client->realm('master')
     ->username($username)
     ->password($password)
     ->email($email)
+    ->emailVerified(true)
+    ->enabled(true)
+    ->attributes([
+        'lang' => $lang,
+        'birthdate' => $birth_date
+    ])
     ->save();
 ```

@@ -1,21 +1,25 @@
 {
-    "name": "scito/keycloak-admin",
+    "name": "zizou86/keycloak-admin",
     "description": "PHP client for the Keycloak Admin API",
     "type": "library",
     "authors": [
         {
             "name": "Maikel van Maurik",
             "email": "maikel@ttc.media"
+        },
+        {
+            "name": "Aziz Trabelsi",
+            "email": "aziz.trabelsi@gmail.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Scito\\Keycloak\\Admin\\": "src/"
+            "Zizou86\\Keycloak\\Admin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Scito\\Keycloak\\Admin\\Tests\\": "tests/"
+            "Zizou86\\Keycloak\\Admin\\Tests\\": "tests/"
         }
     },
     "require": {

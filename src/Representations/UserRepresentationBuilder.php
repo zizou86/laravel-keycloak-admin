@@ -66,6 +66,21 @@ class UserRepresentationBuilder extends AbstractRepresentationBuilder implements
         return $this->setAttribute('email', $email);
     }
 
+    public function withEmailVerified(bool $emailVerified): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('emailVerified', $emailVerified);
+    }
+
+    public function withCredentials(array $credentials): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('credentials', $credentials);
+    }
+
+    public function withAttributes(array $attributes): UserRepresentationBuilderInterface
+    {
+        return $this->setAttribute('attributes', $attributes);
+    }
+
     public function build(): UserRepresentationInterface
     {
         $data = $this->getAttributes();

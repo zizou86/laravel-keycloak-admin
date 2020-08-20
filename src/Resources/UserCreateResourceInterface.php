@@ -20,6 +20,12 @@ interface UserCreateResourceInterface
 
     public function passwordIsTemporary(bool $temporary): UserCreateResourceInterface;
 
+    public function emailVerified(bool $emailVerified): UserCreateResourceInterface;
+
+    public function attributes(array $attributes): UserCreateResourceInterface;
+
+    public function credentials(array $credentials): UserCreateResourceInterface;
+
     /**
      * @param array|null $actions
      * @return UserCreateResourceInterface

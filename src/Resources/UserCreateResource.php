@@ -80,6 +80,24 @@ class UserCreateResource extends AbstractCreateResource implements UserCreateRes
         return $this;
     }
 
+    public function emailVerified(bool $emailVerified): UserCreateResourceInterface
+    {
+        $this->builder->withEmailVerified($emailVerified);
+        return $this;
+    }
+
+    public function attributes(array $attributes): UserCreateResourceInterface
+    {
+        $this->builder->withAttributes($attributes);
+        return $this;
+    }
+
+    public function credentials(array $credentials): UserCreateResourceInterface
+    {
+        $this->builder->withCredentials($credentials);
+        return $this;
+    }
+
     public function save(): UserResourceInterface
     {
         $user = $this->builder->build();

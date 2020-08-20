@@ -52,10 +52,9 @@ class TokenManager
             'grant_type' => 'password'
         ];
 
-        if(!is_null($this->clientSecret)){
+        if (!is_null($this->clientSecret)) {
             $params['client_secret'] = $this->clientSecret;
         }
-
 
         $response = $this->client->post("/auth/realms/master/protocol/openid-connect/token", [
             'form_params' => $params

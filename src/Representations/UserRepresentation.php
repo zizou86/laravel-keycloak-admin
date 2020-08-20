@@ -68,6 +68,16 @@ class UserRepresentation extends AbstractRepresentation implements UserRepresent
         return $this->getAttribute('enabled', false);
     }
 
+    public function getEmailVerified(): ?bool
+    {
+        return $this->getAttribute('emailVerified', false);
+    }
+
+    public function getAttributes(): ?array
+    {
+        return $this->getAttribute('attributes', []);
+    }
+
     public function getCreated()
     {
         return $this->getAttribute('created');
